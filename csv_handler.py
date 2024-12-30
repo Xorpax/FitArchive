@@ -32,4 +32,3 @@ class Handler:
 
 # open csv file and read it, displaying contents in a gui
 # allow adding scores with dates (writing to the csv)
-#
