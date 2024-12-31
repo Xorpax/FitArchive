@@ -60,6 +60,18 @@ class Handler:
             dataset.to_csv(self.csv_path, index=False)
             return f"{exercise_name} and its records have successfully been removed."
         return f"Aborting."
+    
+    def remove_record(self, exercise_name: str, row_index: int) -> str:
+        exercise_name = exercise_name.capitalize()
+        dataset = self.get_dataset()
+        if exercise_name not in self.exercises:
+            return f"No entry for {exercise_name}. Aborting."
+        if dataset.loc[row_index, exercise_name] == np.nan:
+            return f"Cannot remove {exercise_name} at {row_index}. Aborting."
+        dataset.loc[row_index, exercise_name] = np.nan
+        dataset.dropna(subset=exercise_name, inplace=True)
+        dataset.to_csv(self.csv_path, index=False)
+        return f"Successfully removed {exercise_name} at {row_index}"
         
 
 # open csv file and read it, displaying contents in a gui
