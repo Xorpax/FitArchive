@@ -47,6 +47,20 @@ class Handler:
         dataset.to_csv(self.csv_path, index=False)
         self.update_exercises()
         return f"Entry: {entry} successfully added for {exercise_name}"
+    
+    def remove_exercise(self, exercise_name: str) -> str:
+        exercise_name = exercise_name.capitalize()
+        if exercise_name not in self.exercises:
+            return f"No entry for {exercise_name}"
+        dataset = self.get_dataset()
+        entries_len = len(dataset[exercise_name].dropna())
+        choice = input(f"There are {entries_len} entries for {exercise_name}. Would you like to remove them? (Y/N)").upper()
+        if choice[0] == "Y":
+            dataset.drop(columns=exercise_name, inplace=True)
+            dataset.to_csv(self.csv_path, index=False)
+            return f"{exercise_name} and its records have successfully been removed."
+        return f"Aborting."
+        
 
 # open csv file and read it, displaying contents in a gui
 # allow adding scores with dates (writing to the csv)
