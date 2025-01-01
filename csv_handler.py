@@ -16,8 +16,9 @@ class Handler:
             return e
     
     def update_exercises(self) -> None:
-        current_exercises = self.get_dataset().columns
-        self.exercises = current_exercises.values
+        if not self.is_csv_empty():
+            current_exercises = self.get_dataset().columns
+            self.exercises = current_exercises.values
 
     def add_exercise(self, exercise_name: str) -> str:
         exercise_name = exercise_name.capitalize()
@@ -74,9 +75,10 @@ class Handler:
         return f"Successfully removed {exercise_name} at {row_index}"
     
     def is_csv_empty(self) -> bool:
-        df = self.get_dataset().dropna()
-        return df.empty
-        
+        df = self.get_dataset()
+        if isinstance(df, pd.DataFrame):
+            return df.dropna().empty
+        return True
 
 # open csv file and read it, displaying contents in a gui
 # allow adding scores with dates (writing to the csv)
