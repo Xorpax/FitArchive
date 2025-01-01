@@ -74,7 +74,7 @@ class Handler:
         return f"Successfully removed {exercise_name} at {row_index}"
     
     def is_csv_empty(self) -> bool:
-        df = pd.read_csv(self.csv_path).dropna()
+        df = self.get_dataset().dropna()
         return df.empty
         
 
