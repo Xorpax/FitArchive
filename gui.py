@@ -318,8 +318,10 @@ class App(ctk.CTk):
             exercise_btn = ctk.CTkButton(exercises_frame,
                                         text=exercise,
                                         width=300,
-                                        height=45,
-                                        font=(self.font_type, self.font_size))
+                                        height=200,
+                                        font=(self.font_type, self.font_size),
+                                        anchor=ctk.N,
+                                        border_spacing=12)
             exercise_btn.grid(column=col%5, row=row, sticky=ctk.NW, padx=19, pady=10)
             col += 1
             if col % 5 == 0:
