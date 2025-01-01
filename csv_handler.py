@@ -72,6 +72,10 @@ class Handler:
         dataset.dropna(subset=exercise_name, inplace=True)
         dataset.to_csv(self.csv_path, index=False)
         return f"Successfully removed {exercise_name} at {row_index}"
+    
+    def is_csv_empty(self) -> bool:
+        df = pd.read_csv(self.csv_path).dropna()
+        return df.empty
         
 
 # open csv file and read it, displaying contents in a gui
