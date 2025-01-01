@@ -77,7 +77,7 @@ class Handler:
     def is_csv_empty(self) -> bool:
         df = self.get_dataset()
         if isinstance(df, pd.DataFrame):
-            return df.dropna().empty
+            return df.empty
         return True
 
 # open csv file and read it, displaying contents in a gui
