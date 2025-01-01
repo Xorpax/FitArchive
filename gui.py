@@ -7,6 +7,9 @@ import pandas as pd
 CONFIG = configparser.ConfigParser()
 CONFIG.read(r".\config.ini")
 
+# ctk.set_appearance_mode("dark")
+# ctk.set_default_color_theme("dark-blue")
+
 class SidePanel(ctk.CTkFrame):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -298,21 +301,69 @@ class App(ctk.CTk):
                                 height=45,
                                 font=(self.font_type, self.font_size, "bold"),
                                 border_spacing=5,
-                                fg_color="green")
+                                fg_color="green",
+                                command=self.add_exercise_window)
         add_btn.pack(anchor=ctk.NE, padx=(0, 10), pady=(20, 15), side=ctk.RIGHT)
         exercises_frame = ctk.CTkScrollableFrame(self.main_panel,
                                        corner_radius=0,
                                        border_color="yellow",
                                        border_width=1)
         exercises_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=5, pady=(0, 5), side=ctk.TOP)
-        exercises = self.handler.exercises
-        for exercise in exercises:
+        exercises_list = self.handler.exercises
+        print(exercises_list)
+
+        col = 0
+        row = 0
+        for exercise in exercises_list:
             exercise_btn = ctk.CTkButton(exercises_frame,
-                                         text=exercise,
-                                         width=300,
-                                         height=45,
-                                         font=(self.font_type, self.font_size))
-            exercise_btn.pack(side=ctk.LEFT, padx=10, pady=10)
+                                        text=exercise,
+                                        width=300,
+                                        height=45,
+                                        font=(self.font_type, self.font_size))
+            exercise_btn.grid(column=col%5, row=row, sticky=ctk.NW, padx=19, pady=10)
+            col += 1
+            if col % 5 == 0:
+                row += 1
+
+    def add_exercise_window(self):
+        def submit_exercise(name: str):
+            name = name.capitalize()
+            exercises_list = self.handler.exercises
+            if name in exercises_list:
+                label.configure(text=f"An entry for {name} already exists.", text_color="red")
+            else:
+                print(self.handler.add_exercise(name))
+                new_exercise.destroy()
+                self.exercises()
+        
+        x = (self.screen_width - 640) // 2
+        y = (self.screen_height -360) // 2
+        new_exercise = ctk.CTkToplevel(self)
+        new_exercise.title("New exercise")
+        new_exercise.geometry(f"640x300+{x}+{y}")
+        new_exercise.resizable(False, False)
+        new_exercise.after(300, new_exercise.focus)
+        new_exercise.after(300, lambda: new_exercise.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        label = ctk.CTkLabel(new_exercise,
+                             text="Enter your exercise name",
+                             font=(self.font_type, self.header_size))
+        label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(40, 20))
+        entry = ctk.CTkEntry(new_exercise,
+                             placeholder_text="Type here...",
+                             font=(self.font_type, self.font_size),
+                             width=350,
+                             height=50)
+        entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=20)
+        submit_btn = ctk.CTkButton(new_exercise,
+                                   text="Submit",
+                                   width=100,
+                                   height=50,
+                                   font=(self.font_type, self.font_size),
+                                   command=lambda: submit_exercise(entry.get()))
+        submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
+
+    def delete_exercise_data(self):
+        raise NotImplementedError("Delete all exercise data (dataframe column)")
     
     def bmi_calculator(self):
         self.clear_main_panel()
