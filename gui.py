@@ -1,6 +1,8 @@
 import customtkinter as ctk
 from PIL import Image
 import configparser
+from csv_handler import Handler
+import pandas as pd
 
 CONFIG = configparser.ConfigParser()
 CONFIG.read(r".\config.ini")
@@ -145,7 +147,7 @@ class SidePanel(ctk.CTkFrame):
             btn.configure(text=btn.cget("textvariable"))
 
 class App(ctk.CTk):
-    def __init__(self) -> None:
+    def __init__(self, csv_path) -> None:
         super().__init__()
 
         # config info
@@ -187,6 +189,12 @@ class App(ctk.CTk):
         self.main_panel = ctk.CTkFrame(self, corner_radius=0, border_color="red", border_width=1)
         self.main_panel.pack(expand=True, fill=ctk.BOTH, side=ctk.RIGHT)
         self.show_landing_page()
+
+        # file operations
+        # self.csv_path = r".\exercises.csv"
+        # self.csv_path = r".\example1.csv"
+        self.csv_path = csv_path
+        self.handler = Handler(self.csv_path)
 
     def show_landing_page(self):
         # welcome section
@@ -272,19 +280,56 @@ class App(ctk.CTk):
             widget.destroy()
     
     def exercises(self):
-        raise NotImplementedError("Exercises page")
+        self.clear_main_panel()
+        top_panel = ctk.CTkFrame(self.main_panel,
+                                 corner_radius=0,
+                                 border_color="orange",
+                                 border_width=1)
+        top_panel.pack(expand=False, fill=ctk.X, anchor=ctk.NW, padx=5, pady=5)
+        exercises_label = ctk.CTkLabel(top_panel,
+                                       text="Exercises",
+                                       font=(self.font_type, self.header_size))
+        exercises_label.pack(anchor=ctk.NW, padx=(10, 0), pady=(25, 10), side=ctk.LEFT)
+        if self.handler.is_csv_empty():
+            exercises_label.configure(text="No exercises have been added yet. Why not add one to get started?", text_color="red")
+        add_btn = ctk.CTkButton(top_panel,
+                                text="+ Add Exercise",
+                                width=45,
+                                height=45,
+                                font=(self.font_type, self.font_size, "bold"),
+                                border_spacing=5,
+                                fg_color="green")
+        add_btn.pack(anchor=ctk.NE, padx=(0, 10), pady=(20, 15), side=ctk.RIGHT)
+        exercises_frame = ctk.CTkScrollableFrame(self.main_panel,
+                                       corner_radius=0,
+                                       border_color="yellow",
+                                       border_width=1)
+        exercises_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=5, pady=(0, 5), side=ctk.TOP)
+        exercises = self.handler.exercises
+        for exercise in exercises:
+            exercise_btn = ctk.CTkButton(exercises_frame,
+                                         text=exercise,
+                                         width=300,
+                                         height=45,
+                                         font=(self.font_type, self.font_size))
+            exercise_btn.pack(side=ctk.LEFT, padx=10, pady=10)
     
     def bmi_calculator(self):
+        self.clear_main_panel()
         raise NotImplementedError("BMI calculator page")
     
     def measurements(self):
+        self.clear_main_panel()
         raise NotImplementedError("Measurements page")
     
     def notes(self):
+        self.clear_main_panel()
         raise NotImplementedError("Notes page")
     
     def placeholder(self):
         self.clear_main_panel()
+        self.clear_main_panel()
 
     def settings(self):
+        self.clear_main_panel()
         raise NotImplementedError("Settings page")
