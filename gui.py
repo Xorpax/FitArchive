@@ -214,10 +214,10 @@ class App(ctk.CTk):
         self.csv_path = csv_path
         self.handler = Handler(self.csv_path)
 
-        # self.handler.add_exercise("hammer curls")
-        # print(self.handler.get_dataset())
-        # for x in range(1, 100):
-        #     self.handler.add_exercise_data("hammer curls", score=x, date=f"{x%30}.{x%12}.2024", units="kg")
+        self.handler.add_exercise("hammer curls")
+        print(self.handler.get_dataset())
+        for x in range(1, 100):
+            self.handler.add_exercise_data("hammer curls", score=x, date=f"{x%30}.{x%12}.2024", units="kg")
         
 
     def show_landing_page(self) -> None:
@@ -379,7 +379,8 @@ class App(ctk.CTk):
             data = self.handler.get_dataset()[exercise_name].tolist()
             col = 0
             row = 0
-            for index, score in enumerate(data):
+            print(data)
+            for index, score in enumerate(data[3:]):
                 score_label = ctk.CTkLabel(scorebox, text=f"{index + 1}. {score}", font=(self.font_type, self.font_size))
                 score_label.grid(column=col%4, row=row, padx=(30, 0), pady=15, sticky=ctk.NW)
                 col += 1
