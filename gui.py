@@ -214,6 +214,12 @@ class App(ctk.CTk):
         self.csv_path = csv_path
         self.handler = Handler(self.csv_path)
 
+        # self.handler.add_exercise("hammer curls")
+        # # print(self.handler.get_dataset())
+        # for x in range(60):
+        #     self.handler.add_exercise_data("hammer curls", score=x, date=f"{x%30}.{x%12}.2024", units="kg")
+        
+
     def show_landing_page(self) -> None:
         # welcome section
         self.clear_main_panel()
@@ -368,6 +374,17 @@ class App(ctk.CTk):
         submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
 
     def show_exercise(self, exercise_name: str):
+        def list_scores(exercise_name: str):
+            data = self.handler.get_dataset()[exercise_name].tolist()
+            col = 0
+            row = 0
+            for score in data:
+                score_label = ctk.CTkLabel(scorebox, text=f"- {score}", font=(self.font_type, self.font_size))
+                score_label.grid(column=col%5, row=row, padx=22, pady=15)
+                col += 1
+                if col%5 == 0:
+                    row += 1
+                               
         exercise_name = exercise_name.capitalize()
         self.clear_main_panel()
         
@@ -429,6 +446,8 @@ class App(ctk.CTk):
                                       text="Remove score",
                                       font=(self.font_type, self.header_size))
         remove_score_btn.grid(column=4, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
+
+        list_scores(exercise_name=exercise_name)
 
     def delete_exercise_data(self):
         raise NotImplementedError("Delete all exercise data (dataframe column)")
