@@ -381,8 +381,7 @@ class App(ctk.CTk):
     def show_exercise(self, exercise_name: str):
         self.clear_main_panel()
         def list_scores(exercise_name: str):
-            data = self.handler.get_dataset()[exercise_name].tolist()
-            print(type(self.handler.get_dataset()[exercise_name]))
+            data = self.handler.get_dataset()[exercise_name].dropna().tolist()
             col = 0
             row = 0
             print(data)
