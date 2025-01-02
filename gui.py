@@ -215,8 +215,8 @@ class App(ctk.CTk):
         self.handler = Handler(self.csv_path)
 
         # self.handler.add_exercise("hammer curls")
-        # # print(self.handler.get_dataset())
-        # for x in range(60):
+        # print(self.handler.get_dataset())
+        # for x in range(1, 100):
         #     self.handler.add_exercise_data("hammer curls", score=x, date=f"{x%30}.{x%12}.2024", units="kg")
         
 
@@ -374,20 +374,19 @@ class App(ctk.CTk):
         submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
 
     def show_exercise(self, exercise_name: str):
+        self.clear_main_panel()
         def list_scores(exercise_name: str):
             data = self.handler.get_dataset()[exercise_name].tolist()
             col = 0
             row = 0
-            for score in data:
-                score_label = ctk.CTkLabel(scorebox, text=f"- {score}", font=(self.font_type, self.font_size))
-                score_label.grid(column=col%5, row=row, padx=22, pady=15)
+            for index, score in enumerate(data):
+                score_label = ctk.CTkLabel(scorebox, text=f"{index}. {score}", font=(self.font_type, self.font_size))
+                score_label.grid(column=col%5, row=row, padx=22, pady=15, sticky=ctk.NW)
                 col += 1
                 if col%5 == 0:
                     row += 1
                                
         exercise_name = exercise_name.capitalize()
-        self.clear_main_panel()
-        
         # left side
         label = ctk.CTkLabel(self.main_panel,
                              text=exercise_name,
@@ -423,6 +422,9 @@ class App(ctk.CTk):
                                width=180,
                                height=35)
         sort.grid(column=1, row=1, padx=30, sticky=ctk.NW)
+        pb_label = ctk.CTkLabel(self.main_panel, text="PB: ", font=(self.font_type, self.header_size))
+        pb_label.grid(column=3, row=0, padx=30, pady=15, sticky=ctk.NW)
+
         scorebox = ctk.CTkScrollableFrame(self.main_panel,
                                 border_color="orange",
                                 border_width=1)
