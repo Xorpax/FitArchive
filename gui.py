@@ -194,8 +194,6 @@ class App(ctk.CTk):
         self.show_landing_page()
 
         # file operations
-        # self.csv_path = r".\exercises.csv"
-        # self.csv_path = r".\example1.csv"
         self.csv_path = csv_path
         self.handler = Handler(self.csv_path)
 
