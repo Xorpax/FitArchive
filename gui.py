@@ -320,7 +320,8 @@ class App(ctk.CTk):
                                         height=200,
                                         font=(self.font_type, self.font_size),
                                         anchor=ctk.N,
-                                        border_spacing=12)
+                                        border_spacing=12,
+                                        command=lambda: self.show_exercise(exercise))
             exercise_btn.grid(column=col%5, row=row, sticky=ctk.NW, padx=19, pady=10)
             col += 1
             if col % 5 == 0:
@@ -362,6 +363,75 @@ class App(ctk.CTk):
                                    font=(self.font_type, self.font_size),
                                    command=lambda: submit_exercise(entry.get()))
         submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
+
+    def show_exercise(self, exercise_name: str):
+        exercise_name = exercise_name.capitalize()
+        self.clear_main_panel()
+        # use grid layout
+        label = ctk.CTkLabel(self.main_panel,
+                             text=exercise_name,
+                             font=(self.font_type, self.header_size))
+        label.grid(column=0, row=0, padx=15, pady=15, sticky=ctk.NW)
+        notes_label = ctk.CTkLabel(self.main_panel,
+                                   text="Notes",
+                                   font=(self.font_type, self.header_size))
+        notes_label.grid(column=0, row=1, padx=15, pady=15, sticky=ctk.NW)
+        notes_box = ctk.CTkTextbox(self.main_panel,
+                                   font=(self.font_type, self.font_size),
+                                   width=400,
+                                   height=700)
+        notes_box.grid(column=0, row=2, padx=15)
+        sort_label = ctk.CTkLabel(self.main_panel,
+                                  text="Sort records by date:",
+                                  font=(self.font_type, self.header_size))
+        sort_label.grid(column=1, row=0, padx=30, pady=15, sticky=ctk.NW)
+        sort = ctk.CTkComboBox(self.main_panel,
+                               values=["Ascending", "Descending"],
+                               font=(self.font_type, self.font_size),
+                               width=180,
+                               height=35)
+        sort.grid(column=1, row=1, padx=30, sticky=ctk.NW)
+        scorebox = ctk.CTkScrollableFrame(self.main_panel,
+                                border_color="orange",
+                                border_width=1)
+        scorebox.grid(column=1, row=2, padx=30, columnspan=5, sticky=ctk.NSEW)
+        self.main_panel.grid_columnconfigure(1, weight=1)
+        self.main_panel.rowconfigure(4, weight=1)
+
+        save_notes_btn = ctk.CTkButton(self.main_panel,
+                                       text="Save",
+                                       font=(self.font_type, self.header_size))
+        save_notes_btn.grid(column=0, row=3, sticky=ctk.NW, padx=15, pady=15)
+
+        visualise_btn = ctk.CTkButton(self.main_panel,
+                                      text="Visualise",
+                                      font=(self.font_type, self.header_size))
+        visualise_btn.grid(column=1, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
+        add_score_btn = ctk.CTkButton(self.main_panel,
+                                      text="Add score",
+                                      font=(self.font_type, self.header_size))
+        add_score_btn.grid(column=2, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
+
+        
+        edit_score_btn = ctk.CTkButton(self.main_panel,
+                                      text="Edit score",
+                                      font=(self.font_type, self.header_size))
+        edit_score_btn.grid(column=3, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
+
+
+        remove_score_btn = ctk.CTkButton(self.main_panel,
+                                      text="Remove score",
+                                      font=(self.font_type, self.header_size))
+        remove_score_btn.grid(column=4, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
+
+        remove_exercise_btn = ctk.CTkButton(self.main_panel,
+                                            text="Delete exercise",
+                                            font=(self.font_type, self.header_size),
+                                            fg_color="red")
+        remove_exercise_btn.grid(column=0, row=4, padx=15, pady=15, sticky=ctk.SW)
+
+
+
 
     def delete_exercise_data(self):
         raise NotImplementedError("Delete all exercise data (dataframe column)")
