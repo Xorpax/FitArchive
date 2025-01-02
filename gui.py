@@ -335,7 +335,7 @@ class App(ctk.CTk):
                                         font=(self.font_type, self.font_size),
                                         anchor=ctk.N,
                                         border_spacing=12,
-                                        command=lambda: self.show_exercise(exercise))
+                                        command=lambda ex=exercise: self.show_exercise(ex))
             exercise_btn.grid(column=col%5, row=row, sticky=ctk.NW, padx=19, pady=10)
             col += 1
             if col % 5 == 0:
@@ -382,6 +382,7 @@ class App(ctk.CTk):
         self.clear_main_panel()
         def list_scores(exercise_name: str):
             data = self.handler.get_dataset()[exercise_name].tolist()
+            print(type(self.handler.get_dataset()[exercise_name]))
             col = 0
             row = 0
             print(data)
