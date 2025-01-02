@@ -310,7 +310,6 @@ class App(ctk.CTk):
                                        border_width=1)
         exercises_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=5, pady=(0, 5), side=ctk.TOP)
         exercises_list = self.handler.exercises
-        print(exercises_list)
 
         col = 0
         row = 0
