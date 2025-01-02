@@ -380,7 +380,7 @@ class App(ctk.CTk):
             col = 0
             row = 0
             for index, score in enumerate(data):
-                score_label = ctk.CTkLabel(scorebox, text=f"{index}. {score}", font=(self.font_type, self.font_size))
+                score_label = ctk.CTkLabel(scorebox, text=f"{index + 1}. {score}", font=(self.font_type, self.font_size))
                 score_label.grid(column=col%5, row=row, padx=22, pady=15, sticky=ctk.NW)
                 col += 1
                 if col%5 == 0:
