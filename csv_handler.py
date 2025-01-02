@@ -26,7 +26,7 @@ class Handler:
         if exercise_name in self.exercises:
             return f"Entry for {exercise_name} already exists!"
         if self.is_csv_empty():
-            dataset = pd.DataFrame({exercise_name: [""]})
+            dataset = pd.DataFrame({exercise_name: ["PR:", "Category:", "Note:"]})
         else:
             dataset[exercise_name] = ""
         dataset.to_csv(self.csv_path, index=False)
