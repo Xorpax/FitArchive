@@ -277,7 +277,7 @@ class App(ctk.CTk):
         self.close_btn = ctk.CTkButton(self.main_panel, text="Clear this panel", font=(self.font_type, self.font_size), command=self.clear_main_panel, text_color="#000000", corner_radius=10)
         self.close_btn.pack(anchor=ctk.N, pady=20)
     
-    def clear_main_panel(self):
+    def clear_main_panel(self) -> None:
         print("Clearing main panel...")
         for widget in self.main_panel.winfo_children():
             widget.destroy()
