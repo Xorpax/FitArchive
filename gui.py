@@ -14,6 +14,7 @@ class SidePanel(ctk.CTkFrame):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         
+        self.fitarchive_path = r".\assets\FitArchiveLogo.png"
         self.collapse_path = r".\assets\push_left_icon.png"
         self.collapse_img = ctk.CTkImage(Image.open(self.collapse_path), size=(25, 25))
         self.expand_path = r".\assets\push_right_icon.png"
@@ -34,6 +35,21 @@ class SidePanel(ctk.CTkFrame):
     
     def initialise_buttons(self) -> None:
         self.state = "expanded"
+
+        self.fitarchive_img = ctk.CTkImage(Image.open(self.fitarchive_path), size=(25, 25))
+        self.fitarchive_btn = ctk.CTkButton(self,
+                                       corner_radius=0,
+                                       text="Side Panel",
+                                       image=self.fitarchive_img,
+                                       compound=ctk.RIGHT,
+                                       text_color=self.text_color,
+                                       font=(self.font, self.font_size),
+                                       height=self.btn_height,
+                                       anchor=ctk.W, 
+                                       command=self.collapse, 
+                                       textvariable=ctk.StringVar(value="FitArchive"))
+        self.fitarchive_btn.pack(anchor=ctk.N, fill=ctk.X)
+        self.buttons.append(self.fitarchive_btn)
 
         self.title_btn = ctk.CTkButton(self,
                                        corner_radius=0,
@@ -200,6 +216,7 @@ class App(ctk.CTk):
 
     def show_landing_page(self) -> None:
         # welcome section
+        self.clear_main_panel()
         self.header = ctk.CTkLabel(self.main_panel, text="Welcome to FitArchive!", font=(self.font_type, self.header_size, "bold"), anchor=ctk.NW)
         self.header.pack(pady=40)
         self.motto = ctk.CTkLabel(self.main_panel, text="Track your workouts, achieve your goals.", font=(self.font_type, self.font_size), anchor=ctk.NW)
