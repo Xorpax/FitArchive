@@ -28,7 +28,7 @@ class Handler:
         if self.is_csv_empty():
             dataset = pd.DataFrame({exercise_name: ["PR:", "Category:", "Note:"]})
         else:
-            dataset[exercise_name] = ""
+            dataset[exercise_name] = pd.Series(["PR:", "Category:", "Note:"])
         dataset.to_csv(self.csv_path, index=False)
         self.update_exercises()
         return f"Entry for {exercise_name} has been successfully created."
