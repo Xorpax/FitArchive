@@ -160,6 +160,7 @@ class App(ctk.CTk):
 
         # button functions
         self.btn_functions = {
+            "FitArchive": self.show_landing_page,
             "Exercises": self.exercises,
             "BMI Calculator": self.bmi_calculator,
             "Measurements": self.measurements,
@@ -197,25 +198,17 @@ class App(ctk.CTk):
         self.csv_path = csv_path
         self.handler = Handler(self.csv_path)
 
-    def show_landing_page(self):
+    def show_landing_page(self) -> None:
         # welcome section
-        self.header = ctk.CTkLabel(self.main_panel,
-                                         text="Welcome to FitArchive!",
-                                         font=(self.font_type, self.header_size, "bold"),
-                                         anchor=ctk.NW)
+        self.header = ctk.CTkLabel(self.main_panel, text="Welcome to FitArchive!", font=(self.font_type, self.header_size, "bold"), anchor=ctk.NW)
         self.header.pack(pady=40)
-        self.motto = ctk.CTkLabel(self.main_panel,
-                                  text="Track your workouts, achieve your goals.",
-                                  font=(self.font_type, self.font_size),
-                                  anchor=ctk.NW)
+        self.motto = ctk.CTkLabel(self.main_panel, text="Track your workouts, achieve your goals.", font=(self.font_type, self.font_size), anchor=ctk.NW)
         self.motto.pack(pady=10)
 
         # features
         self.features_frame = ctk.CTkFrame(self.main_panel, border_color="green", border_width=1)
         self.features_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=20, pady=20)
-        self.features_label = ctk.CTkLabel(self.features_frame,
-                                           text="Features:",
-                                           font=(self.font_type, self.header_size, "underline"))
+        self.features_label = ctk.CTkLabel(self.features_frame, text="Features:", font=(self.font_type, self.header_size, "underline"))
         self.features_label.pack(padx=10, pady=10, side=ctk.TOP, anchor=ctk.NW)
         
         # buttons
