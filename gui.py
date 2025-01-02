@@ -290,7 +290,7 @@ class App(ctk.CTk):
         for widget in self.main_panel.winfo_children():
             widget.destroy()
     
-    def exercises(self):
+    def exercises(self) -> None:
         self.clear_main_panel()
         top_panel = ctk.CTkFrame(self.main_panel,
                                  corner_radius=0,
@@ -370,7 +370,8 @@ class App(ctk.CTk):
     def show_exercise(self, exercise_name: str):
         exercise_name = exercise_name.capitalize()
         self.clear_main_panel()
-        # use grid layout
+        
+        # left side
         label = ctk.CTkLabel(self.main_panel,
                              text=exercise_name,
                              font=(self.font_type, self.header_size))
@@ -384,6 +385,17 @@ class App(ctk.CTk):
                                    width=400,
                                    height=700)
         notes_box.grid(column=0, row=2, padx=15)
+        save_notes_btn = ctk.CTkButton(self.main_panel,
+                                       text="Save",
+                                       font=(self.font_type, self.header_size))
+        save_notes_btn.grid(column=0, row=3, sticky=ctk.NW, padx=15, pady=15)
+        remove_exercise_btn = ctk.CTkButton(self.main_panel,
+                                            text="Delete exercise",
+                                            font=(self.font_type, self.header_size),
+                                            fg_color="red")
+        remove_exercise_btn.grid(column=0, row=4, padx=15, pady=15, sticky=ctk.SW)
+
+        # right side
         sort_label = ctk.CTkLabel(self.main_panel,
                                   text="Sort records by date:",
                                   font=(self.font_type, self.header_size))
@@ -401,11 +413,6 @@ class App(ctk.CTk):
         self.main_panel.grid_columnconfigure(1, weight=1)
         self.main_panel.rowconfigure(4, weight=1)
 
-        save_notes_btn = ctk.CTkButton(self.main_panel,
-                                       text="Save",
-                                       font=(self.font_type, self.header_size))
-        save_notes_btn.grid(column=0, row=3, sticky=ctk.NW, padx=15, pady=15)
-
         visualise_btn = ctk.CTkButton(self.main_panel,
                                       text="Visualise",
                                       font=(self.font_type, self.header_size))
@@ -414,27 +421,14 @@ class App(ctk.CTk):
                                       text="Add score",
                                       font=(self.font_type, self.header_size))
         add_score_btn.grid(column=2, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
-
-        
         edit_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Edit score",
                                       font=(self.font_type, self.header_size))
         edit_score_btn.grid(column=3, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
-
-
         remove_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Remove score",
                                       font=(self.font_type, self.header_size))
         remove_score_btn.grid(column=4, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
-
-        remove_exercise_btn = ctk.CTkButton(self.main_panel,
-                                            text="Delete exercise",
-                                            font=(self.font_type, self.header_size),
-                                            fg_color="red")
-        remove_exercise_btn.grid(column=0, row=4, padx=15, pady=15, sticky=ctk.SW)
-
-
-
 
     def delete_exercise_data(self):
         raise NotImplementedError("Delete all exercise data (dataframe column)")
