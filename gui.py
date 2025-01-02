@@ -214,10 +214,10 @@ class App(ctk.CTk):
         self.csv_path = csv_path
         self.handler = Handler(self.csv_path)
 
-        self.handler.add_exercise("hammer curls")
-        print(self.handler.get_dataset())
-        for x in range(1, 100):
-            self.handler.add_exercise_data("hammer curls", score=x, date=f"{x%30}.{x%12}.2024", units="kg")
+        # self.handler.add_exercise("hammer curls", "bicep")
+        # print(self.handler.get_dataset())
+        # for x in range(1, 80):
+        #     self.handler.add_exercise_data("hammer curls", score=x, date=f"{x%30}.{x%12}.2024", units="kg")
         
 
     def show_landing_page(self) -> None:
@@ -342,13 +342,13 @@ class App(ctk.CTk):
                 row += 1
 
     def add_exercise_window(self) -> None:
-        def submit_exercise(name: str) -> None:
+        def submit_exercise(name: str, category: str) -> None:
             name = name.capitalize()
             exercises_list = self.handler.exercises
             if name in exercises_list:
-                label.configure(text=f"An entry for {name} already exists.", text_color="red")
+                name_label.configure(text=f"An entry for {name} already exists.", text_color="red")
             else:
-                print(self.handler.add_exercise(name))
+                print(self.handler.add_exercise(name, category))
                 new_exercise.destroy()
                 self.exercises()
         
@@ -361,16 +361,21 @@ class App(ctk.CTk):
         # use after due to customtkinter's implementation where some data is set after 200ms
         new_exercise.after(300, new_exercise.focus)
         new_exercise.after(200, lambda: new_exercise.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
-        label = ctk.CTkLabel(new_exercise, text="Enter your exercise name", font=(self.font_type, self.header_size))
-        label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(40, 20))
-        entry = ctk.CTkEntry(new_exercise, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=50)
-        entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=20)
+        name_label = ctk.CTkLabel(new_exercise, text="Enter your exercise name", font=(self.font_type, self.header_size))
+        name_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 20))
+        name_entry = ctk.CTkEntry(new_exercise, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=40)
+        name_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(0, 20))
+        category_label = ctk.CTkLabel(new_exercise, text="Enter the category", font=(self.font_type, self.header_size))
+        category_label.pack(side=ctk.TOP, anchor=ctk.CENTER)
+        category_entry = ctk.CTkEntry(new_exercise, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=40)
+        category_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 0))
+
         submit_btn = ctk.CTkButton(new_exercise,
                                    text="Submit",
                                    width=100,
                                    height=50,
                                    font=(self.font_type, self.font_size),
-                                   command=lambda: submit_exercise(entry.get()))
+                                   command=lambda: submit_exercise(name_entry.get(), category_entry.get()))
         submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
 
     def show_exercise(self, exercise_name: str):
@@ -382,7 +387,8 @@ class App(ctk.CTk):
             print(data)
             for index, score in enumerate(data[3:]):
                 score_label = ctk.CTkLabel(scorebox, text=f"{index + 1}. {score}", font=(self.font_type, self.font_size))
-                score_label.grid(column=col%4, row=row, padx=(30, 0), pady=15, sticky=ctk.NW)
+                score_label.grid(column=col%4, row=row, padx=(50, 0), pady=15, sticky=ctk.NW)
+                label.configure(text=f"{exercise_name} ({data[1].split(":")[1]})")
                 col += 1
                 if col%4 == 0:
                     row += 1
