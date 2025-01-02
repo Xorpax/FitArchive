@@ -381,9 +381,9 @@ class App(ctk.CTk):
             row = 0
             for index, score in enumerate(data):
                 score_label = ctk.CTkLabel(scorebox, text=f"{index + 1}. {score}", font=(self.font_type, self.font_size))
-                score_label.grid(column=col%5, row=row, padx=22, pady=15, sticky=ctk.NW)
+                score_label.grid(column=col%4, row=row, padx=(30, 0), pady=15, sticky=ctk.NW)
                 col += 1
-                if col%5 == 0:
+                if col%4 == 0:
                     row += 1
                                
         exercise_name = exercise_name.capitalize()
