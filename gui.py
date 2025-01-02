@@ -327,8 +327,8 @@ class App(ctk.CTk):
             if col % 5 == 0:
                 row += 1
 
-    def add_exercise_window(self):
-        def submit_exercise(name: str):
+    def add_exercise_window(self) -> None:
+        def submit_exercise(name: str) -> None:
             name = name.capitalize()
             exercises_list = self.handler.exercises
             if name in exercises_list:
@@ -344,17 +344,12 @@ class App(ctk.CTk):
         new_exercise.title("New exercise")
         new_exercise.geometry(f"640x300+{x}+{y}")
         new_exercise.resizable(False, False)
+        # use after due to customtkinter's implementation where some data is set after 200ms
         new_exercise.after(300, new_exercise.focus)
-        new_exercise.after(300, lambda: new_exercise.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
-        label = ctk.CTkLabel(new_exercise,
-                             text="Enter your exercise name",
-                             font=(self.font_type, self.header_size))
+        new_exercise.after(200, lambda: new_exercise.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        label = ctk.CTkLabel(new_exercise, text="Enter your exercise name", font=(self.font_type, self.header_size))
         label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(40, 20))
-        entry = ctk.CTkEntry(new_exercise,
-                             placeholder_text="Type here...",
-                             font=(self.font_type, self.font_size),
-                             width=350,
-                             height=50)
+        entry = ctk.CTkEntry(new_exercise, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=50)
         entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=20)
         submit_btn = ctk.CTkButton(new_exercise,
                                    text="Submit",
