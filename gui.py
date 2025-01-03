@@ -3,6 +3,7 @@ from PIL import Image
 import configparser
 from csv_handler import Handler
 import pandas as pd
+from datetime import datetime
 
 CONFIG = configparser.ConfigParser()
 CONFIG.read(r".\config.ini")
@@ -515,15 +516,18 @@ class App(ctk.CTk):
         def validate_score(score: str, day: str, month: str, year: str):
             try:
                 score = float(score)
+                day = int(day)
+                month = int(month)
+                year = int(year)
+                date = datetime(year=year, month=month, day=day)
             except ValueError:
-                add_scr_label.configure(text="Invalid score", text_color="red")
+                add_scr_label.configure(text="Invalid score or date", text_color="red")
                 return
             if score < 0:
                 add_scr_label.configure(text="Your score cannot be negative", text_color="red")
                 return
-            if date == "":
-                add_scr_label.configure(text="No date entered", text_color="red")
-                return
+
+            date = date.strftime("%d.%m.%Y")
             unit = self.handler.get_dataset()[exercise_name].tolist()[0].split("|")[1]
             print(self.handler.add_exercise_data(exercise_name, score, date, unit))
             add_scr.destroy()
@@ -533,23 +537,20 @@ class App(ctk.CTk):
         x = (self.screen_width - 640) // 2
         y = (self.screen_height -360) // 2
         add_scr.title("Add score")
-        add_scr.geometry(f"500x380+{x}+{y}")
+        add_scr.geometry(f"500x400+{x}+{y}")
         add_scr.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         add_scr.after(300, add_scr.focus)
         add_scr.after(200, lambda: add_scr.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
 
         add_scr_label = ctk.CTkLabel(add_scr, text="Enter new score:", font=(self.font_type, self.header_size))
-        # add_scr_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
         add_scr_label.grid(column=1, row=0, sticky=ctk.N, pady=(15, 0))
         info_label = ctk.CTkLabel(add_scr, text="Do not include units!", font=(self.font_type, self.font_size), text_color="red")
-        # info_label.pack(side=ctk.TOP, anchor=ctk.CENTER)
         info_label.grid(column=1, row=1, sticky=ctk.N, pady=(15, 0))
+
         score_entry = ctk.CTkEntry(add_scr, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=150, height=40)
-        # score_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=20)
         score_entry.grid(column=1, row=2, sticky=ctk.N, pady=15)
-        # date_label = ctk.CTkLabel(add_scr, text="Enter date", font=(self.font_type, self.font_size))
-        # date_label.pack(side=ctk.TOP, anchor=ctk.CENTER)
+
         day_label = ctk.CTkLabel(add_scr, text="Day", font=(self.font_type, self.font_size))
         day_label.grid(column=0, row=3, sticky=ctk.N, pady=(15, 0), padx=(75, 0))
         month_label = ctk.CTkLabel(add_scr, text="Month", font=(self.font_type, self.font_size))
@@ -557,20 +558,17 @@ class App(ctk.CTk):
         year_label = ctk.CTkLabel(add_scr, text="Year", font=(self.font_type, self.font_size))
         year_label.grid(column=2, row=3, sticky=ctk.N, pady=(15, 0))
 
-        day_entry = ctk.CTkEntry(add_scr, placeholder_text="Day (0-31)", font=(self.font_type, self.font_size), width=50)
-        day_entry.grid(column=0, row=4, sticky=ctk.N, pady=(15, 0), padx=(75, 0))
-        month_entry = ctk.CTkEntry(add_scr, placeholder_text="Month (1-12)", font=(self.font_type, self.font_size), width=50)
+        day_entry = ctk.CTkEntry(add_scr, placeholder_text="0-31", font=(self.font_type, self.font_size), width=100)
+        day_entry.grid(column=0, row=4, sticky=ctk.N, pady=(15, 0), padx=(20, 0))
+        month_entry = ctk.CTkEntry(add_scr, placeholder_text="1-12", font=(self.font_type, self.font_size), width=100)
         month_entry.grid(column=1, row=4, sticky=ctk.N, pady=(15, 0))
-        year_entry = ctk.CTkEntry(add_scr, placeholder_text="Year", font=(self.font_type, self.font_size), width=50)
+        year_entry = ctk.CTkEntry(add_scr, placeholder_text="YYYY", font=(self.font_type, self.font_size), width=100)
         year_entry.grid(column=2, row=4, sticky=ctk.N, pady=(15, 0))
-        # date_entry = ctk.CTkEntry(add_scr, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=150, height=40)
-        # date_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=20)
-        # TODO: add day, month and year entry, then validate (change to grid layout
+
         submit_btn = ctk.CTkButton(add_scr,
                                    text="Submit",
                                    font=(self.font_type, self.header_size),
                                    command=lambda: validate_score(score_entry.get(), day_entry.get(), month_entry.get(), year_entry.get()))
-        # submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(10, 0))
         submit_btn.grid(column=1, row=5, sticky=ctk.N, pady=(40, 0))
     
     def bmi_calculator(self):
