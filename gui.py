@@ -388,11 +388,15 @@ class App(ctk.CTk):
             data = self.handler.get_dataset()[exercise_name].dropna().tolist()
             col = 0
             row = 0
+            category = data[1].split(":")[1]
+            pb = data[0].split(":")[1]
+            label.configure(text=f"{exercise_name} ({category})")
+            print(category, pb)
+            pb_label.configure(text=f"PB: {pb}")
             print(data)
             for index, score in enumerate(data[3:]):
                 score_label = ctk.CTkLabel(scorebox, text=f"{index + 1}. {score}", font=(self.font_type, self.font_size))
                 score_label.grid(column=col%4, row=row, padx=(50, 0), pady=15, sticky=ctk.NW)
-                label.configure(text=f"{exercise_name} ({data[1].split(":")[1]})")
                 col += 1
                 if col%4 == 0:
                     row += 1
