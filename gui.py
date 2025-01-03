@@ -556,14 +556,17 @@ class App(ctk.CTk):
     
     def bmi_calculator(self):
         self.clear_main_panel()
+        self.under_construction()
         raise NotImplementedError("BMI calculator page")
     
     def measurements(self):
         self.clear_main_panel()
+        self.under_construction()
         raise NotImplementedError("Measurements page")
     
     def notes(self):
         self.clear_main_panel()
+        self.under_construction()
         raise NotImplementedError("Notes page")
     
     def placeholder(self):
@@ -572,4 +575,9 @@ class App(ctk.CTk):
 
     def settings(self):
         self.clear_main_panel()
+        self.under_construction()
         raise NotImplementedError("Settings page")
+
+    def under_construction(self):
+        lbl = ctk.CTkLabel(self.main_panel, text="Under Construction...", font=(self.font_type, self.header_size, "bold"))
+        lbl.pack(anchor=ctk.CENTER, pady=50)
