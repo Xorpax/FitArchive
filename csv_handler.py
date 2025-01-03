@@ -44,9 +44,12 @@ class Handler:
         except AssertionError:
             return f"Invalid data types"
         
+        pb = float(dataset[exercise_name].tolist()[0].split("|")[0].split(":")[1])
+        if score > pb:
+            dataset.loc[0, exercise_name] = f"PR:{score}|{units}"
         exercise_col = dataset[exercise_name].dropna()
         entry_index = len(exercise_col)
-        entry = f"{score}|{units}|{date}"
+        entry = f"{score}{units}|{date}"
         dataset.loc[entry_index, exercise_name] = entry
         dataset.to_csv(self.csv_path, index=False)
         self.update_exercises()
