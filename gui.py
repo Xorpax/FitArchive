@@ -467,6 +467,22 @@ class App(ctk.CTk):
         list_scores(exercise_name=exercise_name)
 
     def delete_exercise_data(self, exercise_name: str):
+        def validate_index(index: str):
+            try:
+                index = int(index)
+            except ValueError:
+                delete_scr_label.configure(text="Invalid index", text_color="red")
+            else:
+                if index < 1:
+                    delete_scr_label.configure(text="Invalid index", text_color="red")
+                else:
+                    index += 2
+                    response = self.handler.remove_record(exercise_name, index)
+                    if response:
+                        delete_scr.destroy()
+                        self.show_exercise(exercise_name)
+                    else:
+                        delete_scr_label.configure(text="Invalid index", text_color="red")
         delete_scr = ctk.CTkToplevel(self)
         x = (self.screen_width - 640) // 2
         y = (self.screen_height -360) // 2
@@ -484,10 +500,8 @@ class App(ctk.CTk):
         
         index_entry = ctk.CTkEntry(delete_scr, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=150, height=40)
         index_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(0, 20))
-        submit_btn = ctk.CTkButton(delete_scr, text="Submit", font=(self.font_type, self.header_size))
+        submit_btn = ctk.CTkButton(delete_scr, text="Submit", font=(self.font_type, self.header_size), command=lambda: validate_index(index_entry.get()))
         submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(10, 0))
-
-        raise NotImplementedError("Delete all exercise data (dataframe column)")
     
     def bmi_calculator(self):
         self.clear_main_panel()
