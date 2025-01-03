@@ -389,7 +389,7 @@ class App(ctk.CTk):
             col = 0
             row = 0
             category = data[1].split(":")[1]
-            pb = data[0].split(":")[1]
+            pb = data[0].split(":")[1].replace("|", "")
             label.configure(text=f"{exercise_name} ({category})")
             print(category, pb)
             pb_label.configure(text=f"PB: {pb}")
@@ -456,7 +456,7 @@ class App(ctk.CTk):
         add_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Add score",
                                       font=(self.font_type, self.header_size),
-                                      command=...,
+                                      command=lambda: self.add_exercise_data(exercise_name),
                                       fg_color="#50FFD6")
         add_score_btn.grid(column=2, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
         edit_score_btn = ctk.CTkButton(self.main_panel,
@@ -495,7 +495,7 @@ class App(ctk.CTk):
         delete_scr = ctk.CTkToplevel(self)
         x = (self.screen_width - 640) // 2
         y = (self.screen_height -360) // 2
-        delete_scr.title("Remove record")
+        delete_scr.title("Remove score")
         delete_scr.geometry(f"500x280+{x}+{y}")
         delete_scr.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
@@ -510,6 +510,48 @@ class App(ctk.CTk):
         index_entry = ctk.CTkEntry(delete_scr, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=150, height=40)
         index_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(0, 20))
         submit_btn = ctk.CTkButton(delete_scr, text="Submit", font=(self.font_type, self.header_size), command=lambda: validate_index(index_entry.get()))
+        submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(10, 0))
+
+    def add_exercise_data(self, exercise_name: str):
+        def validate_score(score: str, date: str):
+            try:
+                score = float(score)
+            except ValueError:
+                add_scr_label.configure(text="Invalid score", text_color="red")
+                return
+            if score < 0:
+                add_scr_label.configure(text="Your score cannot be negative", text_color="red")
+                return
+            if date == "":
+                add_scr_label.configure(text="No date entered", text_color="red")
+                return
+            unit = self.handler.get_dataset()[exercise_name].tolist()[0].split("|")[1]
+            print(self.handler.add_exercise_data(exercise_name, score, date, unit))
+            add_scr.destroy()
+            self.show_exercise(exercise_name)
+
+        add_scr = ctk.CTkToplevel(self)
+        x = (self.screen_width - 640) // 2
+        y = (self.screen_height -360) // 2
+        add_scr.title("Add score")
+        add_scr.geometry(f"500x350+{x}+{y}")
+        add_scr.resizable(False, False)
+        # use after due to customtkinter's implementation where some data is set after 200ms
+        add_scr.after(300, add_scr.focus)
+        add_scr.after(200, lambda: add_scr.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+
+        add_scr_label = ctk.CTkLabel(add_scr, text="Enter new score:", font=(self.font_type, self.header_size))
+        add_scr_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
+        info_label = ctk.CTkLabel(add_scr, text="Do not include units!", font=(self.font_type, self.font_size), text_color="red")
+        info_label.pack(side=ctk.TOP, anchor=ctk.CENTER)
+        score_entry = ctk.CTkEntry(add_scr, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=150, height=40)
+        score_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=20)
+        date_label = ctk.CTkLabel(add_scr, text="Enter date", font=(self.font_type, self.font_size))
+        date_label.pack(side=ctk.TOP, anchor=ctk.CENTER)
+        date_entry = ctk.CTkEntry(add_scr, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=150, height=40)
+        date_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=20)
+
+        submit_btn = ctk.CTkButton(add_scr, text="Submit", font=(self.font_type, self.header_size), command=lambda: validate_score(score_entry.get(), date_entry.get()))
         submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(10, 0))
     
     def bmi_calculator(self):
