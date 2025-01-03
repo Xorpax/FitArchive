@@ -466,23 +466,24 @@ class App(ctk.CTk):
 
         list_scores(exercise_name=exercise_name)
 
-    def delete_exercise_data(self, exercise_name: str):
+    def delete_exercise_data(self, exercise_name: str) -> None:
         def validate_index(index: str):
             try:
                 index = int(index)
             except ValueError:
                 delete_scr_label.configure(text="Invalid index", text_color="red")
+                return
+            if index < 1:
+                delete_scr_label.configure(text="Invalid index", text_color="red")
+                return
+            index += 2
+            response = self.handler.remove_record(exercise_name, index)
+            if response:
+                delete_scr.destroy()
+                self.show_exercise(exercise_name)
             else:
-                if index < 1:
-                    delete_scr_label.configure(text="Invalid index", text_color="red")
-                else:
-                    index += 2
-                    response = self.handler.remove_record(exercise_name, index)
-                    if response:
-                        delete_scr.destroy()
-                        self.show_exercise(exercise_name)
-                    else:
-                        delete_scr_label.configure(text="Invalid index", text_color="red")
+                delete_scr_label.configure(text="Invalid index", text_color="red")
+
         delete_scr = ctk.CTkToplevel(self)
         x = (self.screen_width - 640) // 2
         y = (self.screen_height -360) // 2
