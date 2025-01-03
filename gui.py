@@ -391,9 +391,7 @@ class App(ctk.CTk):
             category = data[1].split(":")[1]
             pb = data[0].split(":")[1].replace("|", "")
             label.configure(text=f"{exercise_name} ({category})")
-            print(category, pb)
             pb_label.configure(text=f"PB: {pb}")
-            print(data)
             for index, score in enumerate(data[3:]):
                 score_label = ctk.CTkLabel(scorebox, text=f"{index + 1}. {score}", font=(self.font_type, self.font_size))
                 score_label.grid(column=col%4, row=row, padx=(50, 0), pady=15, sticky=ctk.NW)
@@ -415,12 +413,12 @@ class App(ctk.CTk):
                                    font=(self.font_type, self.font_size))
                                 #    width=400,
                                 #    height=700)
-        notes_box.grid(column=0, row=2, padx=15, sticky=ctk.NSEW, rowspan=3)
+        notes_box.grid(column=0, row=2, padx=15, sticky=ctk.NSEW, rowspan=2)
         self.main_panel.grid_rowconfigure(2, weight=1)
         save_notes_btn = ctk.CTkButton(self.main_panel,
                                        text="Save",
                                        font=(self.font_type, self.header_size))
-        save_notes_btn.grid(column=0, row=5, sticky=ctk.NW, padx=15, pady=15)
+        save_notes_btn.grid(column=0, row=4, sticky=ctk.NW, padx=15, pady=15)
         remove_exercise_btn = ctk.CTkButton(self.main_panel,
                                             text="Delete exercise",
                                             font=(self.font_type, self.header_size),
