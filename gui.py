@@ -441,19 +441,27 @@ class App(ctk.CTk):
 
         visualise_btn = ctk.CTkButton(self.main_panel,
                                       text="Visualise",
-                                      font=(self.font_type, self.header_size))
+                                      font=(self.font_type, self.header_size),
+                                      command=...,
+                                      fg_color="#3F8CFF")
         visualise_btn.grid(column=1, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
         add_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Add score",
-                                      font=(self.font_type, self.header_size))
+                                      font=(self.font_type, self.header_size),
+                                      command=...,
+                                      fg_color="#50FFD6")
         add_score_btn.grid(column=2, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
         edit_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Edit score",
-                                      font=(self.font_type, self.header_size))
+                                      font=(self.font_type, self.header_size),
+                                      command=...,
+                                      fg_color="#FF9350")
         edit_score_btn.grid(column=3, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
         remove_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Remove score",
-                                      font=(self.font_type, self.header_size))
+                                      font=(self.font_type, self.header_size),
+                                      command=...,
+                                      fg_color="#FF5050")
         remove_score_btn.grid(column=4, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
 
         list_scores(exercise_name=exercise_name)
