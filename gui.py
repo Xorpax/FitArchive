@@ -460,13 +460,33 @@ class App(ctk.CTk):
         remove_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Remove score",
                                       font=(self.font_type, self.header_size),
-                                      command=...,
+                                      command=lambda: self.delete_exercise_data(exercise_name),
                                       fg_color="#FF5050")
         remove_score_btn.grid(column=4, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
 
         list_scores(exercise_name=exercise_name)
 
-    def delete_exercise_data(self):
+    def delete_exercise_data(self, exercise_name: str):
+        delete_scr = ctk.CTkToplevel(self)
+        x = (self.screen_width - 640) // 2
+        y = (self.screen_height -360) // 2
+        delete_scr.title("Remove record")
+        delete_scr.geometry(f"500x280+{x}+{y}")
+        delete_scr.resizable(False, False)
+        # use after due to customtkinter's implementation where some data is set after 200ms
+        delete_scr.after(300, delete_scr.focus)
+        delete_scr.after(200, lambda: delete_scr.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+
+        delete_scr_label = ctk.CTkLabel(delete_scr, text="Enter the index to be removed:", font=(self.font_type, self.header_size))
+        delete_scr_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
+        sure_label = ctk.CTkLabel(delete_scr, text="This action is irreversible", font=(self.font_type, self.font_size), text_color="red")
+        sure_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(0, 20))
+        
+        index_entry = ctk.CTkEntry(delete_scr, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=150, height=40)
+        index_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(0, 20))
+        submit_btn = ctk.CTkButton(delete_scr, text="Submit", font=(self.font_type, self.header_size))
+        submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(10, 0))
+
         raise NotImplementedError("Delete all exercise data (dataframe column)")
     
     def bmi_calculator(self):
