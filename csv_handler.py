@@ -26,9 +26,9 @@ class Handler:
         if exercise_name in self.exercises:
             return f"Entry for {exercise_name} already exists!"
         if self.is_csv_empty():
-            dataset = pd.DataFrame({exercise_name: ["PR:", f"Category:{category}", "Note:"]})
+            dataset = pd.DataFrame({exercise_name: ["PR:0", f"Category:{category}", "Note:"]})
         else:
-            dataset[exercise_name] = pd.Series(["PR:", f"Category:{category}", "Note:"])
+            dataset[exercise_name] = pd.Series(["PR:0", f"Category:{category}", "Note:"])
         dataset.to_csv(self.csv_path, index=False)
         self.update_exercises()
         return f"Entry for {exercise_name} has been successfully created."
