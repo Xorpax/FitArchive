@@ -383,7 +383,7 @@ class App(ctk.CTk):
                                    command=lambda: submit_exercise(name_entry.get(), category_entry.get(), units_entry.get()))
         submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
 
-    def show_exercise(self, exercise_name: str):
+    def show_exercise(self, exercise_name: str) -> None:
         self.clear_main_panel()
         def list_scores(exercise_name: str):
             data = self.handler.get_dataset()[exercise_name].dropna().tolist()
@@ -512,7 +512,7 @@ class App(ctk.CTk):
         submit_btn = ctk.CTkButton(delete_scr, text="Submit", font=(self.font_type, self.header_size), command=lambda: validate_index(index_entry.get()))
         submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(10, 0))
 
-    def add_exercise_data(self, exercise_name: str):
+    def add_exercise_data(self, exercise_name: str) -> None:
         def validate_score(score: str, day: str, month: str, year: str):
             try:
                 score = float(score)
@@ -571,30 +571,30 @@ class App(ctk.CTk):
                                    command=lambda: validate_score(score_entry.get(), day_entry.get(), month_entry.get(), year_entry.get()))
         submit_btn.grid(column=1, row=5, sticky=ctk.N, pady=(40, 0))
     
-    def bmi_calculator(self):
+    def bmi_calculator(self) -> None:
         self.clear_main_panel()
         self.under_construction()
         raise NotImplementedError("BMI calculator page")
     
-    def measurements(self):
+    def measurements(self) -> None:
         self.clear_main_panel()
         self.under_construction()
         raise NotImplementedError("Measurements page")
     
-    def notes(self):
+    def notes(self) -> None:
         self.clear_main_panel()
         self.under_construction()
         raise NotImplementedError("Notes page")
     
-    def placeholder(self):
+    def placeholder(self) -> None:
         self.clear_main_panel()
         self.clear_main_panel()
 
-    def settings(self):
+    def settings(self) -> None:
         self.clear_main_panel()
         self.under_construction()
         raise NotImplementedError("Settings page")
 
-    def under_construction(self):
+    def under_construction(self) -> None:
         lbl = ctk.CTkLabel(self.main_panel, text="Under Construction...", font=(self.font_type, self.header_size, "bold"))
         lbl.pack(anchor=ctk.CENTER, pady=50)
