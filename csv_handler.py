@@ -26,9 +26,9 @@ class Handler:
         if exercise_name in self.exercises:
             return f"Entry for {exercise_name} already exists!"
         if self.is_csv_empty():
-            dataset = pd.DataFrame({exercise_name: [f"PR:0{units}", f"Category:{category}", "Note:"]})
+            dataset = pd.DataFrame({exercise_name: [f"PR:0|{units}", f"Category:{category}", "Note:"]})
         else:
-            dataset[exercise_name] = pd.Series([f"PR:0{units}", f"Category:{category}", "Note:"])
+            dataset[exercise_name] = pd.Series([f"PR:0|{units}", f"Category:{category}", "Note:"])
         dataset.to_csv(self.csv_path, index=False)
         self.update_exercises()
         return f"Entry for {exercise_name} has been successfully created."
@@ -46,7 +46,7 @@ class Handler:
         
         exercise_col = dataset[exercise_name].dropna()
         entry_index = len(exercise_col)
-        entry = f"{score}{units}|{date}"
+        entry = f"{score}|{units}|{date}"
         dataset.loc[entry_index, exercise_name] = entry
         dataset.to_csv(self.csv_path, index=False)
         self.update_exercises()
