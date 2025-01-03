@@ -412,19 +412,20 @@ class App(ctk.CTk):
                                    font=(self.font_type, self.header_size))
         notes_label.grid(column=0, row=1, padx=15, pady=15, sticky=ctk.NW)
         notes_box = ctk.CTkTextbox(self.main_panel,
-                                   font=(self.font_type, self.font_size),
-                                   width=400,
-                                   height=700)
-        notes_box.grid(column=0, row=2, padx=15)
+                                   font=(self.font_type, self.font_size))
+                                #    width=400,
+                                #    height=700)
+        notes_box.grid(column=0, row=2, padx=15, sticky=ctk.NSEW, rowspan=3)
+        self.main_panel.grid_rowconfigure(2, weight=1)
         save_notes_btn = ctk.CTkButton(self.main_panel,
                                        text="Save",
                                        font=(self.font_type, self.header_size))
-        save_notes_btn.grid(column=0, row=3, sticky=ctk.NW, padx=15, pady=15)
+        save_notes_btn.grid(column=0, row=5, sticky=ctk.NW, padx=15, pady=15)
         remove_exercise_btn = ctk.CTkButton(self.main_panel,
                                             text="Delete exercise",
                                             font=(self.font_type, self.header_size),
                                             fg_color="red")
-        remove_exercise_btn.grid(column=0, row=4, padx=15, pady=15, sticky=ctk.SW)
+        remove_exercise_btn.grid(column=0, row=6, padx=15, pady=15, sticky=ctk.SW)
 
         # right side
         sort_label = ctk.CTkLabel(self.main_panel,
@@ -443,7 +444,7 @@ class App(ctk.CTk):
         scorebox = ctk.CTkScrollableFrame(self.main_panel,
                                 border_color="orange",
                                 border_width=1)
-        scorebox.grid(column=1, row=2, padx=30, columnspan=5, sticky=ctk.NSEW)
+        scorebox.grid(column=1, row=2, padx=30, columnspan=5, sticky=ctk.NSEW, rowspan=3)
         self.main_panel.grid_columnconfigure(1, weight=1)
         self.main_panel.rowconfigure(4, weight=1)
 
@@ -452,25 +453,25 @@ class App(ctk.CTk):
                                       font=(self.font_type, self.header_size),
                                       command=...,
                                       fg_color="#3F8CFF")
-        visualise_btn.grid(column=1, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
+        visualise_btn.grid(column=1, row=5, padx=(0, 30), pady=15, sticky=ctk.NE)
         add_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Add score",
                                       font=(self.font_type, self.header_size),
                                       command=lambda: self.add_exercise_data(exercise_name),
                                       fg_color="#50FFD6")
-        add_score_btn.grid(column=2, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
+        add_score_btn.grid(column=2, row=5, padx=(0, 30), pady=15, sticky=ctk.NE)
         edit_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Edit score",
                                       font=(self.font_type, self.header_size),
                                       command=...,
                                       fg_color="#FF9350")
-        edit_score_btn.grid(column=3, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
+        edit_score_btn.grid(column=3, row=5, padx=(0, 30), pady=15, sticky=ctk.NE)
         remove_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Remove score",
                                       font=(self.font_type, self.header_size),
                                       command=lambda: self.delete_exercise_data(exercise_name),
                                       fg_color="#FF5050")
-        remove_score_btn.grid(column=4, row=3, padx=(0, 30), pady=15, sticky=ctk.NE)
+        remove_score_btn.grid(column=4, row=5, padx=(0, 30), pady=15, sticky=ctk.NE)
 
         list_scores(exercise_name=exercise_name)
 
