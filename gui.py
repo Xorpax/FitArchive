@@ -342,13 +342,13 @@ class App(ctk.CTk):
                 row += 1
 
     def add_exercise_window(self) -> None:
-        def submit_exercise(name: str, category: str) -> None:
+        def submit_exercise(name: str, category: str, units: str) -> None:
             name = name.capitalize()
             exercises_list = self.handler.exercises
             if name in exercises_list:
                 name_label.configure(text=f"An entry for {name} already exists.", text_color="red")
             else:
-                print(self.handler.add_exercise(name, category))
+                print(self.handler.add_exercise(name, category, units))
                 new_exercise.destroy()
                 self.exercises()
         
@@ -356,7 +356,7 @@ class App(ctk.CTk):
         y = (self.screen_height -360) // 2
         new_exercise = ctk.CTkToplevel(self)
         new_exercise.title("New exercise")
-        new_exercise.geometry(f"640x300+{x}+{y}")
+        new_exercise.geometry(f"640x480+{x}+{y}")
         new_exercise.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         new_exercise.after(300, new_exercise.focus)
@@ -369,13 +369,17 @@ class App(ctk.CTk):
         category_label.pack(side=ctk.TOP, anchor=ctk.CENTER)
         category_entry = ctk.CTkEntry(new_exercise, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=40)
         category_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 0))
+        units_label = ctk.CTkLabel(new_exercise, text="Enter the units", font=(self.font_type, self.header_size))
+        units_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20,0))
+        units_entry = ctk.CTkEntry(new_exercise, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=40)
+        units_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 0))
 
         submit_btn = ctk.CTkButton(new_exercise,
                                    text="Submit",
                                    width=100,
                                    height=50,
                                    font=(self.font_type, self.font_size),
-                                   command=lambda: submit_exercise(name_entry.get(), category_entry.get()))
+                                   command=lambda: submit_exercise(name_entry.get(), category_entry.get(), units_entry.get()))
         submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
 
     def show_exercise(self, exercise_name: str):
