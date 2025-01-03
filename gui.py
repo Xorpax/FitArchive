@@ -430,7 +430,7 @@ class App(ctk.CTk):
                                height=35)
         sort.grid(column=1, row=1, padx=30, sticky=ctk.NW)
         pb_label = ctk.CTkLabel(self.main_panel, text="PB: ", font=(self.font_type, self.header_size))
-        pb_label.grid(column=3, row=0, padx=30, pady=15, sticky=ctk.NW)
+        pb_label.grid(column=4, row=0, padx=30, pady=15, sticky=ctk.NW)
 
         scorebox = ctk.CTkScrollableFrame(self.main_panel,
                                 border_color="orange",
