@@ -577,7 +577,7 @@ class App(ctk.CTk):
 
     def save_exercise_note(self, exercise_name: str, note: str) -> None:
         note = note.rstrip()[:512]
-        print(self.handler.save_note(exercise_name, note))
+        self.handler.save_note(exercise_name, note)
         self.show_exercise(exercise_name)
 
     def delete_exercise(self, exercise_name: str) -> None:
