@@ -392,7 +392,7 @@ class App(ctk.CTk):
             df = data[0]
             col = 0
             row_num = 0
-            pb = special_rows[0][1]
+            pb = special_rows[0][1].replace("|", "")
             category = special_rows[1][1]
             note = special_rows[2][1]
             label.configure(text=f"{exercise_name} ({category})")
@@ -529,6 +529,9 @@ class App(ctk.CTk):
                 return
 
             date = date.strftime("%d.%m.%Y")
+            if self.handler.is_date_duplicate(exercise_name, date):
+                add_scr_label.configure(text=f"No duplicate dates!", text_color="red")
+                return
             unit = self.handler.get_dataset()[exercise_name].tolist()[0].split("|")[1]
             print(self.handler.add_exercise_data(exercise_name, score, date, unit))
             add_scr.destroy()
