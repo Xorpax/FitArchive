@@ -385,23 +385,27 @@ class App(ctk.CTk):
 
     def show_exercise(self, exercise_name: str) -> None:
         self.clear_main_panel()
-        def list_scores(exercise_name: str):
-            data = self.handler.get_dataset()[exercise_name].dropna().tolist()
+        def list_scores(sort_type: str="Index ascending"):
+            print(f"{sort_type=}")
+            data = self.handler.sort_records(exercise_name, sort_type=sort_type)
+            special_rows = data[1]
+            df = data[0]
             col = 0
-            row = 0
-            pb = data[0].split(":")[1].replace("|", "")
-            category = data[1].split(":")[1]
-            note = data[2].split(":")[1]
+            row_num = 0
+            pb = special_rows[0][1]
+            category = special_rows[1][1]
+            note = special_rows[2][1]
             label.configure(text=f"{exercise_name} ({category})")
             notes_box.insert("0.0", text=note)
             pb_label.configure(text=f"PB: {pb}")
-            for index, score in enumerate(data[3:]):
-                score_label = ctk.CTkLabel(scorebox, text=f"{index + 1}. {score}", font=(self.font_type, self.font_size))
-                score_label.grid(column=col%4, row=row, padx=(50, 0), pady=15, sticky=ctk.NW)
+
+            for index, row in df.iterrows():
+                score_label = ctk.CTkLabel(scorebox, text=f"{index - 2}. {row[0]}|{row[1]}", font=(self.font_type, self.font_size))
+                score_label.grid(column=col%4, row=row_num, padx=(50, 0), pady=15, sticky=ctk.NW)
                 col += 1
                 if col%4 == 0:
-                    row += 1
-                               
+                    row_num += 1 
+
         exercise_name = exercise_name.capitalize()
         # left side
         label = ctk.CTkLabel(self.main_panel,
@@ -432,14 +436,18 @@ class App(ctk.CTk):
 
         # right side
         sort_label = ctk.CTkLabel(self.main_panel,
-                                  text="Sort records by date:",
+                                  text="Sort records:",
                                   font=(self.font_type, self.header_size))
         sort_label.grid(column=1, row=0, padx=30, pady=15, sticky=ctk.NW)
+        sort_var = ctk.StringVar(value="Index ascending")
         sort = ctk.CTkComboBox(self.main_panel,
-                               values=["Ascending", "Descending"],
+                               values=["Index ascending", "Index descending", "Score ascending", "Score descending", "Date ascending", "Date descending"],
                                font=(self.font_type, self.font_size),
-                               width=180,
-                               height=35)
+                               width=250,
+                               height=35,
+                               state="readonly",
+                               variable=sort_var,
+                               command=lambda s: list_scores(sort_type=sort_var.get()))
         sort.grid(column=1, row=1, padx=30, sticky=ctk.NW)
         pb_label = ctk.CTkLabel(self.main_panel, text="PB: ", font=(self.font_type, self.header_size))
         pb_label.grid(column=4, row=0, padx=30, pady=15, sticky=ctk.NW)
@@ -476,7 +484,7 @@ class App(ctk.CTk):
                                       fg_color="#FF5050")
         remove_score_btn.grid(column=4, row=5, padx=(0, 30), pady=15, sticky=ctk.NE)
 
-        list_scores(exercise_name=exercise_name)
+        list_scores()
 
     def delete_exercise_data(self, exercise_name: str) -> None:
         def validate_index(index: str):

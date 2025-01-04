@@ -82,7 +82,38 @@ class Handler:
         dataset.to_csv(self.csv_path, index=False)
         print(f"Successfully removed {exercise_name} at {row_index}")
         return True
-    
+
+    def sort_records(self, exercise_name: str, sort_type: str) -> tuple[pd.DataFrame, list[str]]:
+        """Return a list of special rows (PR, Category, Note) and a dataframe of sorted scores"""
+        sort_type = sort_type.capitalize()
+        sort_types = ["Index ascending", "Index descending", "Score ascending", "Score descending", "Date ascending", "Date descending"]
+        if sort_type not in sort_types:
+            return f"No type {sort_type}"
+        
+        dataset = self.get_dataset()[exercise_name].dropna()
+        special_fields = dataset[:3].str.split(":")
+        dataset = dataset[3:]
+        print(special_fields)
+        if "descending" in sort_type:
+            dataset = dataset[::-1]
+        
+        if sort_type == sort_types[0]:
+            dataset = dataset.str.split("|", expand=True).sort_index(ascending=True)
+            return dataset, special_fields
+        if sort_type == sort_types[1]:
+            dataset = dataset.str.split("|", expand=True).sort_index(ascending=False)
+            return dataset, special_fields
+        dataset = dataset.str.split("|", expand=True)
+        if sort_type == sort_types[2]:
+            dataset = dataset.sort_values(by=0)
+        if sort_type == sort_types[3]:
+            dataset = dataset.sort_values(by=0, ascending=False)
+        if sort_type == sort_types[4]:
+            dataset = dataset.sort_values(by=1)
+        if sort_type == sort_types[5]:
+            dataset = dataset.sort_values(by=1, ascending=False)
+        return dataset, special_fields
+
     def is_csv_empty(self) -> bool:
         df = self.get_dataset()
         if isinstance(df, pd.DataFrame):
