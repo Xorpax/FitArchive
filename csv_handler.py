@@ -93,24 +93,22 @@ class Handler:
         dataset = self.get_dataset()[exercise_name].dropna()
         special_fields = dataset[:3].str.split(":")
         dataset = dataset[3:]
-        print(special_fields)
         if "descending" in sort_type:
             dataset = dataset[::-1]
         
-        if sort_type == sort_types[0]:
-            dataset = dataset.str.split("|", expand=True).sort_index(ascending=True)
-            return dataset, special_fields
-        if sort_type == sort_types[1]:
-            dataset = dataset.str.split("|", expand=True).sort_index(ascending=False)
-            return dataset, special_fields
         dataset = dataset.str.split("|", expand=True)
-        if sort_type == sort_types[2]:
+        
+        if sort_type == sort_types[0]:
+            dataset = dataset.sort_index(ascending=True,)
+        elif sort_type == sort_types[1]:
+            dataset = dataset.sort_index(ascending=False)
+        elif sort_type == sort_types[2]:
             dataset = dataset.sort_values(by=0)
-        if sort_type == sort_types[3]:
+        elif sort_type == sort_types[3]:
             dataset = dataset.sort_values(by=0, ascending=False)
-        if sort_type == sort_types[4]:
+        elif sort_type == sort_types[4]:
             dataset = dataset.sort_values(by=1)
-        if sort_type == sort_types[5]:
+        elif sort_type == sort_types[5]:
             dataset = dataset.sort_values(by=1, ascending=False)
         return dataset, special_fields
 
