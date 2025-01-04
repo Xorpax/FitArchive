@@ -89,5 +89,11 @@ class Handler:
             return df.empty
         return True
 
-# open csv file and read it, displaying contents in a gui
-# allow adding scores with dates (writing to the csv)
+    def save_note(self, exercise_name: str, note: str) -> str:
+        exercise_name = exercise_name.capitalize()
+        dataset = self.get_dataset()
+        if exercise_name not in self.exercises:
+            return f"No entry for {exercise_name}"
+        dataset.loc[2, exercise_name] = f"Note:{note}"
+        dataset.to_csv(self.csv_path, index=False)
+        return f"Succesfully saved the note for {exercise_name}"

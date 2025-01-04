@@ -420,7 +420,8 @@ class App(ctk.CTk):
         self.main_panel.grid_rowconfigure(2, weight=1)
         save_notes_btn = ctk.CTkButton(self.main_panel,
                                        text="Save",
-                                       font=(self.font_type, self.header_size))
+                                       font=(self.font_type, self.header_size),
+                                       command=lambda: self.save_exercise_note(notes_box.get("0.0", ctk.END)))
         save_notes_btn.grid(column=0, row=4, sticky=ctk.NW, padx=15, pady=15)
         remove_exercise_btn = ctk.CTkButton(self.main_panel,
                                             text="Delete exercise",
@@ -573,6 +574,10 @@ class App(ctk.CTk):
                                    font=(self.font_type, self.header_size),
                                    command=lambda: validate_score(score_entry.get(), day_entry.get(), month_entry.get(), year_entry.get()))
         submit_btn.grid(column=1, row=5, sticky=ctk.N, pady=(40, 0))
+
+    def save_exercise_note(self, exercise_name: str, note: str) -> None:
+        print(self.handler.save_note(exercise_name, note[:512]))
+        self.show_exercise(exercise_name)
 
     def delete_exercise(self, exercise_name: str) -> None:
         def submit(choice: int):
