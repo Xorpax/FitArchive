@@ -389,9 +389,11 @@ class App(ctk.CTk):
             data = self.handler.get_dataset()[exercise_name].dropna().tolist()
             col = 0
             row = 0
-            category = data[1].split(":")[1]
             pb = data[0].split(":")[1].replace("|", "")
+            category = data[1].split(":")[1]
+            note = data[2].split(":")[1]
             label.configure(text=f"{exercise_name} ({category})")
+            notes_box.insert("0.0", text=note)
             pb_label.configure(text=f"PB: {pb}")
             for index, score in enumerate(data[3:]):
                 score_label = ctk.CTkLabel(scorebox, text=f"{index + 1}. {score}", font=(self.font_type, self.font_size))
