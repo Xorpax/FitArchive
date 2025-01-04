@@ -412,7 +412,7 @@ class App(ctk.CTk):
         label.grid(column=0, row=0, padx=15, pady=15, sticky=ctk.NW)
         notes_label = ctk.CTkLabel(self.main_panel, text="Notes", font=(self.font_type, self.header_size))
         notes_label.grid(column=0, row=1, padx=15, pady=15, sticky=ctk.NW)
-        notes_box = ctk.CTkTextbox(self.main_panel, font=(self.font_type, self.font_size))
+        notes_box = ctk.CTkTextbox(self.main_panel, font=(self.font_type, self.font_size), wrap="word")
         notes_box.grid(column=0, row=2, padx=15, sticky=ctk.NSEW, rowspan=2)
         self.main_panel.grid_rowconfigure(2, weight=1)
         save_notes_btn = ctk.CTkButton(self.main_panel,
