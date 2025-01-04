@@ -408,18 +408,11 @@ class App(ctk.CTk):
 
         exercise_name = exercise_name.capitalize()
         # left side
-        label = ctk.CTkLabel(self.main_panel,
-                             text=exercise_name,
-                             font=(self.font_type, self.header_size))
+        label = ctk.CTkLabel(self.main_panel, text=exercise_name, font=(self.font_type, self.header_size))
         label.grid(column=0, row=0, padx=15, pady=15, sticky=ctk.NW)
-        notes_label = ctk.CTkLabel(self.main_panel,
-                                   text="Notes",
-                                   font=(self.font_type, self.header_size))
+        notes_label = ctk.CTkLabel(self.main_panel, text="Notes", font=(self.font_type, self.header_size))
         notes_label.grid(column=0, row=1, padx=15, pady=15, sticky=ctk.NW)
-        notes_box = ctk.CTkTextbox(self.main_panel,
-                                   font=(self.font_type, self.font_size))
-                                #    width=400,
-                                #    height=700)
+        notes_box = ctk.CTkTextbox(self.main_panel, font=(self.font_type, self.font_size))
         notes_box.grid(column=0, row=2, padx=15, sticky=ctk.NSEW, rowspan=2)
         self.main_panel.grid_rowconfigure(2, weight=1)
         save_notes_btn = ctk.CTkButton(self.main_panel,
@@ -435,9 +428,7 @@ class App(ctk.CTk):
         remove_exercise_btn.grid(column=0, row=6, padx=15, pady=15, sticky=ctk.SW)
 
         # right side
-        sort_label = ctk.CTkLabel(self.main_panel,
-                                  text="Sort records:",
-                                  font=(self.font_type, self.header_size))
+        sort_label = ctk.CTkLabel(self.main_panel, text="Sort records:", font=(self.font_type, self.header_size))
         sort_label.grid(column=1, row=0, padx=30, pady=15, sticky=ctk.NW)
         sort_var = ctk.StringVar(value="Index ascending")
         sort = ctk.CTkComboBox(self.main_panel,
@@ -452,9 +443,7 @@ class App(ctk.CTk):
         pb_label = ctk.CTkLabel(self.main_panel, text="PB: ", font=(self.font_type, self.header_size))
         pb_label.grid(column=4, row=0, padx=30, pady=15, sticky=ctk.NW)
 
-        scorebox = ctk.CTkScrollableFrame(self.main_panel,
-                                border_color="orange",
-                                border_width=1)
+        scorebox = ctk.CTkScrollableFrame(self.main_panel, border_color="orange", border_width=1)
         scorebox.grid(column=1, row=2, padx=30, columnspan=5, sticky=ctk.NSEW, rowspan=3)
         self.main_panel.grid_columnconfigure(1, weight=1)
         self.main_panel.rowconfigure(4, weight=1)
