@@ -423,7 +423,8 @@ class App(ctk.CTk):
         remove_exercise_btn = ctk.CTkButton(self.main_panel,
                                             text="Delete exercise",
                                             font=(self.font_type, self.header_size),
-                                            fg_color="red")
+                                            fg_color="red",
+                                            command=lambda: self.delete_exercise(exercise_name))
         remove_exercise_btn.grid(column=0, row=6, padx=15, pady=15, sticky=ctk.SW)
 
         # right side
@@ -570,7 +571,43 @@ class App(ctk.CTk):
                                    font=(self.font_type, self.header_size),
                                    command=lambda: validate_score(score_entry.get(), day_entry.get(), month_entry.get(), year_entry.get()))
         submit_btn.grid(column=1, row=5, sticky=ctk.N, pady=(40, 0))
-    
+
+    def delete_exercise(self, exercise_name: str) -> None:
+        def submit(choice: int):
+            print(choice)
+            if choice:
+                del_exercise_label.configure(text=choice, text_color="green")
+                self.handler.remove_exercise(exercise_name)
+                del_exercise.destroy()
+                self.exercises()
+                return
+            del_exercise_label.configure(text=choice, text_color="red")
+            del_exercise.destroy()
+
+        del_exercise = ctk.CTkToplevel(self)
+        x = (self.screen_width - 640) // 2
+        y = (self.screen_height -360) // 2
+        del_exercise.title(f"Delete {exercise_name}")
+        del_exercise.geometry(f"450x300+{x}+{y}")
+        del_exercise.resizable(False, False)
+        # use after due to customtkinter's implementation where some data is set after 200ms
+        del_exercise.after(300, del_exercise.focus)
+        del_exercise.after(200, lambda: del_exercise.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+
+        del_exercise_label = ctk.CTkLabel(del_exercise, text="Are you sure?", font=(self.font_type, self.header_size))
+        del_exercise_label.pack(side=ctk.TOP, pady=(10, 0))
+        info_label = ctk.CTkLabel(del_exercise, text="This action is irreversible", font=(self.font_type, self.font_size), text_color="red")
+        info_label.pack(side=ctk.TOP, pady=(10, 0))
+
+        radio_var = ctk.IntVar(value=0)
+        yes_btn = ctk.CTkRadioButton(del_exercise, text="Yes", font=(self.font_type, self.font_size), variable=radio_var, value=1)
+        yes_btn.pack(side=ctk.TOP, pady=(25, 0))
+        no_btn = ctk.CTkRadioButton(del_exercise, text="No", font=(self.font_type, self.font_size), variable=radio_var, value=0)
+        no_btn.pack(side=ctk.TOP, pady=(15, 0))
+
+        submit_btn = ctk.CTkButton(del_exercise, text="Submit", font=(self.font_type, self.header_size), command=lambda: submit(radio_var.get()))
+        submit_btn.pack(side=ctk.TOP, pady=(45, 10))
+
     def bmi_calculator(self) -> None:
         self.clear_main_panel()
         self.under_construction()
