@@ -517,7 +517,7 @@ class App(ctk.CTk):
 
         add_scr = ctk.CTkToplevel(self)
         x = (self.screen_width - 640) // 2
-        y = (self.screen_height -360) // 2
+        y = (self.screen_height - 360) // 2
         add_scr.title("Add score")
         add_scr.geometry(f"500x400+{x}+{y}")
         add_scr.resizable(False, False)
