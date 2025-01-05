@@ -235,8 +235,12 @@ class App(ctk.CTk):
         buttons_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=10, pady=10)
         buttons_frame.rowconfigure(0, weight=1)
         buttons_frame.columnconfigure(list(range(5)), weight=1)
+
+        exercises_img = ctk.CTkImage(Image.open(r".\assets\exercise.jpg"), size=(1000, 1000))
         exercises_btn = ctk.CTkButton(buttons_frame,
-                                        text="Exercises",
+                                        # text="Exercises",
+                                        text="",
+                                        image=exercises_img,
                                         font=(self.font_type, self.font_size),
                                         anchor=ctk.N,
                                         border_spacing=20,
@@ -301,10 +305,7 @@ class App(ctk.CTk):
                                 fg_color="green",
                                 command=self.add_exercise_window)
         add_btn.pack(anchor=ctk.NE, padx=(0, 10), pady=(20, 15), side=ctk.RIGHT)
-        exercises_frame = ctk.CTkScrollableFrame(self.main_panel,
-                                       corner_radius=0,
-                                       border_color="yellow",
-                                       border_width=1)
+        exercises_frame = ctk.CTkScrollableFrame(self.main_panel, corner_radius=0, border_color="yellow",border_width=1)
         exercises_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=5, pady=(0, 5), side=ctk.TOP)
         exercises_list = self.handler.exercises
 
