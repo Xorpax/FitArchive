@@ -286,14 +286,9 @@ class App(ctk.CTk):
     
     def exercises(self) -> None:
         self.clear_main_panel()
-        top_panel = ctk.CTkFrame(self.main_panel,
-                                 corner_radius=0,
-                                 border_color="orange",
-                                 border_width=1)
+        top_panel = ctk.CTkFrame(self.main_panel, corner_radius=0, border_color="orange", border_width=1)
         top_panel.pack(expand=False, fill=ctk.X, anchor=ctk.NW, padx=5, pady=5)
-        exercises_label = ctk.CTkLabel(top_panel,
-                                       text="Exercises",
-                                       font=(self.font_type, self.header_size))
+        exercises_label = ctk.CTkLabel(top_panel, text="Exercises", font=(self.font_type, self.header_size))
         exercises_label.pack(anchor=ctk.NW, padx=(10, 0), pady=(25, 10), side=ctk.LEFT)
         if self.handler.is_csv_empty():
             exercises_label.configure(text="No exercises have been added yet. Why not add one to get started?", text_color="red")
