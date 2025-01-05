@@ -310,8 +310,7 @@ class App(ctk.CTk):
         for exercise in exercises_list:
             exercise_btn = ctk.CTkButton(exercises_frame,
                                         text=exercise,
-                                        width=300,
-                                        height=200,
+                                        width=250,
                                         font=(self.font_type, self.font_size),
                                         anchor=ctk.N,
                                         border_spacing=12,
