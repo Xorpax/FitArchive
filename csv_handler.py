@@ -120,7 +120,7 @@ class Handler:
 
     def is_date_duplicate(self, exercise_name: str, date: str):
         exercise_name = exercise_name.capitalize()
-        dataset = self.get_dataset()[exercise_name][3:].str.split("|", expand=True)[1]
+        dataset = self.get_dataset()[exercise_name][3:].str.split("|", expand=True)
         return date in dataset.values
 
     def save_note(self, exercise_name: str, note: str) -> str:
