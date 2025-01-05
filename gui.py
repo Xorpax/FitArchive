@@ -122,19 +122,19 @@ class SidePanel(ctk.CTkFrame):
         self.notes_btn.pack(anchor=ctk.N, fill=ctk.X)
         self.buttons.append(self.notes_btn)
 
-        self.placeholder_img = ctk.CTkImage(Image.open(self.collapse_path), size=(25, 25))
-        self.placeholder_btn = ctk.CTkButton(self,
-                                             corner_radius=0,
-                                             text="Placeholder",
-                                             image=self.collapse_img,
-                                             compound=ctk.RIGHT,
-                                             text_color=self.text_color,
-                                             font=(self.font, self.font_size),
-                                             height=self.btn_height,
-                                             anchor=ctk.W,
-                                             textvariable=ctk.StringVar(value="Placeholder"))
-        self.placeholder_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.buttons.append(self.placeholder_btn)
+        # self.placeholder_img = ctk.CTkImage(Image.open(self.collapse_path), size=(25, 25))
+        # self.placeholder_btn = ctk.CTkButton(self,
+        #                                      corner_radius=0,
+        #                                      text="Placeholder",
+        #                                      image=self.collapse_img,
+        #                                      compound=ctk.RIGHT,
+        #                                      text_color=self.text_color,
+        #                                      font=(self.font, self.font_size),
+        #                                      height=self.btn_height,
+        #                                      anchor=ctk.W,
+        #                                      textvariable=ctk.StringVar(value="Placeholder"))
+        # self.placeholder_btn.pack(anchor=ctk.N, fill=ctk.X)
+        # self.buttons.append(self.placeholder_btn)
 
         self.settings_img = ctk.CTkImage(Image.open(self.settings_path), size=(25, 25))
         self.settings_btn = ctk.CTkButton(self,
@@ -214,11 +214,6 @@ class App(ctk.CTk):
         # file operations
         self.csv_path = csv_path
         self.handler = Handler(self.csv_path)
-
-        # self.handler.add_exercise("hammer curls", "bicep")
-        # print(self.handler.get_dataset())
-        # for x in range(1, 80):
-        #     self.handler.add_exercise_data("hammer curls", score=x, date=f"{x%30}.{x%12}.2024", units="kg")
         
 
     def show_landing_page(self) -> None:
