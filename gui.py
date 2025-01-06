@@ -290,8 +290,6 @@ class App(ctk.CTk):
         top_panel.pack(expand=False, fill=ctk.X, anchor=ctk.NW, padx=5, pady=5)
         exercises_label = ctk.CTkLabel(top_panel, text="Exercises", font=(self.font_type, self.header_size))
         exercises_label.pack(anchor=ctk.NW, padx=(10, 0), pady=(25, 10), side=ctk.LEFT)
-        if self.handler.is_csv_empty():
-            exercises_label.configure(text="No exercises have been added yet. Why not add one to get started?", text_color="red")
         add_btn = ctk.CTkButton(top_panel,
                                 text="+ Add Exercise",
                                 width=45,
@@ -304,7 +302,10 @@ class App(ctk.CTk):
         exercises_frame = ctk.CTkScrollableFrame(self.main_panel, corner_radius=0, border_color="yellow", border_width=1)
         exercises_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=5, pady=(0, 5), side=ctk.TOP)
         exercises_list = self.handler.exercises
-
+        no_exercises = self.handler.is_csv_empty()
+        if no_exercises:
+            exercises_label.configure(text="No exercises added yet. Why not start by adding one?", text_color="red")
+            return
         col = 0
         row = 0
         for exercise in exercises_list:
@@ -319,6 +320,7 @@ class App(ctk.CTk):
             col += 1
             if col % 5 == 0:
                 row += 1
+        
         exercises_frame.columnconfigure(list(range(col)), weight=1)
         exercises_frame.rowconfigure(list(range(row)), weight=1)
 
