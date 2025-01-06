@@ -688,9 +688,7 @@ class App(ctk.CTk):
         calculate_btn.grid(row=2, column=1, padx=10, pady=10, sticky=ctk.W)
         result_lbl = ctk.CTkLabel(calc_frame, text="Result:", font=(self.font_type, self.font_size))
         result_lbl.grid(row=3, column=0, padx=15, pady=50, sticky=ctk.W, columnspan=2)
-        
 
-    
     def measurements(self) -> None:
         self.clear_main_panel()
         self.under_construction()
@@ -714,4 +712,4 @@ class App(ctk.CTk):
         lbl = ctk.CTkLabel(self.main_panel, text="Under Construction...", font=(self.font_type, self.header_size, "bold"))
         # lbl.pack(anchor=ctk.CENTER, pady=50)
         self.main_panel.columnconfigure(0, weight=1)
-        lbl.grid(sticky=ctk.E)
+        lbl.grid(pady=20)
