@@ -4,6 +4,8 @@ import configparser
 from csv_handler import Handler
 import pandas as pd
 from datetime import datetime
+import os
+import string
 
 CONFIG = configparser.ConfigParser()
 CONFIG.read(r".\config.ini")
@@ -321,6 +323,10 @@ class App(ctk.CTk):
             if col % 5 == 0:
                 row += 1
         
+        if col == 0:
+            col = 1
+        if row == 0:
+            row = 1
         exercises_frame.columnconfigure(list(range(col)), weight=1)
         exercises_frame.rowconfigure(list(range(row)), weight=1)
 
@@ -698,8 +704,103 @@ class App(ctk.CTk):
     
     def notes(self) -> None:
         self.clear_main_panel()
+
+        top_panel = ctk.CTkFrame(self.main_panel, corner_radius=0, border_color="orange", border_width=1)
+        top_panel.pack(expand=False, fill=ctk.X, anchor=ctk.NW, padx=5, pady=5)
+        notes_label = ctk.CTkLabel(top_panel, text="Notes", font=(self.font_type, self.header_size))
+        notes_label.pack(anchor=ctk.NW, padx=(10, 0), pady=(25, 10), side=ctk.LEFT)
+        add_btn = ctk.CTkButton(top_panel,
+                                text="+ Add Note",
+                                width=45,
+                                height=45,
+                                font=(self.font_type, self.font_size, "bold"),
+                                border_spacing=5,
+                                fg_color="green",
+                                command=self.add_note)
+        add_btn.pack(anchor=ctk.NE, padx=(0, 10), pady=(20, 15), side=ctk.RIGHT)
+        notes_frame = ctk.CTkScrollableFrame(self.main_panel, corner_radius=0, border_color="yellow", border_width=1)
+        notes_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=5, pady=(0, 5), side=ctk.TOP)
+
+        notes_list = os.listdir(r".\notes")
+        no_notes = len(notes_list) == 0
+        if no_notes:
+            notes_label.configure(text="No notes added yet. Why not start by adding one?", text_color="red")
+            return
+        
+        col = 0
+        row = 0
+        for note in notes_list:
+            note_name = note.split(".")[0]
+            note_btn = ctk.CTkButton(notes_frame,
+                                        text=note_name,
+                                        width=250,
+                                        font=(self.font_type, self.font_size),
+                                        anchor=ctk.N,
+                                        border_spacing=12,
+                                        command=lambda n=note_name: self.show_note(n))
+            note_btn.grid(column=col%5, row=row, sticky=ctk.NSEW, padx=19, pady=10)
+            col += 1
+            if col % 5 == 0:
+                row += 1
+        
+        if col == 0:
+            col = 1
+        if row == 0:
+            row = 1
+        notes_frame.columnconfigure(list(range(col)), weight=1)
+        notes_frame.rowconfigure(list(range(row)), weight=1)
+
+    def add_note(self) -> None:
+        def submit_note(note_name: str) -> None:
+            print("current directory: adding a new note")
+            print(os.getcwd())
+            illegal_chars: str = string.punctuation
+            note_name = note_name.lower()
+            is_name_legal = not(any((char in illegal_chars for char in note_name)))
+            notes = os.listdir(r".\notes")
+            name_exists = f"{note_name}.txt" in notes
+            
+            if name_exists:
+                name_label.configure(text=f"An entry for {note_name} already exists.", text_color="red")
+                return
+            if not is_name_legal:
+                name_label.configure(text=f"Name contains illegal characters", text_color="red")
+                return
+            
+            with open(fr".\notes\{note_name}.txt", "x") as new_note_file:
+                print(os.listdir(fr".\notes"))
+                print(f"{new_note_file.name} created")
+            new_note.destroy()
+            self.notes()
+        print(os.getcwd())
+        x = (self.screen_width - 640) // 2
+        y = (self.screen_height -360) // 2
+
+        new_note = ctk.CTkToplevel(self)
+        new_note.title("Add note")
+        new_note.geometry(f"600x400+{x}+{y}")
+        new_note.resizable(False, False)
+
+        # use after due to customtkinter's implementation where some data is set after 200ms
+        new_note.after(300, new_note.focus)
+        new_note.after(200, lambda: new_note.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+
+        name_label = ctk.CTkLabel(new_note, text="Enter your note name", font=(self.font_type, self.header_size))
+        name_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 20))
+        name_entry = ctk.CTkEntry(new_note, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=40)
+        name_entry.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(0, 20))
+
+        submit_btn = ctk.CTkButton(new_note,
+                                   text="Submit",
+                                   width=100,
+                                   height=50,
+                                   font=(self.font_type, self.font_size),
+                                   command=lambda: submit_note(name_entry.get()))
+        submit_btn.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
+
+    def show_note(self, note_name: str) -> None:
+        self.clear_main_panel()
         self.under_construction()
-        raise NotImplementedError("Notes page")
     
     def placeholder(self) -> None:
         self.clear_main_panel()
@@ -712,6 +813,5 @@ class App(ctk.CTk):
 
     def under_construction(self) -> None:
         lbl = ctk.CTkLabel(self.main_panel, text="Under Construction...", font=(self.font_type, self.header_size, "bold"))
-        # lbl.pack(anchor=ctk.CENTER, pady=50)
         self.main_panel.columnconfigure(0, weight=1)
-        lbl.grid(pady=20)
+        lbl.grid(pady=20, sticky=ctk.N)
