@@ -384,11 +384,13 @@ class App(ctk.CTk):
             category = special_rows[1][1]
             note = special_rows[2][1]
             label.configure(text=f"{exercise_name} ({category})")
+            notes_box.delete("0.0", ctk.END)
             notes_box.insert("0.0", text=note)
             pb_label.configure(text=f"PB: {pb}")
 
             for index, row in df.iterrows():
-                score_label = ctk.CTkLabel(scorebox, text=f"{index - 2}. {row[0]}|{row[1]}", font=(self.font_type, self.font_size))
+                date = row[1].date().strftime("%d.%m.%Y")
+                score_label = ctk.CTkLabel(scorebox, text=f"{index - 2}. {row[0]}|{date}", font=(self.font_type, self.font_size))
                 score_label.grid(column=col%4, row=row_num, padx=(50, 0), pady=15, sticky=ctk.NW)
                 col += 1
                 if col%4 == 0:
