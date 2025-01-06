@@ -319,6 +319,8 @@ class App(ctk.CTk):
             col += 1
             if col % 5 == 0:
                 row += 1
+        exercises_frame.columnconfigure(list(range(col)), weight=1)
+        exercises_frame.rowconfigure(list(range(row)), weight=1)
 
     def add_exercise_window(self) -> None:
         def submit_exercise(name: str, category: str, units: str) -> None:
@@ -620,4 +622,6 @@ class App(ctk.CTk):
 
     def under_construction(self) -> None:
         lbl = ctk.CTkLabel(self.main_panel, text="Under Construction...", font=(self.font_type, self.header_size, "bold"))
-        lbl.pack(anchor=ctk.CENTER, pady=50)
+        # lbl.pack(anchor=ctk.CENTER, pady=50)
+        self.main_panel.columnconfigure(0, weight=1)
+        lbl.grid(sticky=ctk.E)
