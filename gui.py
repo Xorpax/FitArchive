@@ -96,19 +96,19 @@ class SidePanel(ctk.CTkFrame):
         self.bmi_calculator_btn.pack(anchor=ctk.N, fill=ctk.X)
         self.buttons.append(self.bmi_calculator_btn)
 
-        self.measurements_img = ctk.CTkImage(Image.open(self.measurements_path), size=(25, 25))
-        self.measurements_btn = ctk.CTkButton(self,
-                                              corner_radius=0,
-                                              text="Measurements",
-                                              image=self.measurements_img,
-                                              compound=ctk.RIGHT,
-                                              text_color=self.text_color,
-                                              font=(self.font, self.font_size),
-                                              height=self.btn_height,
-                                              anchor=ctk.W,
-                                              textvariable=ctk.StringVar(value="Measurements"))
-        self.measurements_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.buttons.append(self.measurements_btn)
+        # self.measurements_img = ctk.CTkImage(Image.open(self.measurements_path), size=(25, 25))
+        # self.measurements_btn = ctk.CTkButton(self,
+        #                                       corner_radius=0,
+        #                                       text="Measurements",
+        #                                       image=self.measurements_img,
+        #                                       compound=ctk.RIGHT,
+        #                                       text_color=self.text_color,
+        #                                       font=(self.font, self.font_size),
+        #                                       height=self.btn_height,
+        #                                       anchor=ctk.W,
+        #                                       textvariable=ctk.StringVar(value="Measurements"))
+        # self.measurements_btn.pack(anchor=ctk.N, fill=ctk.X)
+        # self.buttons.append(self.measurements_btn)
 
         self.notes_img = ctk.CTkImage(Image.open(self.notes_path), size=(25, 25))
         self.notes_btn = ctk.CTkButton(self,
@@ -236,7 +236,7 @@ class App(ctk.CTk):
         buttons_frame = ctk.CTkFrame(features_frame, border_color="cyan", border_width=1)
         buttons_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=10, pady=10)
         buttons_frame.rowconfigure(0, weight=1)
-        buttons_frame.columnconfigure(list(range(5)), weight=1)
+        buttons_frame.columnconfigure(list(range(4)), weight=1)
         exercises_btn = ctk.CTkButton(buttons_frame,
                                         text="Exercises",
                                         font=(self.font_type, self.font_size),
@@ -253,13 +253,13 @@ class App(ctk.CTk):
                                            command=self.bmi_calculator)
         bmi_calculator_btn.grid(row=0, column=1, sticky=ctk.NSEW, padx=15, pady=15)
 
-        measurements_btn = ctk.CTkButton(buttons_frame,
-                                        text="Measurements",
-                                        font=(self.font_type, self.font_size),
-                                        anchor=ctk.N,
-                                        border_spacing=20,
-                                        command=self.measurements)
-        measurements_btn.grid(row=0, column=2, sticky=ctk.NSEW, padx=15, pady=15)
+        # measurements_btn = ctk.CTkButton(buttons_frame,
+        #                                 text="Measurements",
+        #                                 font=(self.font_type, self.font_size),
+        #                                 anchor=ctk.N,
+        #                                 border_spacing=20,
+        #                                 command=self.measurements)
+        # measurements_btn.grid(row=0, column=2, sticky=ctk.NSEW, padx=15, pady=15)
 
         notes_btn = ctk.CTkButton(buttons_frame,
                                     text="Notes",
@@ -267,7 +267,7 @@ class App(ctk.CTk):
                                     anchor=ctk.N,
                                     border_spacing=20,
                                     command=self.notes)
-        notes_btn.grid(row=0, column=3, sticky=ctk.NSEW, padx=15, pady=15)
+        notes_btn.grid(row=0, column=2, sticky=ctk.NSEW, padx=15, pady=15)
 
         settings_btn = ctk.CTkButton(buttons_frame,
                                     text="Settings",
@@ -275,7 +275,7 @@ class App(ctk.CTk):
                                     anchor=ctk.N,
                                     border_spacing=20,
                                     command=self.settings)
-        settings_btn.grid(row=0, column=4, sticky=ctk.NSEW, padx=15, pady=15)
+        settings_btn.grid(row=0, column=3, sticky=ctk.NSEW, padx=15, pady=15)
 
         # experimental
         close_btn = ctk.CTkButton(self.main_panel, text="Clear this panel", font=(self.font_type, self.font_size), command=self.clear_main_panel, text_color="#000000", corner_radius=10)
