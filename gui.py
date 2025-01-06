@@ -567,7 +567,7 @@ class App(ctk.CTk):
         submit_btn.grid(column=1, row=5, sticky=ctk.N, pady=(40, 0))
 
     def save_exercise_note(self, exercise_name: str, note: str) -> None:
-        note = note.rstrip()[:256]
+        note = note.rstrip()[:128]
         self.handler.save_note(exercise_name, note)
         self.show_exercise(exercise_name)
 
