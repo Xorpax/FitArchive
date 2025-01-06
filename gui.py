@@ -380,6 +380,7 @@ class App(ctk.CTk):
             df = data[0]
             col = 0
             row_num = 0
+            unit = special_rows[0][1].split("|")[1]
             pb = special_rows[0][1].replace("|", "")
             category = special_rows[1][1]
             note = special_rows[2][1]
@@ -390,7 +391,7 @@ class App(ctk.CTk):
 
             for index, row in df.iterrows():
                 date = row[1].date().strftime("%d.%m.%Y")
-                score_label = ctk.CTkLabel(scorebox, text=f"{index - 2}. {row[0]}|{date}", font=(self.font_type, self.font_size))
+                score_label = ctk.CTkLabel(scorebox, text=f"{index - 2}. {row[0]}{unit}|{date}", font=(self.font_type, self.font_size))
                 score_label.grid(column=col%4, row=row_num, padx=(50, 0), pady=15, sticky=ctk.NW)
                 col += 1
                 if col%4 == 0:

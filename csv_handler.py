@@ -97,9 +97,10 @@ class Handler:
             dataset = dataset[::-1]
         
         dataset = dataset.str.split("|", expand=True)
-        # fix sorting by date (cast datetype to datetime)
+        unit = special_fields[0][1].split("|")[1]
         dataset[1] = pd.to_datetime(dataset[1], format="%d.%m.%Y")
-        
+        dataset[0] = pd.to_numeric(dataset[0].str.replace(unit, ""), downcast="float")
+
         if sort_type == sort_types[0]:
             dataset = dataset.sort_index(ascending=True,)
         elif sort_type == sort_types[1]:
