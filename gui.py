@@ -755,8 +755,8 @@ class App(ctk.CTk):
             print("current directory: adding a new note")
             print(os.getcwd())
             illegal_chars: str = string.punctuation
-            note_name = note_name.lower()
-            is_name_legal = not(any((char in illegal_chars for char in note_name)))
+            note_name = note_name.lower().rstrip()
+            is_name_legal = not(any((char in illegal_chars for char in note_name)) or note_name == "")
             notes = os.listdir(r".\notes")
             name_exists = f"{note_name}.txt" in notes
             
@@ -778,7 +778,7 @@ class App(ctk.CTk):
 
         new_note = ctk.CTkToplevel(self)
         new_note.title("Add note")
-        new_note.geometry(f"600x400+{x}+{y}")
+        new_note.geometry(f"500x250+{x}+{y}")
         new_note.resizable(False, False)
 
         # use after due to customtkinter's implementation where some data is set after 200ms
@@ -800,8 +800,61 @@ class App(ctk.CTk):
 
     def show_note(self, note_name: str) -> None:
         self.clear_main_panel()
-        self.under_construction()
-    
+        def save_note():
+            content = note_box.get("0.0", ctk.END)
+            with open(fr".\notes\{note_name}.txt", "w") as note_file:
+                note_file.write(content)
+            self.clear_main_panel()
+            self.show_note(note_name)
+
+        self.main_panel.rowconfigure(1, weight=1)
+        self.main_panel.columnconfigure(0, weight=1)
+        label = ctk.CTkLabel(self.main_panel, text=note_name, font=(self.font_type, self.header_size))
+        label.grid(row=0, column=0, pady=15, padx=15, sticky=ctk.W)
+        note_box = ctk.CTkTextbox(self.main_panel, wrap="word", font=(self.font_type, self.font_size))
+        note_box.grid(row=1, column=0, pady=15, padx=15, sticky=ctk.NSEW, columnspan=2)
+        with open(fr".\notes\{note_name}.txt", "r") as note_file:
+            note_box.insert("0.0", note_file.read())
+        delete_note = ctk.CTkButton(self.main_panel, text="Delete note", fg_color="red", font=(self.font_type, self.header_size), command=lambda: self.delete_note(note_name))
+        delete_note.grid(row=2, column=0, pady=15, padx=15, sticky=ctk.W)
+        save_note = ctk.CTkButton(self.main_panel, text="Save", font=(self.font_type, self.header_size), command=save_note)
+        save_note.grid(row=2, column=1, pady=15, padx=15, sticky=ctk.E)
+
+    def delete_note(self, note_name: str):
+        def submit(choice: int):
+            print(choice)
+            if choice:
+                del_note_label.configure(text=choice, text_color="green")
+                os.remove(fr".\notes\{note_name}.txt")
+                del_note.destroy()
+                self.notes()
+                return
+            del_note_label.configure(text=choice, text_color="red")
+            del_note.destroy()
+        del_note = ctk.CTkToplevel(self)
+        x = (self.screen_width - 640) // 2
+        y = (self.screen_height -360) // 2
+        del_note.title(f"Delete {note_name}")
+        del_note.geometry(f"450x300+{x}+{y}")
+        del_note.resizable(False, False)
+        # use after due to customtkinter's implementation where some data is set after 200ms
+        del_note.after(300, del_note.focus)
+        del_note.after(200, lambda: del_note.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+
+        del_note_label = ctk.CTkLabel(del_note, text="Are you sure?", font=(self.font_type, self.header_size))
+        del_note_label.pack(side=ctk.TOP, pady=(10, 0))
+        info_label = ctk.CTkLabel(del_note, text="This action is irreversible", font=(self.font_type, self.font_size), text_color="red")
+        info_label.pack(side=ctk.TOP, pady=(10, 0))
+
+        radio_var = ctk.IntVar(value=0)
+        yes_btn = ctk.CTkRadioButton(del_note, text="Yes", font=(self.font_type, self.font_size), variable=radio_var, value=1)
+        yes_btn.pack(side=ctk.TOP, pady=(25, 0))
+        no_btn = ctk.CTkRadioButton(del_note, text="No", font=(self.font_type, self.font_size), variable=radio_var, value=0)
+        no_btn.pack(side=ctk.TOP, pady=(15, 0))
+
+        submit_btn = ctk.CTkButton(del_note, text="Submit", font=(self.font_type, self.header_size), command=lambda: submit(radio_var.get()))
+        submit_btn.pack(side=ctk.TOP, pady=(45, 10))
+        
     def placeholder(self) -> None:
         self.clear_main_panel()
         self.clear_main_panel()
