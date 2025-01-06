@@ -755,7 +755,7 @@ class App(ctk.CTk):
             print("current directory: adding a new note")
             print(os.getcwd())
             illegal_chars: str = string.punctuation
-            note_name = note_name.lower().rstrip()
+            note_name = note_name.rstrip()
             is_name_legal = not(any((char in illegal_chars for char in note_name)) or note_name == "")
             notes = os.listdir(r".\notes")
             name_exists = f"{note_name}.txt" in notes
