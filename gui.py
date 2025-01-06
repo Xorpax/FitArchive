@@ -391,7 +391,7 @@ class App(ctk.CTk):
 
             for index, row in df.iterrows():
                 date = row[1].date().strftime("%d.%m.%Y")
-                score_label = ctk.CTkLabel(scorebox, text=f"{index - 2}. {row[0]}{unit}|{date}", font=(self.font_type, self.font_size))
+                score_label = ctk.CTkLabel(scorebox, text=f"{index - 2}. {row[0]}{unit} ({date})", font=(self.font_type, self.font_size))
                 score_label.grid(column=col%4, row=row_num, padx=(50, 0), pady=15, sticky=ctk.NW)
                 col += 1
                 if col%4 == 0:
@@ -420,7 +420,7 @@ class App(ctk.CTk):
 
         # right side
         sort_label = ctk.CTkLabel(self.main_panel, text="Sort records:", font=(self.font_type, self.header_size))
-        sort_label.grid(column=1, row=0, padx=30, pady=15, sticky=ctk.NW)
+        sort_label.grid(column=1, row=0, padx=30, pady=15, sticky=ctk.NW, columnspan=2)
         sort_var = ctk.StringVar(value="Index ascending")
         sort = ctk.CTkComboBox(self.main_panel,
                                values=["Index ascending", "Index descending", "Score ascending", "Score descending", "Date ascending", "Date descending"],
@@ -430,7 +430,7 @@ class App(ctk.CTk):
                                state="readonly",
                                variable=sort_var,
                                command=lambda s: list_scores(sort_type=sort_var.get()))
-        sort.grid(column=1, row=1, padx=30, sticky=ctk.NW)
+        sort.grid(column=1, row=1, padx=30, sticky=ctk.NW, columnspan=3)
         pb_label = ctk.CTkLabel(self.main_panel, text="PB: ", font=(self.font_type, self.header_size))
         pb_label.grid(column=4, row=0, padx=30, pady=15, sticky=ctk.NW)
 
