@@ -191,7 +191,7 @@ class App(ctk.CTk):
         self.screen_height = self.winfo_screenheight()
 
         # window setup
-        self.minsize(width=960, height=540)
+        self.minsize(width=1350, height=800)
         self.maxsize(width=self.screen_width, height=self.screen_height)
         self.geometry(f"{self.screen_width}x{self.screen_height}")
         self.title("FitArchive")
@@ -598,8 +598,98 @@ class App(ctk.CTk):
 
     def bmi_calculator(self) -> None:
         self.clear_main_panel()
-        self.under_construction()
-        raise NotImplementedError("BMI calculator page")
+        def calculate_bmi(weight: str, height: str):
+            try:
+                weight = float(weight)
+                height = float(height)
+            except ValueError:
+                result_lbl.configure(text="Invalid weight or height", text_color="red")
+                return
+            height /= 100
+            bmi = weight / (height ** 2)
+            result_lbl.configure(text=f"Result: {bmi:.2f}", text_color="white")
+
+        self.main_panel.columnconfigure(list(range(2)), weight=10)
+        self.main_panel.rowconfigure(4, weight=1)
+
+        # right side
+        about_label = ctk.CTkLabel(self.main_panel, text="About", font=(self.font_type, self.header_size))
+        about_label.grid(row=0, column=1, sticky=ctk.S, pady=(20, 25))
+        abt = """BMI (Body Mass Index) is a simple measure used to determine if a person’s\nweight is appropriate for their height. Monitoring BMI helps track overall\nfitness and maintain healthy habits."""
+        about = ctk.CTkLabel(self.main_panel, text=abt, font=(self.font_type, self.font_size))
+        about.grid(row=1, column=1, sticky=ctk.N, padx=15)
+
+        index_label = ctk.CTkLabel(self.main_panel, text="Index", font=(self.font_type, self.header_size))
+        index_label.grid(row=2, column=1, sticky=ctk.N, pady=15)
+
+        index_frame = ctk.CTkFrame(self.main_panel, border_width=1, border_color="purple")
+        index_frame.grid(row=4, column=1, sticky=ctk.NSEW, padx=15, pady=(0, 20))
+
+        index_frame.columnconfigure(list(range(2)), weight=1)
+        index_frame.rowconfigure(list(range(1, 7)), weight=1)
+
+        bmi_score = ctk.CTkLabel(index_frame, text="BMI score", font=(self.font_type, self.header_size))
+        bmi_score.grid(row=0, column=0, padx=15, pady=15)
+
+        weight_status = ctk.CTkLabel(index_frame, text="Weight status", font=(self.font_type, self.header_size))
+        weight_status.grid(row=0, column=1, padx=15, pady=15)
+
+        # scores
+        score1 = ctk.CTkLabel(index_frame, text="Below 18.5", font=(self.font_type, self.font_size))
+        score1.grid(row=1, column=0, pady=20)
+        score2 = ctk.CTkLabel(index_frame, text="18.5 - 24.9", font=(self.font_type, self.font_size))
+        score2.grid(row=2, column=0, pady=20)
+        score3 = ctk.CTkLabel(index_frame, text="25.0 - 29.9", font=(self.font_type, self.font_size))
+        score3.grid(row=3, column=0, pady=20)
+        score4 = ctk.CTkLabel(index_frame, text="30 - 34.9", font=(self.font_type, self.font_size))
+        score4.grid(row=4, column=0, pady=20)
+        score5 = ctk.CTkLabel(index_frame, text="35.0 - 39.9", font=(self.font_type, self.font_size))
+        score5.grid(row=5, column=0, pady=20)
+        score6 = ctk.CTkLabel(index_frame, text="Above 40", font=(self.font_type, self.font_size))
+        score6.grid(row=6, column=0, pady=20)
+
+        # score labels
+        under = ctk.CTkLabel(index_frame, text="Underweight", font=(self.font_type, self.font_size))
+        under.grid(row=1, column=1, pady=20)
+        healthy = ctk.CTkLabel(index_frame, text="Healthy weight", font=(self.font_type, self.font_size))
+        healthy.grid(row=2, column=1, pady=20)
+        over = ctk.CTkLabel(index_frame, text="Overweight", font=(self.font_type, self.font_size))
+        over.grid(row=3, column=1, pady=20)
+        ob1 = ctk.CTkLabel(index_frame, text="Obesity class 1", font=(self.font_type, self.font_size))
+        ob1.grid(row=4, column=1, pady=20)
+        ob2 = ctk.CTkLabel(index_frame, text="Obesity class 2", font=(self.font_type, self.font_size))
+        ob2.grid(row=5, column=1, pady=20)
+        ob3 = ctk.CTkLabel(index_frame, text="Obesity class 3", font=(self.font_type, self.font_size))
+        ob3.grid(row=6, column=1, pady=20)
+
+        # left side
+        main_label = ctk.CTkLabel(self.main_panel, text="BMI Calculator", font=(self.font_type, self.header_size))
+        main_label.grid(row=0, column=0, pady=(20, 25), sticky=ctk.S, padx=15)
+
+        calc_frame = ctk.CTkFrame(self.main_panel, border_width=1, border_color="white")
+        calc_frame.grid(row=1, column=0, sticky=ctk.NSEW, padx=15, rowspan=4, pady=(0, 20))
+        calc_frame.columnconfigure(list(range(2)), weight=1)
+
+        weight = ctk.CTkLabel(calc_frame, text="weight", font=(self.font_type, self.font_size, "bold"))
+        weight.grid(row=0, column=0, padx=15, pady=(15, 10), sticky=ctk.W)
+        weight_entry = ctk.CTkEntry(calc_frame, width=150, height=40, placeholder_text="kg", font=(self.font_type, self.font_size))
+        weight_entry.grid(row=0, column=1, padx=10, pady=(15, 10), sticky=ctk.W)
+        height = ctk.CTkLabel(calc_frame, text="height", font=(self.font_type, self.font_size, "bold"))
+        height.grid(row=1, column=0, padx=15, pady=10, sticky=ctk.W)
+        height_entry = ctk.CTkEntry(calc_frame, width=150, height=40, placeholder_text="cm", font=(self.font_type, self.font_size))
+        height_entry.grid(row=1, column=1, padx=10, pady=10, sticky=ctk.W)
+
+        calculate_btn = ctk.CTkButton(calc_frame,
+                                      width=150,
+                                      height=40,
+                                      font=(self.font_type, self.font_size),
+                                      text="Calculate",
+                                      command=lambda: calculate_bmi(weight_entry.get(), height_entry.get()))
+        calculate_btn.grid(row=2, column=1, padx=10, pady=10, sticky=ctk.W)
+        result_lbl = ctk.CTkLabel(calc_frame, text="Result:", font=(self.font_type, self.font_size))
+        result_lbl.grid(row=3, column=0, padx=15, pady=50, sticky=ctk.W, columnspan=2)
+        
+
     
     def measurements(self) -> None:
         self.clear_main_panel()
