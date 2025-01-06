@@ -315,7 +315,7 @@ class App(ctk.CTk):
                                         anchor=ctk.N,
                                         border_spacing=12,
                                         command=lambda ex=exercise: self.show_exercise(ex))
-            exercise_btn.grid(column=col%5, row=row, sticky=ctk.NW, padx=19, pady=10)
+            exercise_btn.grid(column=col%5, row=row, sticky=ctk.NSEW, padx=19, pady=10)
             col += 1
             if col % 5 == 0:
                 row += 1
