@@ -29,6 +29,7 @@ class SidePanel(ctk.CTkFrame):
         self.settings_path = r".\assets\settings.png"
         self.state = ""
         self.font = CONFIG["UI"]["SidePanelFont"]
+        self.header_size = int(CONFIG["UI"]["SidePanelHeaderSize"])
         self.font_size = int(CONFIG["UI"]["SidePanelFontSize"])
         self.text_color = CONFIG["UI"]["SidePanelTextColor"]
         self.buttons = []
@@ -46,7 +47,7 @@ class SidePanel(ctk.CTkFrame):
                                        image=self.fitarchive_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
-                                       font=(self.font, self.font_size),
+                                       font=(self.font, self.header_size),
                                        height=self.btn_height,
                                        anchor=ctk.W, 
                                        command=self.collapse, 
@@ -60,7 +61,7 @@ class SidePanel(ctk.CTkFrame):
                                        image=self.collapse_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
-                                       font=(self.font, self.font_size),
+                                       font=(self.font, self.header_size),
                                        height=self.btn_height,
                                        anchor=ctk.W, 
                                        command=self.collapse, 
@@ -75,7 +76,7 @@ class SidePanel(ctk.CTkFrame):
                                            image=self.exercises_img,
                                            compound=ctk.RIGHT,
                                            text_color=self.text_color,
-                                           font=(self.font, self.font_size),
+                                           font=(self.font, self.header_size),
                                            height=self.btn_height,
                                            anchor=ctk.W,
                                            textvariable=ctk.StringVar(value="Exercises"))
@@ -89,7 +90,7 @@ class SidePanel(ctk.CTkFrame):
                                                 image=self.bmi_calculator_img,
                                                 compound=ctk.RIGHT,
                                                 text_color=self.text_color,
-                                                font=(self.font, self.font_size),
+                                                font=(self.font, self.header_size),
                                                 height=self.btn_height,
                                                 anchor=ctk.W,
                                                 textvariable=ctk.StringVar(value="BMI Calculator"))
@@ -117,26 +118,12 @@ class SidePanel(ctk.CTkFrame):
                                        image=self.notes_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
-                                       font=(self.font, self.font_size),
+                                       font=(self.font, self.header_size),
                                        height=self.btn_height,
                                        anchor=ctk.W,
                                        textvariable=ctk.StringVar(value="Notes"))
         self.notes_btn.pack(anchor=ctk.N, fill=ctk.X)
         self.buttons.append(self.notes_btn)
-
-        # self.placeholder_img = ctk.CTkImage(Image.open(self.collapse_path), size=(25, 25))
-        # self.placeholder_btn = ctk.CTkButton(self,
-        #                                      corner_radius=0,
-        #                                      text="Placeholder",
-        #                                      image=self.collapse_img,
-        #                                      compound=ctk.RIGHT,
-        #                                      text_color=self.text_color,
-        #                                      font=(self.font, self.font_size),
-        #                                      height=self.btn_height,
-        #                                      anchor=ctk.W,
-        #                                      textvariable=ctk.StringVar(value="Placeholder"))
-        # self.placeholder_btn.pack(anchor=ctk.N, fill=ctk.X)
-        # self.buttons.append(self.placeholder_btn)
 
         self.settings_img = ctk.CTkImage(Image.open(self.settings_path), size=(25, 25))
         self.settings_btn = ctk.CTkButton(self,
@@ -145,7 +132,7 @@ class SidePanel(ctk.CTkFrame):
                                              image=self.settings_img,
                                              compound=ctk.RIGHT,
                                              text_color=self.text_color,
-                                             font=(self.font, self.font_size),
+                                             font=(self.font, self.header_size),
                                              height=self.btn_height,
                                              anchor=ctk.W,
                                              textvariable=ctk.StringVar(value="Settings"))
@@ -201,7 +188,7 @@ class App(ctk.CTk):
         self.after(0, lambda: self.wm_state('zoomed'))
 
         # side panel
-        self.side_panel = SidePanel(self, corner_radius=0, border_color="blue", border_width=1)
+        self.side_panel = SidePanel(self, corner_radius=0, border_color="blue", border_width=0)
         self.side_panel.pack(expand=False, side=ctk.LEFT, fill=ctk.BOTH, anchor=ctk.NW, padx=1)
         for btn in self.side_panel.buttons:
             btn_val = btn.cget("textvariable").get()
@@ -253,14 +240,6 @@ class App(ctk.CTk):
                                            command=self.bmi_calculator)
         bmi_calculator_btn.grid(row=0, column=1, sticky=ctk.NSEW, padx=15, pady=15)
 
-        # measurements_btn = ctk.CTkButton(buttons_frame,
-        #                                 text="Measurements",
-        #                                 font=(self.font_type, self.font_size),
-        #                                 anchor=ctk.N,
-        #                                 border_spacing=20,
-        #                                 command=self.measurements)
-        # measurements_btn.grid(row=0, column=2, sticky=ctk.NSEW, padx=15, pady=15)
-
         notes_btn = ctk.CTkButton(buttons_frame,
                                     text="Notes",
                                     font=(self.font_type, self.font_size),
@@ -276,10 +255,6 @@ class App(ctk.CTk):
                                     border_spacing=20,
                                     command=self.settings)
         settings_btn.grid(row=0, column=3, sticky=ctk.NSEW, padx=15, pady=15)
-
-        # experimental
-        close_btn = ctk.CTkButton(self.main_panel, text="Clear this panel", font=(self.font_type, self.font_size), command=self.clear_main_panel, text_color="#000000", corner_radius=10)
-        close_btn.pack(anchor=ctk.N, pady=20)
     
     def clear_main_panel(self) -> None:
         print("Clearing main panel...")
@@ -403,8 +378,8 @@ class App(ctk.CTk):
         label.grid(column=0, row=0, padx=15, pady=15, sticky=ctk.NW)
         notes_label = ctk.CTkLabel(self.main_panel, text="Notes", font=(self.font_type, self.header_size))
         notes_label.grid(column=0, row=1, padx=15, pady=15, sticky=ctk.NW)
-        notes_box = ctk.CTkTextbox(self.main_panel, font=(self.font_type, self.font_size), wrap="word")
-        notes_box.grid(column=0, row=2, padx=15, sticky=ctk.NSEW, rowspan=2)
+        notes_box = ctk.CTkTextbox(self.main_panel, font=(self.font_type, self.font_size), wrap="word", width=300, height=500)
+        notes_box.grid(column=0, row=2, padx=15, rowspan=2)
         self.main_panel.grid_rowconfigure(2, weight=1)
         save_notes_btn = ctk.CTkButton(self.main_panel,
                                        text="Save",
@@ -454,7 +429,7 @@ class App(ctk.CTk):
         edit_score_btn = ctk.CTkButton(self.main_panel,
                                       text="Edit score",
                                       font=(self.font_type, self.header_size),
-                                      command=...,
+                                      command=lambda: self.edit_exercise_data(exercise_name),
                                       fg_color="#FF9350")
         edit_score_btn.grid(column=3, row=5, padx=(0, 30), pady=15, sticky=ctk.NE)
         remove_score_btn = ctk.CTkButton(self.main_panel,
@@ -565,6 +540,55 @@ class App(ctk.CTk):
                                    font=(self.font_type, self.header_size),
                                    command=lambda: validate_score(score_entry.get(), day_entry.get(), month_entry.get(), year_entry.get()))
         submit_btn.grid(column=1, row=5, sticky=ctk.N, pady=(40, 0))
+
+    def edit_exercise_data(self, exercise_name: str) -> None:
+        def validate_score(score: str, index: int):
+            try:
+                score = float(score)
+                index = int(index)
+            except ValueError:
+                add_scr_label.configure(text="Invalid score or index", text_color="red")
+                return
+            if score < 0:
+                add_scr_label.configure(text="Your score cannot be negative", text_color="red")
+                return
+            
+            index += 2
+            edit = self.handler.edit_record(exercise_name, index, score)
+            if edit:
+                edit_scr.destroy()
+                self.show_exercise(exercise_name)
+                return
+            add_scr_label.configure(text="Invalid index", text_color="red")
+
+        edit_scr = ctk.CTkToplevel(self)
+        x = (self.screen_width - 640) // 2
+        y = (self.screen_height - 360) // 2
+        edit_scr.title("Edit score")
+        edit_scr.geometry(f"400x400+{x}+{y}")
+        edit_scr.resizable(False, False)
+        # use after due to customtkinter's implementation where some data is set after 200ms
+        edit_scr.after(300, edit_scr.focus)
+        edit_scr.after(200, lambda: edit_scr.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+
+        add_scr_label = ctk.CTkLabel(edit_scr, text="Enter new score:", font=(self.font_type, self.header_size))
+        add_scr_label.grid(column=0, row=0, pady=(15, 0), padx=(80, 0))
+        info_label = ctk.CTkLabel(edit_scr, text="Do not include units!", font=(self.font_type, self.font_size), text_color="red")
+        info_label.grid(column=0, row=1, pady=(15, 0), padx=(80, 0))
+
+        score_entry = ctk.CTkEntry(edit_scr, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=150, height=40)
+        score_entry.grid(column=0, row=2, pady=15, padx=(80, 0))
+        
+        index_label = ctk.CTkLabel(edit_scr, text="Index", font=(self.font_type, self.header_size))
+        index_label.grid(column=0, row=3, pady=(15, 0), padx=(80, 0))
+        index_entry = ctk.CTkEntry(edit_scr, font=(self.font_type, self.font_size), width=100, height=40, placeholder_text="...")
+        index_entry.grid(column=0, row=4, pady=15, padx=(80, 0))
+
+        submit_btn = ctk.CTkButton(edit_scr,
+                                   text="Submit",
+                                   font=(self.font_type, self.header_size),
+                                   command=lambda: validate_score(score_entry.get(), index_entry.get()))
+        submit_btn.grid(column=0, row=7, pady=(40, 0), padx=(80, 0))
 
     def save_exercise_note(self, exercise_name: str, note: str) -> None:
         note = note.rstrip()[:128]
