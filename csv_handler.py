@@ -134,3 +134,21 @@ class Handler:
         dataset.loc[2, exercise_name] = f"Note:{note}"
         dataset.to_csv(self.csv_path, index=False)
         return f"Succesfully saved the note for {exercise_name}"
+
+    def edit_record(self, exercise_name: str, row_index: int, new_score: float) -> bool:
+        exercise_name = exercise_name.capitalize()
+        dataset = self.get_dataset()
+        pb_row = dataset[exercise_name][0]
+        pb = float(pb_row.split("|")[0].split(":")[1])
+        unit = pb_row.split("|")[1]
+        num_rows = len(dataset[exercise_name])
+        if row_index > num_rows:
+            print("too many")
+            return False
+        if new_score > pb:
+            pb = f"PR:{new_score}|{unit}"
+            dataset.loc[0, exercise_name] = pb
+        date = dataset[exercise_name][row_index].split("|")[1]
+        dataset.loc[row_index, exercise_name] = f"{new_score}{unit}|{date}"
+        dataset.to_csv(self.csv_path, index=False)
+        return True
