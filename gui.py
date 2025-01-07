@@ -261,6 +261,10 @@ class App(ctk.CTk):
         for widget in self.main_panel.winfo_children():
             widget.destroy()
     
+    def reset_config(self) -> None:
+        self.main_panel.columnconfigure(list(range(100)), weight=0)
+        self.main_panel.rowconfigure(list(range(100)), weight=0)
+
     def exercises(self) -> None:
         self.clear_main_panel()
         top_panel = ctk.CTkFrame(self.main_panel, corner_radius=0, border_color="orange", border_width=1)
@@ -348,6 +352,7 @@ class App(ctk.CTk):
 
     def show_exercise(self, exercise_name: str) -> None:
         self.clear_main_panel()
+        self.reset_config()
         def list_scores(sort_type: str="Index ascending"):
             print(f"{sort_type=}")
             data = self.handler.sort_records(exercise_name, sort_type=sort_type)
@@ -380,13 +385,13 @@ class App(ctk.CTk):
         notes_label = ctk.CTkLabel(self.main_panel, text="Notes", font=(self.font_type, self.header_size))
         notes_label.grid(column=0, row=1, padx=15, pady=15, sticky=ctk.NW)
         notes_box = ctk.CTkTextbox(self.main_panel, font=(self.font_type, self.font_size), wrap="word", width=300, height=500)
-        notes_box.grid(column=0, row=2, padx=15, rowspan=2)
+        notes_box.grid(column=0, row=2, padx=15, rowspan=2, sticky=ctk.NW)
         self.main_panel.grid_rowconfigure(2, weight=1)
         save_notes_btn = ctk.CTkButton(self.main_panel,
                                        text="Save",
                                        font=(self.font_type, self.header_size),
                                        command=lambda: self.save_exercise_note(exercise_name, notes_box.get("0.0", ctk.END)))
-        save_notes_btn.grid(column=0, row=4, sticky=ctk.NW, padx=15, pady=15)
+        save_notes_btn.grid(column=0, row=4, sticky=ctk.NW, padx=15, pady=15, rowspan=2)
         remove_exercise_btn = ctk.CTkButton(self.main_panel,
                                             text="Delete exercise",
                                             font=(self.font_type, self.header_size),
@@ -633,6 +638,7 @@ class App(ctk.CTk):
         submit_btn.pack(side=ctk.TOP, pady=(45, 10))
 
     def bmi_calculator(self) -> None:
+        self.reset_config()
         self.clear_main_panel()
         def calculate_bmi(weight: str, height: str):
             try:
@@ -732,7 +738,7 @@ class App(ctk.CTk):
     
     def notes(self) -> None:
         self.clear_main_panel()
-
+        self.reset_config()
         top_panel = ctk.CTkFrame(self.main_panel, corner_radius=0, border_color="orange", border_width=1)
         top_panel.pack(expand=False, fill=ctk.X, anchor=ctk.NW, padx=5, pady=5)
         notes_label = ctk.CTkLabel(top_panel, text="Notes", font=(self.font_type, self.header_size))
@@ -889,6 +895,7 @@ class App(ctk.CTk):
 
     def settings(self) -> None:
         self.clear_main_panel()
+        self.reset_config()
         self.under_construction()
         raise NotImplementedError("Settings page")
 
