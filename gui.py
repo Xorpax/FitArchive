@@ -363,7 +363,8 @@ class App(ctk.CTk):
             notes_box.delete("0.0", ctk.END)
             notes_box.insert("0.0", text=note)
             pb_label.configure(text=f"PB: {pb}")
-
+            if df.empty:
+                return
             for index, row in df.iterrows():
                 date = row[1].date().strftime("%d.%m.%Y")
                 score_label = ctk.CTkLabel(scorebox, text=f"{index - 2}. {row[0]}{unit} ({date})", font=(self.font_type, self.font_size))

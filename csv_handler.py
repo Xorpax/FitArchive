@@ -93,6 +93,8 @@ class Handler:
         dataset = self.get_dataset()[exercise_name].dropna()
         special_fields = dataset[:3].str.split(":")
         dataset = dataset[3:]
+        if dataset.empty:
+            return dataset, special_fields
         if "descending" in sort_type:
             dataset = dataset[::-1]
         
