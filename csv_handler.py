@@ -138,13 +138,13 @@ class Handler:
     def edit_record(self, exercise_name: str, row_index: int, new_score: float) -> bool:
         exercise_name = exercise_name.capitalize()
         dataset = self.get_dataset()
-        pb_row = dataset[exercise_name][0]
-        pb = float(pb_row.split("|")[0].split(":")[1])
-        unit = pb_row.split("|")[1]
         num_rows = len(dataset[exercise_name])
         if row_index > num_rows:
             print("too many")
             return False
+        pb_row = dataset[exercise_name][0]
+        pb = float(pb_row.split("|")[0].split(":")[1])
+        unit = pb_row.split("|")[1]
         if new_score > pb:
             pb = f"PR:{new_score}|{unit}"
             dataset.loc[0, exercise_name] = pb
