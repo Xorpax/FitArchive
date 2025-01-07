@@ -196,7 +196,7 @@ class App(ctk.CTk):
                 btn.configure(command=self.btn_functions.get(btn_val))
 
         # main panel
-        self.main_panel = ctk.CTkFrame(self, corner_radius=0, border_color="red", border_width=1)
+        self.main_panel = ctk.CTkFrame(self, corner_radius=0, border_color="red", border_width=0)
         self.main_panel.pack(expand=True, fill=ctk.BOTH, side=ctk.RIGHT)
         self.show_landing_page()
 
@@ -214,13 +214,13 @@ class App(ctk.CTk):
         motto.pack(pady=10)
 
         # features
-        features_frame = ctk.CTkFrame(self.main_panel, border_color="green", border_width=1)
+        features_frame = ctk.CTkFrame(self.main_panel, border_color="green", border_width=0)
         features_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=20, pady=20)
         features_label = ctk.CTkLabel(features_frame, text="Features:", font=(self.font_type, self.header_size, "underline"))
         features_label.pack(padx=10, pady=10, side=ctk.TOP, anchor=ctk.NW)
         
         # buttons
-        buttons_frame = ctk.CTkFrame(features_frame, border_color="cyan", border_width=1)
+        buttons_frame = ctk.CTkFrame(features_frame, border_color="cyan", border_width=0)
         buttons_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=10, pady=10)
         buttons_frame.rowconfigure(0, weight=1)
         buttons_frame.columnconfigure(list(range(4)), weight=1)
@@ -267,7 +267,7 @@ class App(ctk.CTk):
 
     def exercises(self) -> None:
         self.clear_main_panel()
-        top_panel = ctk.CTkFrame(self.main_panel, corner_radius=0, border_color="orange", border_width=1)
+        top_panel = ctk.CTkFrame(self.main_panel, corner_radius=0, border_color="orange", border_width=0)
         top_panel.pack(expand=False, fill=ctk.X, anchor=ctk.NW, padx=5, pady=5)
         exercises_label = ctk.CTkLabel(top_panel, text="Exercises", font=(self.font_type, self.header_size))
         exercises_label.pack(anchor=ctk.NW, padx=(10, 0), pady=(25, 10), side=ctk.LEFT)
@@ -280,7 +280,7 @@ class App(ctk.CTk):
                                 fg_color="green",
                                 command=self.add_exercise_window)
         add_btn.pack(anchor=ctk.NE, padx=(0, 10), pady=(20, 15), side=ctk.RIGHT)
-        exercises_frame = ctk.CTkScrollableFrame(self.main_panel, corner_radius=0, border_color="yellow", border_width=1)
+        exercises_frame = ctk.CTkScrollableFrame(self.main_panel, corner_radius=0, border_color="yellow", border_width=0)
         exercises_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=5, pady=(0, 5), side=ctk.TOP)
         exercises_list = self.handler.exercises
         no_exercises = self.handler.is_csv_empty()
@@ -415,7 +415,7 @@ class App(ctk.CTk):
         pb_label = ctk.CTkLabel(self.main_panel, text="PB: ", font=(self.font_type, self.header_size))
         pb_label.grid(column=4, row=0, padx=30, pady=15, sticky=ctk.NW)
 
-        scorebox = ctk.CTkScrollableFrame(self.main_panel, border_color="orange", border_width=1)
+        scorebox = ctk.CTkScrollableFrame(self.main_panel, border_color="orange", border_width=0)
         scorebox.grid(column=1, row=2, padx=30, columnspan=5, sticky=ctk.NSEW, rowspan=3)
         self.main_panel.grid_columnconfigure(1, weight=1)
         self.main_panel.rowconfigure(4, weight=1)
@@ -664,7 +664,7 @@ class App(ctk.CTk):
         index_label = ctk.CTkLabel(self.main_panel, text="Index", font=(self.font_type, self.header_size))
         index_label.grid(row=2, column=1, sticky=ctk.N, pady=15)
 
-        index_frame = ctk.CTkFrame(self.main_panel, border_width=1, border_color="purple")
+        index_frame = ctk.CTkFrame(self.main_panel, border_width=0, border_color="purple")
         index_frame.grid(row=4, column=1, sticky=ctk.NSEW, padx=15, pady=(0, 20))
 
         index_frame.columnconfigure(list(range(2)), weight=1)
@@ -708,7 +708,7 @@ class App(ctk.CTk):
         main_label = ctk.CTkLabel(self.main_panel, text="BMI Calculator", font=(self.font_type, self.header_size))
         main_label.grid(row=0, column=0, pady=(20, 25), sticky=ctk.S, padx=15)
 
-        calc_frame = ctk.CTkFrame(self.main_panel, border_width=1, border_color="white")
+        calc_frame = ctk.CTkFrame(self.main_panel, border_width=0, border_color="white")
         calc_frame.grid(row=1, column=0, sticky=ctk.NSEW, padx=15, rowspan=4, pady=(0, 20))
         calc_frame.columnconfigure(list(range(2)), weight=1)
 
@@ -739,7 +739,7 @@ class App(ctk.CTk):
     def notes(self) -> None:
         self.clear_main_panel()
         self.reset_config()
-        top_panel = ctk.CTkFrame(self.main_panel, corner_radius=0, border_color="orange", border_width=1)
+        top_panel = ctk.CTkFrame(self.main_panel, corner_radius=0, border_color="orange", border_width=0)
         top_panel.pack(expand=False, fill=ctk.X, anchor=ctk.NW, padx=5, pady=5)
         notes_label = ctk.CTkLabel(top_panel, text="Notes", font=(self.font_type, self.header_size))
         notes_label.pack(anchor=ctk.NW, padx=(10, 0), pady=(25, 10), side=ctk.LEFT)
@@ -752,7 +752,7 @@ class App(ctk.CTk):
                                 fg_color="green",
                                 command=self.add_note)
         add_btn.pack(anchor=ctk.NE, padx=(0, 10), pady=(20, 15), side=ctk.RIGHT)
-        notes_frame = ctk.CTkScrollableFrame(self.main_panel, corner_radius=0, border_color="yellow", border_width=1)
+        notes_frame = ctk.CTkScrollableFrame(self.main_panel, corner_radius=0, border_color="yellow", border_width=0)
         notes_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=5, pady=(0, 5), side=ctk.TOP)
 
         notes_list = os.listdir(r".\notes")
