@@ -550,7 +550,7 @@ class App(ctk.CTk):
             except ValueError:
                 add_scr_label.configure(text="Invalid score or index", text_color="red")
                 return
-            if score < 0 or index < 0:
+            if score < 0 or index <= 0:
                 add_scr_label.configure(text="Invalid score or index", text_color="red")
                 return
             
