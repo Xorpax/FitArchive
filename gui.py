@@ -62,47 +62,47 @@ class SidePanel(ctk.CTkFrame):
 
         exercises_img = ctk.CTkImage(Image.open(self.exercises_path), size=(25, 25))
         exercises_btn = ctk.CTkButton(self,
-                                           corner_radius=0,
-                                           image=exercises_img,
-                                           compound=ctk.RIGHT,
-                                           text_color=self.text_color,
-                                           font=(self.font, self.header_size),
-                                           height=self.btn_height,
-                                           anchor=ctk.W,
-                                           textvariable=ctk.StringVar(value="Exercises"))
+                                    corner_radius=0,
+                                    image=exercises_img,
+                                    compound=ctk.RIGHT,
+                                    text_color=self.text_color,
+                                    font=(self.font, self.header_size),
+                                    height=self.btn_height,
+                                    anchor=ctk.W,
+                                    textvariable=ctk.StringVar(value="Exercises"))
 
         bmi_calculator_img = ctk.CTkImage(Image.open(self.bmi_calculator_path), size=(25, 25))
         bmi_calculator_btn = ctk.CTkButton(self,
-                                                corner_radius=0,
-                                                image=bmi_calculator_img,
-                                                compound=ctk.RIGHT,
-                                                text_color=self.text_color,
-                                                font=(self.font, self.header_size),
-                                                height=self.btn_height,
-                                                anchor=ctk.W,
-                                                textvariable=ctk.StringVar(value="BMI Calculator"))
+                                        corner_radius=0,
+                                        image=bmi_calculator_img,
+                                        compound=ctk.RIGHT,
+                                        text_color=self.text_color,
+                                        font=(self.font, self.header_size),
+                                        height=self.btn_height,
+                                        anchor=ctk.W,
+                                        textvariable=ctk.StringVar(value="BMI Calculator"))
 
         notes_img = ctk.CTkImage(Image.open(self.notes_path), size=(25, 25))
         notes_btn = ctk.CTkButton(self,
-                                       corner_radius=0,
-                                       image=notes_img,
-                                       compound=ctk.RIGHT,
-                                       text_color=self.text_color,
-                                       font=(self.font, self.header_size),
-                                       height=self.btn_height,
-                                       anchor=ctk.W,
-                                       textvariable=ctk.StringVar(value="Notes"))  
+                                corner_radius=0,
+                                image=notes_img,
+                                compound=ctk.RIGHT,
+                                text_color=self.text_color,
+                                font=(self.font, self.header_size),
+                                height=self.btn_height,
+                                anchor=ctk.W,
+                                textvariable=ctk.StringVar(value="Notes"))  
 
         settings_img = ctk.CTkImage(Image.open(self.settings_path), size=(25, 25))
         settings_btn = ctk.CTkButton(self,
-                                             corner_radius=0,
-                                             image=settings_img,
-                                             compound=ctk.RIGHT,
-                                             text_color=self.text_color,
-                                             font=(self.font, self.header_size),
-                                             height=self.btn_height,
-                                             anchor=ctk.W,
-                                             textvariable=ctk.StringVar(value="Settings"))
+                                    corner_radius=0,
+                                    image=settings_img,
+                                    compound=ctk.RIGHT,
+                                    text_color=self.text_color,
+                                    font=(self.font, self.header_size),
+                                    height=self.btn_height,
+                                    anchor=ctk.W,
+                                    textvariable=ctk.StringVar(value="Settings"))
 
         self.buttons.append(self.title_btn)
         self.buttons.append(landing_page_btn)
