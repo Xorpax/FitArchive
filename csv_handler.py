@@ -159,15 +159,14 @@ class Handler:
 
     def visualise(self, exercise_name: str) -> None:
         exercise_name = exercise_name.capitalize()
-        dataset = self.get_dataset()[exercise_name].dropna()
-        unit = dataset[0].split("|")[1]
-        category = dataset[1].split(":")[1]
-        df = dataset[3:].str.split("|", expand=True).reset_index(drop=True)
-        scores = df[0].str.replace(unit, "").astype(float)
-        df[0] = scores
+        dataset = self.sort_records(exercise_name, "Date ascending")
+        special_fields = dataset[1]
+        df = dataset[0].dropna().reset_index(drop=True)
+        unit = special_fields[0][1].split("|")[1]
+        category = special_fields[1][1]
+         
         df.rename(columns={0: f"score ({unit})", 1: "date (DD-MM-YYYY)"}, inplace=True)
-
-        # figure styling
+        df["date (DD-MM-YYYY)"] = df["date (DD-MM-YYYY)"].astype(str)
         rc = {
             "axes.facecolor": "#353130",  # Dark grey background
             "axes.edgecolor": "#45403f",  # Grey axes edges
