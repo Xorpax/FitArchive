@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import datetime
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 class Handler:
@@ -154,3 +156,39 @@ class Handler:
         dataset.loc[row_index, exercise_name] = f"{new_score}{unit}|{date}"
         dataset.to_csv(self.csv_path, index=False)
         return True
+
+    def visualise(self, exercise_name: str) -> None:
+        exercise_name = exercise_name.capitalize()
+        dataset = self.get_dataset()[exercise_name].dropna()
+        unit = dataset[0].split("|")[1]
+        category = dataset[1].split(":")[1]
+        df = dataset[3:].str.split("|", expand=True).reset_index(drop=True)
+        scores = df[0].str.replace(unit, "").astype(float)
+        df[0] = scores
+        df.rename(columns={0: f"score ({unit})", 1: "date (DD-MM-YYYY)"}, inplace=True)
+
+        # figure styling
+        rc = {
+            "axes.facecolor": "#353130",  # Dark grey background
+            "axes.edgecolor": "#45403f",  # Grey axes edges
+            "axes.labelcolor": "#ffffff",
+            "grid.color": "#444444",      # Gray gridlines
+            "text.color": "#ffffff",
+            "xtick.color": "#ffffff",
+            "ytick.color": "#ffffff",
+            "xtick.labelsize": 12,        # Font size for x-tick labels
+            "ytick.labelsize": 12,        # Font size for y-tick labels 
+            "figure.facecolor": "#353130" # Window background color
+        }
+
+        sns.set_theme(context="paper", font_scale=1.75, rc=rc, style="darkgrid")
+        plt.figure(figsize=(10, 7.8))
+        sns.lineplot(data=df, x="date (DD-MM-YYYY)", y=f"score ({unit})", markers=True, marker="o", color="#f0a310", linewidth=2.25)
+        plt.ylim(bottom=df[f"score ({unit})"].min(), top=df[f"score ({unit})"].max())
+        plt.xlim(df["date (DD-MM-YYYY)"][0], df["date (DD-MM-YYYY)"].values[-1])
+        plt.title(f"{exercise_name} ({category})")
+
+        plt.xticks(rotation=-35)
+        plt.yticks(df[f"score ({unit})"])
+        plt.tight_layout()
+        plt.show()
