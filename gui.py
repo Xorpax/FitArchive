@@ -12,6 +12,7 @@ CONFIG.read(r".\config.ini")
 
 # ctk.set_appearance_mode("dark")
 # ctk.set_default_color_theme("dark-blue")
+# ctk.set_default_color_theme("green")
 
 class SidePanel(ctk.CTkFrame):
     def __init__(self, *args, **kwargs) -> None:
@@ -399,7 +400,7 @@ class App(ctk.CTk):
         visualise_btn = ctk.CTkButton(self.main_panel,
                                       text="Visualise",
                                       font=(self.font_type, self.header_size),
-                                      command=...,
+                                      command=lambda: self.handler.visualise(exercise_name),
                                       fg_color="#3F8CFF")
         visualise_btn.grid(column=1, row=5, padx=(0, 30), pady=15, sticky=ctk.NE)
         add_score_btn = ctk.CTkButton(self.main_panel,
@@ -870,10 +871,27 @@ class App(ctk.CTk):
         self.clear_main_panel()
 
     def settings(self) -> None:
-        self.clear_main_panel()
+        # self.clear_main_panel()
         self.reset_config()
-        self.under_construction()
-        raise NotImplementedError("Settings page")
+
+        x = (self.screen_width - 640) // 2
+        y = (self.screen_height -360) // 2
+
+        settings_window = ctk.CTkToplevel(self)
+        settings_window.title("Add note")
+        settings_window.geometry(f"1000x700+{x}+{y}")
+        settings_window.resizable(False, False)
+
+        # use after due to customtkinter's implementation where some data is set after 200ms
+        settings_window.after(300, settings_window.focus)
+        settings_window.after(200, lambda: settings_window.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+
+        blue_btn = ctk.CTkButton(settings_window, text="green", command=lambda: ctk.set_default_color_theme("blue"))
+        blue_btn.pack()
+        green_btn = ctk.CTkButton(settings_window, text="blue", command=lambda: ctk.set_default_color_theme("green"))
+        green_btn.pack()
+
+
 
     def under_construction(self) -> None:
         lbl = ctk.CTkLabel(self.main_panel, text="Under Construction...", font=(self.font_type, self.header_size, "bold"))
