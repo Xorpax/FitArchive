@@ -27,7 +27,6 @@ class SidePanel(ctk.CTkFrame):
         self.measurements_path = r".\assets\muscle.png"
         self.notes_path = r".\assets\notes.png"
         self.settings_path = r".\assets\settings.png"
-        # self.state = ""
         self.font = CONFIG["UI"]["SidePanelFont"]
         self.header_size = int(CONFIG["UI"]["SidePanelHeaderSize"])
         self.font_size = int(CONFIG["UI"]["SidePanelFontSize"])
@@ -143,7 +142,6 @@ class SidePanel(ctk.CTkFrame):
         self.settings_btn.pack(anchor=ctk.S, fill=ctk.X, side=ctk.BOTTOM)
 
     def collapse(self) -> None:
-        # self.state = "collapsed"
         for btn in self.buttons:
             txt_var = btn.cget("textvariable").get()
             if txt_var == "Side Panel":
@@ -151,7 +149,6 @@ class SidePanel(ctk.CTkFrame):
             btn.configure(text="", width=45)
 
     def expand(self) -> None:
-        # self.state = "expanded"
         for btn in self.buttons:
             txt_var = btn.cget("textvariable").get()
             if txt_var == "Side Panel":
