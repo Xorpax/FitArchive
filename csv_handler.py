@@ -166,7 +166,7 @@ class Handler:
         category = special_fields[1][1]
          
         df.rename(columns={0: f"score ({unit})", 1: "date (DD-MM-YYYY)"}, inplace=True)
-        df["date (DD-MM-YYYY)"] = df["date (DD-MM-YYYY)"].astype(str)
+        df["date (DD-MM-YYYY)"] = df["date (DD-MM-YYYY)"].dt.strftime("%d-%m-%Y")
         rc = {
             "axes.facecolor": "#353130",  # Dark grey background
             "axes.edgecolor": "#45403f",  # Grey axes edges
