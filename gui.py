@@ -27,7 +27,7 @@ class SidePanel(ctk.CTkFrame):
         self.measurements_path = r".\assets\muscle.png"
         self.notes_path = r".\assets\notes.png"
         self.settings_path = r".\assets\settings.png"
-        self.state = ""
+        # self.state = ""
         self.font = CONFIG["UI"]["SidePanelFont"]
         self.header_size = int(CONFIG["UI"]["SidePanelHeaderSize"])
         self.font_size = int(CONFIG["UI"]["SidePanelFontSize"])
@@ -41,9 +41,9 @@ class SidePanel(ctk.CTkFrame):
         self.state = "expanded"
 
         self.fitarchive_img = ctk.CTkImage(Image.open(self.fitarchive_path), size=(25, 25))
-        self.fitarchive_btn = ctk.CTkButton(self,
+        self.landing_page_btn = ctk.CTkButton(self,
                                        corner_radius=0,
-                                       text="Side Panel",
+                                       text="FitArchive",
                                        image=self.fitarchive_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
@@ -52,8 +52,6 @@ class SidePanel(ctk.CTkFrame):
                                        anchor=ctk.W, 
                                        command=self.collapse, 
                                        textvariable=ctk.StringVar(value="FitArchive"))
-        self.fitarchive_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.buttons.append(self.fitarchive_btn)
 
         self.title_btn = ctk.CTkButton(self,
                                        corner_radius=0,
@@ -66,8 +64,7 @@ class SidePanel(ctk.CTkFrame):
                                        anchor=ctk.W, 
                                        command=self.collapse, 
                                        textvariable=ctk.StringVar(value="Side Panel"))
-        self.title_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.buttons.append(self.title_btn)
+        
 
         self.exercises_img = ctk.CTkImage(Image.open(self.exercises_path), size=(25, 25))
         self.exercises_btn = ctk.CTkButton(self,
@@ -80,13 +77,11 @@ class SidePanel(ctk.CTkFrame):
                                            height=self.btn_height,
                                            anchor=ctk.W,
                                            textvariable=ctk.StringVar(value="Exercises"))
-        self.exercises_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.buttons.append(self.exercises_btn)
 
         self.bmi_calculator_img = ctk.CTkImage(Image.open(self.bmi_calculator_path), size=(25, 25))
         self.bmi_calculator_btn = ctk.CTkButton(self,
                                                 corner_radius=0,
-                                                text="BMI calculator",
+                                                text="BMI Calculator",
                                                 image=self.bmi_calculator_img,
                                                 compound=ctk.RIGHT,
                                                 text_color=self.text_color,
@@ -94,9 +89,7 @@ class SidePanel(ctk.CTkFrame):
                                                 height=self.btn_height,
                                                 anchor=ctk.W,
                                                 textvariable=ctk.StringVar(value="BMI Calculator"))
-        self.bmi_calculator_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.buttons.append(self.bmi_calculator_btn)
-
+        
         # self.measurements_img = ctk.CTkImage(Image.open(self.measurements_path), size=(25, 25))
         # self.measurements_btn = ctk.CTkButton(self,
         #                                       corner_radius=0,
@@ -121,9 +114,7 @@ class SidePanel(ctk.CTkFrame):
                                        font=(self.font, self.header_size),
                                        height=self.btn_height,
                                        anchor=ctk.W,
-                                       textvariable=ctk.StringVar(value="Notes"))
-        self.notes_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.buttons.append(self.notes_btn)
+                                       textvariable=ctk.StringVar(value="Notes"))  
 
         self.settings_img = ctk.CTkImage(Image.open(self.settings_path), size=(25, 25))
         self.settings_btn = ctk.CTkButton(self,
@@ -136,11 +127,23 @@ class SidePanel(ctk.CTkFrame):
                                              height=self.btn_height,
                                              anchor=ctk.W,
                                              textvariable=ctk.StringVar(value="Settings"))
-        self.settings_btn.pack(anchor=ctk.N, fill=ctk.X)
+
+        self.buttons.append(self.title_btn)
+        self.buttons.append(self.landing_page_btn)
+        self.buttons.append(self.exercises_btn)
+        self.buttons.append(self.bmi_calculator_btn)
+        self.buttons.append(self.notes_btn)
         self.buttons.append(self.settings_btn)
 
+        self.title_btn.pack(anchor=ctk.N, fill=ctk.X)
+        self.landing_page_btn.pack(anchor=ctk.N, fill=ctk.X)
+        self.exercises_btn.pack(anchor=ctk.N, fill=ctk.X)
+        self.bmi_calculator_btn.pack(anchor=ctk.N, fill=ctk.X)
+        self.notes_btn.pack(anchor=ctk.N, fill=ctk.X)
+        self.settings_btn.pack(anchor=ctk.S, fill=ctk.X, side=ctk.BOTTOM)
+
     def collapse(self) -> None:
-        self.state = "collapsed"
+        # self.state = "collapsed"
         for btn in self.buttons:
             txt_var = btn.cget("textvariable").get()
             if txt_var == "Side Panel":
@@ -148,7 +151,7 @@ class SidePanel(ctk.CTkFrame):
             btn.configure(text="", width=45)
 
     def expand(self) -> None:
-        self.state = "expanded"
+        # self.state = "expanded"
         for btn in self.buttons:
             txt_var = btn.cget("textvariable").get()
             if txt_var == "Side Panel":
@@ -171,7 +174,6 @@ class App(ctk.CTk):
             "BMI Calculator": self.bmi_calculator,
             "Measurements": self.measurements,
             "Notes": self.notes,
-            "Placeholder": self.placeholder,
             "Settings": self.settings,
         }
 
@@ -180,7 +182,7 @@ class App(ctk.CTk):
         self.screen_height = self.winfo_screenheight()
 
         # window setup
-        self.minsize(width=1350, height=800)
+        self.minsize(width=1405, height=800)
         self.maxsize(width=self.screen_width, height=self.screen_height)
         self.geometry(f"{self.screen_width}x{self.screen_height}")
         self.title("FitArchive")
@@ -364,7 +366,7 @@ class App(ctk.CTk):
             pb = special_rows[0][1].replace("|", "")
             category = special_rows[1][1]
             note = special_rows[2][1]
-            label.configure(text=f"{exercise_name} ({category})")
+            label.configure(text=f"{exercise_name}\n({category})")
             notes_box.delete("0.0", ctk.END)
             notes_box.insert("0.0", text=note)
             pb_label.configure(text=f"PB: {pb}")
@@ -415,7 +417,7 @@ class App(ctk.CTk):
         pb_label = ctk.CTkLabel(self.main_panel, text="PB: ", font=(self.font_type, self.header_size))
         pb_label.grid(column=4, row=0, padx=30, pady=15, sticky=ctk.NW)
 
-        scorebox = ctk.CTkScrollableFrame(self.main_panel, border_color="orange", border_width=0)
+        scorebox = ctk.CTkScrollableFrame(self.main_panel, border_color="orange", border_width=0, orientation="horizontal")
         scorebox.grid(column=1, row=2, padx=30, columnspan=5, sticky=ctk.NSEW, rowspan=3)
         self.main_panel.grid_columnconfigure(1, weight=1)
         self.main_panel.rowconfigure(4, weight=1)
@@ -597,7 +599,7 @@ class App(ctk.CTk):
         submit_btn.grid(column=0, row=7, pady=(40, 0), padx=(80, 0))
 
     def save_exercise_note(self, exercise_name: str, note: str) -> None:
-        note = note.rstrip()[:128]
+        note = note.rstrip()[:200]
         self.handler.save_note(exercise_name, note)
         self.show_exercise(exercise_name)
 
@@ -889,7 +891,7 @@ class App(ctk.CTk):
         submit_btn = ctk.CTkButton(del_note, text="Submit", font=(self.font_type, self.header_size), command=lambda: submit(radio_var.get()))
         submit_btn.pack(side=ctk.TOP, pady=(45, 10))
         
-    def placeholder(self) -> None:
+    # def placeholder(self) -> None:
         self.clear_main_panel()
         self.clear_main_panel()
 
