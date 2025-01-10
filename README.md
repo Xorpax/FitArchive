@@ -9,4 +9,6 @@ By the end the app should:
 - visualise the target muscles using a diagram
 - offer different ways of visualising my progress (bar charts, pie charts, graphs, etc.)
 
-- pyinstaller --windowed --hidden-import=pandas._libs.tslibs.base --hidden-import=PIL --add-data="C:\Users\petar\AppData\Local\Programs\Python\Python313\Lib\site-packages;pillow" --add-data="C:\Users\petar\AppData\Local\Programs\Python\Python313\Lib\site-packages;customtkinter" -n FitArchive .\app.py
+The Pyinstaller command used to compile the code (you need to have the modules/libraries installed):
+
+pyinstaller --windowed --hidden-import=pandas._libs.tslibs.base --hidden-import=PIL --add-data="C:\Users\<user>\AppData\Local\Programs\Python\Python313\Lib\site-packages;pillow" --add-data="C:\Users\<user>\AppData\Local\Programs\Python\Python313\Lib\site-packages;customtkinter" --add-data="C:\Users\<user>\AppData\Local\Programs\Python\Python313\Lib\site-packages;seaborn" -n FitArchive .\app.py
