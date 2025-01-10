@@ -42,7 +42,6 @@ class SidePanel(ctk.CTkFrame):
         self.fitarchive_img = ctk.CTkImage(Image.open(self.fitarchive_path), size=(25, 25))
         self.landing_page_btn = ctk.CTkButton(self,
                                        corner_radius=0,
-                                       text="FitArchive",
                                        image=self.fitarchive_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
@@ -54,7 +53,6 @@ class SidePanel(ctk.CTkFrame):
 
         self.title_btn = ctk.CTkButton(self,
                                        corner_radius=0,
-                                       text="Side Panel",
                                        image=self.collapse_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
@@ -63,12 +61,10 @@ class SidePanel(ctk.CTkFrame):
                                        anchor=ctk.W, 
                                        command=self.collapse, 
                                        textvariable=ctk.StringVar(value="Side Panel"))
-        
 
         self.exercises_img = ctk.CTkImage(Image.open(self.exercises_path), size=(25, 25))
         self.exercises_btn = ctk.CTkButton(self,
                                            corner_radius=0,
-                                           text="Exercises",
                                            image=self.exercises_img,
                                            compound=ctk.RIGHT,
                                            text_color=self.text_color,
@@ -80,7 +76,6 @@ class SidePanel(ctk.CTkFrame):
         self.bmi_calculator_img = ctk.CTkImage(Image.open(self.bmi_calculator_path), size=(25, 25))
         self.bmi_calculator_btn = ctk.CTkButton(self,
                                                 corner_radius=0,
-                                                text="BMI Calculator",
                                                 image=self.bmi_calculator_img,
                                                 compound=ctk.RIGHT,
                                                 text_color=self.text_color,
@@ -88,25 +83,10 @@ class SidePanel(ctk.CTkFrame):
                                                 height=self.btn_height,
                                                 anchor=ctk.W,
                                                 textvariable=ctk.StringVar(value="BMI Calculator"))
-        
-        # self.measurements_img = ctk.CTkImage(Image.open(self.measurements_path), size=(25, 25))
-        # self.measurements_btn = ctk.CTkButton(self,
-        #                                       corner_radius=0,
-        #                                       text="Measurements",
-        #                                       image=self.measurements_img,
-        #                                       compound=ctk.RIGHT,
-        #                                       text_color=self.text_color,
-        #                                       font=(self.font, self.font_size),
-        #                                       height=self.btn_height,
-        #                                       anchor=ctk.W,
-        #                                       textvariable=ctk.StringVar(value="Measurements"))
-        # self.measurements_btn.pack(anchor=ctk.N, fill=ctk.X)
-        # self.buttons.append(self.measurements_btn)
 
         self.notes_img = ctk.CTkImage(Image.open(self.notes_path), size=(25, 25))
         self.notes_btn = ctk.CTkButton(self,
                                        corner_radius=0,
-                                       text="Notes",
                                        image=self.notes_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
@@ -118,7 +98,6 @@ class SidePanel(ctk.CTkFrame):
         self.settings_img = ctk.CTkImage(Image.open(self.settings_path), size=(25, 25))
         self.settings_btn = ctk.CTkButton(self,
                                              corner_radius=0,
-                                             text="Settings",
                                              image=self.settings_img,
                                              compound=ctk.RIGHT,
                                              text_color=self.text_color,
