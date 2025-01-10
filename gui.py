@@ -37,12 +37,10 @@ class SidePanel(ctk.CTkFrame):
         self.initialise_buttons()
     
     def initialise_buttons(self) -> None:
-        self.state = "expanded"
-
-        self.fitarchive_img = ctk.CTkImage(Image.open(self.fitarchive_path), size=(25, 25))
-        self.landing_page_btn = ctk.CTkButton(self,
+        fitarchive_img = ctk.CTkImage(Image.open(self.fitarchive_path), size=(25, 25))
+        landing_page_btn = ctk.CTkButton(self,
                                        corner_radius=0,
-                                       image=self.fitarchive_img,
+                                       image=fitarchive_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
                                        font=(self.font, self.header_size),
@@ -62,10 +60,10 @@ class SidePanel(ctk.CTkFrame):
                                        command=self.collapse, 
                                        textvariable=ctk.StringVar(value="Side Panel"))
 
-        self.exercises_img = ctk.CTkImage(Image.open(self.exercises_path), size=(25, 25))
-        self.exercises_btn = ctk.CTkButton(self,
+        exercises_img = ctk.CTkImage(Image.open(self.exercises_path), size=(25, 25))
+        exercises_btn = ctk.CTkButton(self,
                                            corner_radius=0,
-                                           image=self.exercises_img,
+                                           image=exercises_img,
                                            compound=ctk.RIGHT,
                                            text_color=self.text_color,
                                            font=(self.font, self.header_size),
@@ -73,10 +71,10 @@ class SidePanel(ctk.CTkFrame):
                                            anchor=ctk.W,
                                            textvariable=ctk.StringVar(value="Exercises"))
 
-        self.bmi_calculator_img = ctk.CTkImage(Image.open(self.bmi_calculator_path), size=(25, 25))
-        self.bmi_calculator_btn = ctk.CTkButton(self,
+        bmi_calculator_img = ctk.CTkImage(Image.open(self.bmi_calculator_path), size=(25, 25))
+        bmi_calculator_btn = ctk.CTkButton(self,
                                                 corner_radius=0,
-                                                image=self.bmi_calculator_img,
+                                                image=bmi_calculator_img,
                                                 compound=ctk.RIGHT,
                                                 text_color=self.text_color,
                                                 font=(self.font, self.header_size),
@@ -84,10 +82,10 @@ class SidePanel(ctk.CTkFrame):
                                                 anchor=ctk.W,
                                                 textvariable=ctk.StringVar(value="BMI Calculator"))
 
-        self.notes_img = ctk.CTkImage(Image.open(self.notes_path), size=(25, 25))
-        self.notes_btn = ctk.CTkButton(self,
+        notes_img = ctk.CTkImage(Image.open(self.notes_path), size=(25, 25))
+        notes_btn = ctk.CTkButton(self,
                                        corner_radius=0,
-                                       image=self.notes_img,
+                                       image=notes_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
                                        font=(self.font, self.header_size),
@@ -95,10 +93,10 @@ class SidePanel(ctk.CTkFrame):
                                        anchor=ctk.W,
                                        textvariable=ctk.StringVar(value="Notes"))  
 
-        self.settings_img = ctk.CTkImage(Image.open(self.settings_path), size=(25, 25))
-        self.settings_btn = ctk.CTkButton(self,
+        settings_img = ctk.CTkImage(Image.open(self.settings_path), size=(25, 25))
+        settings_btn = ctk.CTkButton(self,
                                              corner_radius=0,
-                                             image=self.settings_img,
+                                             image=settings_img,
                                              compound=ctk.RIGHT,
                                              text_color=self.text_color,
                                              font=(self.font, self.header_size),
@@ -107,18 +105,18 @@ class SidePanel(ctk.CTkFrame):
                                              textvariable=ctk.StringVar(value="Settings"))
 
         self.buttons.append(self.title_btn)
-        self.buttons.append(self.landing_page_btn)
-        self.buttons.append(self.exercises_btn)
-        self.buttons.append(self.bmi_calculator_btn)
-        self.buttons.append(self.notes_btn)
-        self.buttons.append(self.settings_btn)
+        self.buttons.append(landing_page_btn)
+        self.buttons.append(exercises_btn)
+        self.buttons.append(bmi_calculator_btn)
+        self.buttons.append(notes_btn)
+        self.buttons.append(settings_btn)
 
         self.title_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.landing_page_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.exercises_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.bmi_calculator_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.notes_btn.pack(anchor=ctk.N, fill=ctk.X)
-        self.settings_btn.pack(anchor=ctk.S, fill=ctk.X, side=ctk.BOTTOM)
+        landing_page_btn.pack(anchor=ctk.N, fill=ctk.X)
+        exercises_btn.pack(anchor=ctk.N, fill=ctk.X)
+        bmi_calculator_btn.pack(anchor=ctk.N, fill=ctk.X)
+        notes_btn.pack(anchor=ctk.N, fill=ctk.X)
+        settings_btn.pack(anchor=ctk.S, fill=ctk.X, side=ctk.BOTTOM)
 
     def collapse(self) -> None:
         for btn in self.buttons:
