@@ -891,8 +891,6 @@ class App(ctk.CTk):
         green_btn = ctk.CTkButton(settings_window, text="blue", command=lambda: ctk.set_default_color_theme("green"))
         green_btn.pack()
 
-
-
     def under_construction(self) -> None:
         lbl = ctk.CTkLabel(self.main_panel, text="Under Construction...", font=(self.font_type, self.header_size, "bold"))
         self.main_panel.columnconfigure(0, weight=1)
