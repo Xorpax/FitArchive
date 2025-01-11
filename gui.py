@@ -951,12 +951,12 @@ class App(ctk.CTk):
         main_header_size_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=header_sizes, width=85, height=35)
         main_header_size_entry.grid(column=1, row=4, pady=25, padx=40)
         # font types
-        fonts = list(font.families())
-        fonts.insert(0, self.font_type)
-        fonts.append("Sans Serif")
+        main_fonts = list(font.families())
+        main_fonts.insert(0, self.font_type)
+        main_fonts.append("Sans Serif")
         main_font_label = ctk.CTkLabel(settings_frame, text="Font", font=(self.font_type, self.font_size))
         main_font_label.grid(column=0, row=5, pady=25, padx=40)
-        main_font_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=fonts, width=110, height=35)
+        main_font_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=main_fonts, width=110, height=35)
         main_font_entry.grid(column=1, row=5, pady=25, padx=40)
         
 
@@ -971,9 +971,12 @@ class App(ctk.CTk):
         side_size_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=side_font_sizes, width=85, height=35)
         side_size_entry.grid(column=1, row=7, pady=25, padx=40)
         # font types
+        side_fonts = list(font.families())
+        side_fonts.insert(0, self.side_panel.font)
+        side_fonts.append("Sans Serif")
         side_font_label = ctk.CTkLabel(settings_frame, text="Font", font=(self.font_type, self.font_size))
         side_font_label.grid(column=0, row=8, pady=25, padx=40)
-        side_font_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=fonts, width=110, height=35)
+        side_font_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=side_fonts, width=110, height=35)
         side_font_entry.grid(column=1, row=8, pady=25, padx=40)
 
 
