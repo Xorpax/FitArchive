@@ -882,14 +882,42 @@ class App(ctk.CTk):
 
     def settings(self) -> None:
         def save_settings():
-            return
+            # main panel
+            main_font_size = main_font_size_entry.get()
+            main_header_size = main_header_size_entry.get()
+            main_font = main_font_entry.get()
+            # side panel
+            side_font_size = side_size_entry.get()
+            side_font = side_font_entry.get()
+            # appearance
+            appearance = theme_entry.get()
+            colour_appearance = colour_theme.get()
+
+            
+            
+            CONFIG["MainPanel"]["FontSize"] = main_font_size_entry.get()
+            CONFIG["MainPanel"]["HeaderSize"] = main_header_size_entry.get()
+            CONFIG["MainPanel"]["Font"] = main_font_entry.get()
+
+            CONFIG["SidePanel"]["FontSize"] = side_size_entry.get()
+            CONFIG["SidePanel"]["Font"] = side_font_entry.get()
+
+            CONFIG["Appearance"]["Theme"] = theme_entry.get()
+            if colour_appearance not in ("blue", "green"):
+                CONFIG["Appearance"]["ColourScheme"] = fr".\themes\{colour_theme.get()}.json"
+            else:
+                CONFIG["Appearance"]["ColourScheme"] = colour_theme.get()
+
+            with open(CONFIG_PATH, "w") as configfile:
+                CONFIG.write(configfile)
+            settings_window.destroy()
 
         x = (self.screen_width - 920) // 2
         y = (self.screen_height - 600) // 2
 
         settings_window = ctk.CTkToplevel(self)
         settings_window.title("Settings")
-        settings_window.geometry(f"900x540+{x}+{y}")
+        settings_window.geometry(f"900x630+{x}+{y}")
         settings_window.resizable(False, False)
 
         # use after due to customtkinter's implementation where some data is set after 200ms
@@ -966,13 +994,14 @@ class App(ctk.CTk):
         themes.append("blue")
         themes.append("green")
         themes.insert(0, COLOUR_SCHEME)
+        themes[0] = COLOUR_SCHEME.lstrip(r".\themes\\").rstrip(".json")
         colour_theme = ctk.CTkOptionMenu(settings_frame, values=themes, font=(self.font_type, self.font_size), height=35)
         colour_theme.grid(column=1, row=11, padx=40)
 
         # saving settings
         info_label = ctk.CTkLabel(settings_frame, text="Changes will be applied after restarting FitArchive", font=(self.font_type, self.font_size), text_color="red")
         info_label.grid(column=1, row=12, padx=40, pady=(40, 0))
-        save_button = ctk.CTkButton(settings_frame, text="Save", font=(self.font_type, self.font_size), height=45)
+        save_button = ctk.CTkButton(settings_frame, text="Save", font=(self.font_type, self.font_size), height=45, command=save_settings)
         save_button.grid(column=1, row=13, padx=40, pady=40)
 
     def under_construction(self) -> None:
