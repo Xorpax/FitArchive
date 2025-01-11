@@ -8,8 +8,9 @@ import os
 import string
 from tkinter import font
 
+CONFIG_PATH = r".\config.ini"
 CONFIG = configparser.ConfigParser()
-CONFIG.read(r".\config.ini")
+CONFIG.read(CONFIG_PATH)
 THEMES_PATH = r".\themes"
 # ctk.set_appearance_mode("dark")
 # ctk.set_default_color_theme("dark-blue")
