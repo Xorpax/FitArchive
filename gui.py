@@ -143,7 +143,9 @@ class App(ctk.CTk):
         super().__init__()
 
         # config info
-        self.read_config()
+        self.font_type = CONFIG["MainPanel"]["Font"]
+        self.header_size = int(CONFIG["MainPanel"]["HeaderSize"])
+        self.font_size = int(CONFIG["MainPanel"]["FontSize"])
 
         # button functions
         self.btn_functions = {
@@ -252,12 +254,7 @@ class App(ctk.CTk):
         for btn in self.side_panel.buttons:
             btn_val = btn.cget("textvariable").get()
             if btn_val != "Side Panel":
-                btn.configure(command=self.btn_functions.get(btn_val))
-
-    def read_config(self) -> None:
-        self.font_type = CONFIG["MainPanel"]["Font"]
-        self.header_size = int(CONFIG["MainPanel"]["HeaderSize"])
-        self.font_size = int(CONFIG["MainPanel"]["FontSize"])
+                btn.configure(command=self.btn_functions.get(btn_val))        
 
     def reset_config(self) -> None:
         self.main_panel.columnconfigure(list(range(100)), weight=0)
