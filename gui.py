@@ -246,16 +246,6 @@ class App(ctk.CTk):
         self.main_panel.pack(expand=True, fill=ctk.BOTH, side=ctk.RIGHT)
         # for widget in self.main_panel.winfo_children():
         #     widget.destroy()
-    
-    def clear_side_panel(self) -> None:
-        print("Clearing side panel")
-        self.side_panel.destroy()
-        self.side_panel = SidePanel(self, corner_radius=0, border_color="blue", border_width=0)
-        self.side_panel.pack(expand=False, side=ctk.LEFT, fill=ctk.BOTH, anchor=ctk.NW, padx=1)
-        for btn in self.side_panel.buttons:
-            btn_val = btn.cget("textvariable").get()
-            if btn_val != "Side Panel":
-                btn.configure(command=self.btn_functions.get(btn_val))        
 
     def reset_config(self) -> None:
         self.main_panel.columnconfigure(list(range(100)), weight=0)
@@ -890,12 +880,6 @@ class App(ctk.CTk):
         self.clear_main_panel()
 
     def settings(self) -> None:
-        # self.clear_main_panel()
-        self.reset_config()
-        def update_theme(name):
-            ctk.set_default_color_theme(name)
-            self.clear_side_panel()
-            # change windows to update main panel
         def save_settings():
             return
 
