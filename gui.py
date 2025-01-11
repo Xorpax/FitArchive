@@ -2,7 +2,6 @@ import customtkinter as ctk
 from PIL import Image
 import configparser
 from csv_handler import Handler
-import pandas as pd
 from datetime import datetime
 import os
 import string
