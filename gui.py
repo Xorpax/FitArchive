@@ -6,6 +6,7 @@ import pandas as pd
 from datetime import datetime
 import os
 import string
+from tkinter import font
 
 CONFIG = configparser.ConfigParser()
 CONFIG.read(r".\config.ini")
@@ -13,10 +14,11 @@ THEMES_PATH = r".\themes"
 # ctk.set_appearance_mode("dark")
 # ctk.set_default_color_theme("dark-blue")
 # ctk.set_default_color_theme("green")
+THEME = CONFIG["Appearance"]["Theme"]
+COLOUR_SCHEME = CONFIG["Appearance"]["ColourScheme"]
 
-ctk.set_appearance_mode("light")
-ctk.set_default_color_theme(r".\themes\autumn.json")
-# ctk.set_default_color_theme(r".\themes\lavender.json")
+ctk.set_appearance_mode(THEME)
+ctk.set_default_color_theme(COLOUR_SCHEME)
 
 
 class SidePanel(ctk.CTkFrame):
@@ -34,7 +36,6 @@ class SidePanel(ctk.CTkFrame):
         self.notes_path = r".\assets\notes.png"
         self.settings_path = r".\assets\settings.png"
         self.font = CONFIG["SidePanel"]["Font"]
-        self.header_size = int(CONFIG["SidePanel"]["HeaderSize"])
         self.font_size = int(CONFIG["SidePanel"]["FontSize"])
         self.text_color = CONFIG["SidePanel"]["TextColor"]
         self.buttons = []
@@ -49,7 +50,7 @@ class SidePanel(ctk.CTkFrame):
                                        image=fitarchive_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
-                                       font=(self.font, self.header_size),
+                                       font=(self.font, self.font_size),
                                        height=self.btn_height,
                                        anchor=ctk.W, 
                                        command=self.collapse, 
@@ -60,7 +61,7 @@ class SidePanel(ctk.CTkFrame):
                                        image=self.collapse_img,
                                        compound=ctk.RIGHT,
                                        text_color=self.text_color,
-                                       font=(self.font, self.header_size),
+                                       font=(self.font, self.font_size),
                                        height=self.btn_height,
                                        anchor=ctk.W, 
                                        command=self.collapse, 
@@ -72,7 +73,7 @@ class SidePanel(ctk.CTkFrame):
                                     image=exercises_img,
                                     compound=ctk.RIGHT,
                                     text_color=self.text_color,
-                                    font=(self.font, self.header_size),
+                                    font=(self.font, self.font_size),
                                     height=self.btn_height,
                                     anchor=ctk.W,
                                     textvariable=ctk.StringVar(value="Exercises"))
@@ -83,7 +84,7 @@ class SidePanel(ctk.CTkFrame):
                                         image=bmi_calculator_img,
                                         compound=ctk.RIGHT,
                                         text_color=self.text_color,
-                                        font=(self.font, self.header_size),
+                                        font=(self.font, self.font_size),
                                         height=self.btn_height,
                                         anchor=ctk.W,
                                         textvariable=ctk.StringVar(value="BMI Calculator"))
@@ -94,7 +95,7 @@ class SidePanel(ctk.CTkFrame):
                                 image=notes_img,
                                 compound=ctk.RIGHT,
                                 text_color=self.text_color,
-                                font=(self.font, self.header_size),
+                                font=(self.font, self.font_size),
                                 height=self.btn_height,
                                 anchor=ctk.W,
                                 textvariable=ctk.StringVar(value="Notes"))  
@@ -105,7 +106,7 @@ class SidePanel(ctk.CTkFrame):
                                     image=settings_img,
                                     compound=ctk.RIGHT,
                                     text_color=self.text_color,
-                                    font=(self.font, self.header_size),
+                                    font=(self.font, self.font_size),
                                     height=self.btn_height,
                                     anchor=ctk.W,
                                     textvariable=ctk.StringVar(value="Settings"))
@@ -185,7 +186,7 @@ class App(ctk.CTk):
         # file operations
         self.csv_path = csv_path
         self.handler = Handler(self.csv_path)
-        
+              
 
     def show_landing_page(self) -> None:
         # welcome section
@@ -895,14 +896,15 @@ class App(ctk.CTk):
             ctk.set_default_color_theme(name)
             self.clear_side_panel()
             # change windows to update main panel
-            
+        def save_settings():
+            return
 
         x = (self.screen_width - 920) // 2
-        y = (self.screen_height - 540) // 2
+        y = (self.screen_height - 600) // 2
 
         settings_window = ctk.CTkToplevel(self)
         settings_window.title("Settings")
-        settings_window.geometry(f"700x540+{x}+{y}")
+        settings_window.geometry(f"900x540+{x}+{y}")
         settings_window.resizable(False, False)
 
         # use after due to customtkinter's implementation where some data is set after 200ms
@@ -914,15 +916,79 @@ class App(ctk.CTk):
         settings_frame = ctk.CTkScrollableFrame(settings_window, corner_radius=0)
         settings_frame.grid(column=0, row=0, sticky=ctk.NSEW)
 
-        settings_frame.columnconfigure(0, weight=1)
         appearance_label = ctk.CTkLabel(settings_frame, text="Appearance", font=(self.font_type, self.header_size))
-        appearance_label.grid(column=0, row=0, pady=15)
+        appearance_label.grid(column=1, row=0, pady=35, sticky=ctk.N, padx=80)
 
 
-        # blue_btn = ctk.CTkButton(settings_frame, text="green", command=lambda: ctk.set_default_color_theme("blue"))
-        # blue_btn.grid(column=0, row=1, pady=10, sticky=ctk.N)
-        # green_btn = ctk.CTkButton(settings_frame, text="blue", command=lambda: update_theme(r".\themes\breeze.json"))
-        # green_btn.grid(column=0, row=2, pady=10, sticky=ctk.N)
+        # main screen appearance
+        main_panel_label = ctk.CTkLabel(settings_frame, text="Main Screen", font=(self.font_type, self.font_size, "bold"))
+        main_panel_label.grid(column=1, row=2, pady=15, sticky=ctk.N, padx=80)
+        # font size
+        main_font_size_label = ctk.CTkLabel(settings_frame, text="Font size", font=(self.font_type, self.font_size))
+        main_font_size_label.grid(column=0, row=3, pady=25, padx=40)
+        main_font_sizes = [str(x) for x in range(12, 36, 2)]
+        main_font_sizes.insert(0, str(self.font_size))
+        main_font_size_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=main_font_sizes, width=85, height=35)
+        main_font_size_entry.grid(column=1, row=3, pady=25, padx=40)
+        # header size
+        main_header_size_label = ctk.CTkLabel(settings_frame, text="Header size", font=(self.font_type, self.font_size))
+        main_header_size_label.grid(column=0, row=4, pady=25, padx=40)
+        header_sizes = [str(x) for x in range(12, 36, 2)]
+        header_sizes.insert(0, str(self.header_size))
+        main_header_size_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=header_sizes, width=85, height=35)
+        main_header_size_entry.grid(column=1, row=4, pady=25, padx=40)
+        # font types
+        fonts = list(font.families())
+        fonts.insert(0, self.font_type)
+        fonts.append("Sans Serif")
+        main_font_label = ctk.CTkLabel(settings_frame, text="Font", font=(self.font_type, self.font_size))
+        main_font_label.grid(column=0, row=5, pady=25, padx=40)
+        main_font_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=fonts, width=110, height=35)
+        main_font_entry.grid(column=1, row=5, pady=25, padx=40)
+        
+
+        # side panel appearance
+        side_panel_label = ctk.CTkLabel(settings_frame, text="Side Panel", font=(self.font_type, self.font_size, "bold"))
+        side_panel_label.grid(column=1, row=6, pady=15, sticky=ctk.N, padx=80)
+        side_font_size_label = ctk.CTkLabel(settings_frame, text="Font size", font=(self.font_type, self.font_size))
+        # font sizes
+        side_font_size_label.grid(column=0, row=7, pady=25, padx=40)
+        side_font_sizes = [str(x) for x in range(12, 36, 2)]
+        side_font_sizes.insert(0, str(self.side_panel.font_size))
+        side_size_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=side_font_sizes, width=85, height=35)
+        side_size_entry.grid(column=1, row=7, pady=25, padx=40)
+        # font types
+        side_font_label = ctk.CTkLabel(settings_frame, text="Font", font=(self.font_type, self.font_size))
+        side_font_label.grid(column=0, row=8, pady=25, padx=40)
+        side_font_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=fonts, width=110, height=35)
+        side_font_entry.grid(column=1, row=8, pady=25, padx=40)
+
+
+        # display themes
+        display_label = ctk.CTkLabel(settings_frame, text="Display", font=(self.font_type, self.font_size, "bold"))
+        display_label.grid(column=1, row=9, pady=15, sticky=ctk.N, padx=80)
+        # appearance themes
+        theme_font_label = ctk.CTkLabel(settings_frame, text="Appearance Theme", font=(self.font_type, self.font_size))
+        theme_font_label.grid(column=0, row=10, pady=25, padx=40)
+        appearance_themes = ["system", "dark", "light"]
+        appearance_themes.insert(0, THEME)
+        theme_entry = ctk.CTkOptionMenu(settings_frame, font=(self.font_type, self.font_size), values=appearance_themes, height=35)
+        theme_entry.grid(column=1, row=10, pady=25, padx=40)
+        # colour themes
+        colour_theme_font_label = ctk.CTkLabel(settings_frame, text="Colour Theme", font=(self.font_type, self.font_size))
+        colour_theme_font_label.grid(column=0, row=11, pady=25, padx=40)
+        themes = [theme.replace(".json", "") for theme in os.listdir(r".\themes")]
+        themes.append("blue")
+        themes.append("green")
+        themes.insert(0, COLOUR_SCHEME)
+        colour_theme = ctk.CTkOptionMenu(settings_frame, values=themes, font=(self.font_type, self.font_size), height=35)
+        colour_theme.grid(column=1, row=11, padx=40)
+
+        # saving settings
+        info_label = ctk.CTkLabel(settings_frame, text="Changes will be applied after restarting FitArchive", font=(self.font_type, self.font_size), text_color="red")
+        info_label.grid(column=1, row=12, padx=40, pady=(40, 0))
+        save_button = ctk.CTkButton(settings_frame, text="Save", font=(self.font_type, self.font_size), height=45)
+        save_button.grid(column=1, row=13, padx=40, pady=40)
 
     def under_construction(self) -> None:
         lbl = ctk.CTkLabel(self.main_panel, text="Under Construction...", font=(self.font_type, self.header_size, "bold"))
