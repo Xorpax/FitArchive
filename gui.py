@@ -11,9 +11,6 @@ CONFIG_PATH = r".\config.ini"
 CONFIG = configparser.ConfigParser()
 CONFIG.read(CONFIG_PATH)
 THEMES_PATH = r".\themes"
-# ctk.set_appearance_mode("dark")
-# ctk.set_default_color_theme("dark-blue")
-# ctk.set_default_color_theme("green")
 THEME = CONFIG["Appearance"]["Theme"]
 COLOUR_SCHEME = CONFIG["Appearance"]["ColourScheme"]
 
