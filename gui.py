@@ -9,10 +9,15 @@ import string
 
 CONFIG = configparser.ConfigParser()
 CONFIG.read(r".\config.ini")
-
+THEMES_PATH = r".\themes"
 # ctk.set_appearance_mode("dark")
 # ctk.set_default_color_theme("dark-blue")
 # ctk.set_default_color_theme("green")
+
+ctk.set_appearance_mode("light")
+ctk.set_default_color_theme(r".\themes\autumn.json")
+# ctk.set_default_color_theme(r".\themes\lavender.json")
+
 
 class SidePanel(ctk.CTkFrame):
     def __init__(self, *args, **kwargs) -> None:
@@ -235,9 +240,22 @@ class App(ctk.CTk):
     
     def clear_main_panel(self) -> None:
         print("Clearing main panel...")
-        for widget in self.main_panel.winfo_children():
-            widget.destroy()
+        self.main_panel.destroy()
+        self.main_panel = ctk.CTkFrame(self, corner_radius=0, border_color="red", border_width=0)
+        self.main_panel.pack(expand=True, fill=ctk.BOTH, side=ctk.RIGHT)
+        # for widget in self.main_panel.winfo_children():
+        #     widget.destroy()
     
+    def clear_side_panel(self) -> None:
+        print("Clearing side panel")
+        self.side_panel.destroy()
+        self.side_panel = SidePanel(self, corner_radius=0, border_color="blue", border_width=0)
+        self.side_panel.pack(expand=False, side=ctk.LEFT, fill=ctk.BOTH, anchor=ctk.NW, padx=1)
+        for btn in self.side_panel.buttons:
+            btn_val = btn.cget("textvariable").get()
+            if btn_val != "Side Panel":
+                btn.configure(command=self.btn_functions.get(btn_val))
+
     def reset_config(self) -> None:
         self.main_panel.columnconfigure(list(range(100)), weight=0)
         self.main_panel.rowconfigure(list(range(100)), weight=0)
@@ -873,6 +891,11 @@ class App(ctk.CTk):
     def settings(self) -> None:
         # self.clear_main_panel()
         self.reset_config()
+        def update_theme(name):
+            ctk.set_default_color_theme(name)
+            self.clear_side_panel()
+            # change windows to update main panel
+            
 
         x = (self.screen_width - 640) // 2
         y = (self.screen_height -360) // 2
@@ -888,7 +911,7 @@ class App(ctk.CTk):
 
         blue_btn = ctk.CTkButton(settings_window, text="green", command=lambda: ctk.set_default_color_theme("blue"))
         blue_btn.pack()
-        green_btn = ctk.CTkButton(settings_window, text="blue", command=lambda: ctk.set_default_color_theme("green"))
+        green_btn = ctk.CTkButton(settings_window, text="blue", command=lambda: update_theme(r".\themes\breeze.json"))
         green_btn.pack()
 
     def under_construction(self) -> None:
