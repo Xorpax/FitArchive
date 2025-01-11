@@ -38,3 +38,6 @@ FitArchive was made by myself (Xorpax) as a workout tracker.
 ![image](./preview/theme_autumn.png "Autumn Light Theme")
 # Lavender Light Theme
 ![image](./preview/theme_lavender.png "Lavender Light Theme")
+
+
+Do not hesitate to contact me through my discord (kyloren6933) if you have any questions/feedback!
