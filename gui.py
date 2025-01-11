@@ -33,12 +33,12 @@ class SidePanel(ctk.CTkFrame):
         self.measurements_path = r".\assets\muscle.png"
         self.notes_path = r".\assets\notes.png"
         self.settings_path = r".\assets\settings.png"
-        self.font = CONFIG["UI"]["SidePanelFont"]
-        self.header_size = int(CONFIG["UI"]["SidePanelHeaderSize"])
-        self.font_size = int(CONFIG["UI"]["SidePanelFontSize"])
-        self.text_color = CONFIG["UI"]["SidePanelTextColor"]
+        self.font = CONFIG["SidePanel"]["Font"]
+        self.header_size = int(CONFIG["SidePanel"]["HeaderSize"])
+        self.font_size = int(CONFIG["SidePanel"]["FontSize"])
+        self.text_color = CONFIG["SidePanel"]["TextColor"]
         self.buttons = []
-        self.btn_height = int(CONFIG["UI"]["SidePanelBtnHeight"])
+        self.btn_height = int(CONFIG["SidePanel"]["BtnHeight"])
         
         self.initialise_buttons()
     
@@ -143,9 +143,7 @@ class App(ctk.CTk):
         super().__init__()
 
         # config info
-        self.font_type = CONFIG["UI"]["MainPanelFont"]
-        self.header_size = int(CONFIG["UI"]["MainPanelHeaderSize"])
-        self.font_size = int(CONFIG["UI"]["MainPanelFontSize"])
+        self.read_config()
 
         # button functions
         self.btn_functions = {
@@ -255,6 +253,11 @@ class App(ctk.CTk):
             btn_val = btn.cget("textvariable").get()
             if btn_val != "Side Panel":
                 btn.configure(command=self.btn_functions.get(btn_val))
+
+    def read_config(self) -> None:
+        self.font_type = CONFIG["MainPanel"]["Font"]
+        self.header_size = int(CONFIG["MainPanel"]["HeaderSize"])
+        self.font_size = int(CONFIG["MainPanel"]["FontSize"])
 
     def reset_config(self) -> None:
         self.main_panel.columnconfigure(list(range(100)), weight=0)
@@ -897,22 +900,32 @@ class App(ctk.CTk):
             # change windows to update main panel
             
 
-        x = (self.screen_width - 640) // 2
-        y = (self.screen_height -360) // 2
+        x = (self.screen_width - 920) // 2
+        y = (self.screen_height - 540) // 2
 
         settings_window = ctk.CTkToplevel(self)
-        settings_window.title("Add note")
-        settings_window.geometry(f"1000x700+{x}+{y}")
+        settings_window.title("Settings")
+        settings_window.geometry(f"700x540+{x}+{y}")
         settings_window.resizable(False, False)
 
         # use after due to customtkinter's implementation where some data is set after 200ms
         settings_window.after(300, settings_window.focus)
         settings_window.after(200, lambda: settings_window.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
 
-        blue_btn = ctk.CTkButton(settings_window, text="green", command=lambda: ctk.set_default_color_theme("blue"))
-        blue_btn.pack()
-        green_btn = ctk.CTkButton(settings_window, text="blue", command=lambda: update_theme(r".\themes\breeze.json"))
-        green_btn.pack()
+        settings_window.columnconfigure(0, weight=1)
+        settings_window.rowconfigure(0, weight=1)
+        settings_frame = ctk.CTkScrollableFrame(settings_window, corner_radius=0)
+        settings_frame.grid(column=0, row=0, sticky=ctk.NSEW)
+
+        settings_frame.columnconfigure(0, weight=1)
+        appearance_label = ctk.CTkLabel(settings_frame, text="Appearance", font=(self.font_type, self.header_size))
+        appearance_label.grid(column=0, row=0, pady=15)
+
+
+        # blue_btn = ctk.CTkButton(settings_frame, text="green", command=lambda: ctk.set_default_color_theme("blue"))
+        # blue_btn.grid(column=0, row=1, pady=10, sticky=ctk.N)
+        # green_btn = ctk.CTkButton(settings_frame, text="blue", command=lambda: update_theme(r".\themes\breeze.json"))
+        # green_btn.grid(column=0, row=2, pady=10, sticky=ctk.N)
 
     def under_construction(self) -> None:
         lbl = ctk.CTkLabel(self.main_panel, text="Under Construction...", font=(self.font_type, self.header_size, "bold"))
