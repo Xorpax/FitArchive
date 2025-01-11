@@ -883,17 +883,7 @@ class App(ctk.CTk):
     def settings(self) -> None:
         def save_settings():
             # main panel
-            main_font_size = main_font_size_entry.get()
-            main_header_size = main_header_size_entry.get()
-            main_font = main_font_entry.get()
-            # side panel
-            side_font_size = side_size_entry.get()
-            side_font = side_font_entry.get()
-            # appearance
-            appearance = theme_entry.get()
             colour_appearance = colour_theme.get()
-
-            
             
             CONFIG["MainPanel"]["FontSize"] = main_font_size_entry.get()
             CONFIG["MainPanel"]["HeaderSize"] = main_header_size_entry.get()
@@ -904,9 +894,9 @@ class App(ctk.CTk):
 
             CONFIG["Appearance"]["Theme"] = theme_entry.get()
             if colour_appearance not in ("blue", "green"):
-                CONFIG["Appearance"]["ColourScheme"] = fr".\themes\{colour_theme.get()}.json"
+                CONFIG["Appearance"]["ColourScheme"] = fr".\themes\{colour_appearance}.json"
             else:
-                CONFIG["Appearance"]["ColourScheme"] = colour_theme.get()
+                CONFIG["Appearance"]["ColourScheme"] = colour_appearance
 
             with open(CONFIG_PATH, "w") as configfile:
                 CONFIG.write(configfile)
