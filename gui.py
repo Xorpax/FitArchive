@@ -7,10 +7,13 @@ import os
 import string
 from tkinter import font
 
-CONFIG_PATH = r".\config.ini"
+CURRENT_DIR = os.getcwd()
+ASSETS_PATH = os.path.join(CURRENT_DIR, "assets")
+CONFIG_PATH = os.path.join(CURRENT_DIR, "config.ini")
 CONFIG = configparser.ConfigParser()
 CONFIG.read(CONFIG_PATH)
-THEMES_PATH = r".\themes"
+THEMES_PATH = os.path.join(CURRENT_DIR, "themes")
+NOTES_PATH = os.path.join(CURRENT_DIR, "notes")
 THEME = CONFIG["Appearance"]["Theme"]
 COLOUR_SCHEME = CONFIG["Appearance"]["ColourScheme"]
 
@@ -22,16 +25,16 @@ class SidePanel(ctk.CTkFrame):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         
-        self.fitarchive_path = r".\assets\FitArchiveLogo.png"
-        self.collapse_path = r".\assets\push_left_icon.png"
+        self.fitarchive_path = os.path.join(ASSETS_PATH, "FitArchiveLogo.png")
+        self.collapse_path = os.path.join(ASSETS_PATH, "push_left_icon.png")
         self.collapse_img = ctk.CTkImage(Image.open(self.collapse_path), size=(25, 25))
-        self.expand_path = r".\assets\push_right_icon.png"
+        self.expand_path = os.path.join(ASSETS_PATH, "push_right_icon.png")
         self.expand_img = ctk.CTkImage(Image.open(self.expand_path), size=(25, 25))
-        self.exercises_path = r".\assets\exercise.png"
-        self.bmi_calculator_path = r".\assets\calculator.png"
-        self.measurements_path = r".\assets\muscle.png"
-        self.notes_path = r".\assets\notes.png"
-        self.settings_path = r".\assets\settings.png"
+        self.exercises_path = os.path.join(ASSETS_PATH, "exercise.png")
+        self.bmi_calculator_path = os.path.join(ASSETS_PATH, "calculator.png")
+        self.measurements_path = os.path.join(ASSETS_PATH, "muscle.png")
+        self.notes_path = os.path.join(ASSETS_PATH, "notes.png")
+        self.settings_path = os.path.join(ASSETS_PATH, "settings.png")
         self.font = CONFIG["SidePanel"]["Font"]
         self.font_size = int(CONFIG["SidePanel"]["FontSize"])
         self.text_color = CONFIG["SidePanel"]["TextColor"]
@@ -160,11 +163,12 @@ class App(ctk.CTk):
         self.screen_height = self.winfo_screenheight()
 
         # window setup
+        self.icon = os.path.join(ASSETS_PATH, "FitArchiveLogo1.ico")
         self.minsize(width=1405, height=800)
         self.maxsize(width=self.screen_width, height=self.screen_height)
         self.geometry(f"{self.screen_width}x{self.screen_height}")
         self.title("FitArchive")
-        self.iconbitmap(r".\assets\FitArchiveLogo1.ico")
+        self.iconbitmap(self.icon)
         self.after(0, lambda: self.wm_state('zoomed'))
 
         # side panel
@@ -311,7 +315,7 @@ class App(ctk.CTk):
         new_exercise.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         new_exercise.after(300, new_exercise.focus)
-        new_exercise.after(200, lambda: new_exercise.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        new_exercise.after(200, lambda: new_exercise.iconbitmap(self.icon))
         name_label = ctk.CTkLabel(new_exercise, text="Enter your exercise name", font=(self.font_type, self.header_size))
         name_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 20))
         name_entry = ctk.CTkEntry(new_exercise, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=40)
@@ -456,7 +460,7 @@ class App(ctk.CTk):
         delete_scr.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         delete_scr.after(300, delete_scr.focus)
-        delete_scr.after(200, lambda: delete_scr.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        delete_scr.after(200, lambda: delete_scr.iconbitmap(self.icon))
 
         delete_scr_label = ctk.CTkLabel(delete_scr, text="Enter the index to be removed:", font=(self.font_type, self.header_size))
         delete_scr_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
@@ -500,7 +504,7 @@ class App(ctk.CTk):
         add_scr.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         add_scr.after(300, add_scr.focus)
-        add_scr.after(200, lambda: add_scr.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        add_scr.after(200, lambda: add_scr.iconbitmap(self.icon))
 
         add_scr_label = ctk.CTkLabel(add_scr, text="Enter new score:", font=(self.font_type, self.header_size))
         add_scr_label.grid(column=1, row=0, sticky=ctk.N, pady=(15, 0))
@@ -558,7 +562,7 @@ class App(ctk.CTk):
         edit_scr.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         edit_scr.after(300, edit_scr.focus)
-        edit_scr.after(200, lambda: edit_scr.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        edit_scr.after(200, lambda: edit_scr.iconbitmap(self.icon))
 
         add_scr_label = ctk.CTkLabel(edit_scr, text="Enter new score:", font=(self.font_type, self.header_size))
         add_scr_label.grid(column=0, row=0, pady=(15, 0), padx=(80, 0))
@@ -604,7 +608,7 @@ class App(ctk.CTk):
         del_exercise.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         del_exercise.after(300, del_exercise.focus)
-        del_exercise.after(200, lambda: del_exercise.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        del_exercise.after(200, lambda: del_exercise.iconbitmap(self.icon))
 
         del_exercise_label = ctk.CTkLabel(del_exercise, text="Are you sure?", font=(self.font_type, self.header_size))
         del_exercise_label.pack(side=ctk.TOP, pady=(10, 0))
@@ -738,7 +742,7 @@ class App(ctk.CTk):
         notes_frame = ctk.CTkScrollableFrame(self.main_panel, corner_radius=0, border_color="yellow", border_width=0)
         notes_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=5, pady=(0, 5), side=ctk.TOP)
 
-        notes_list = os.listdir(r".\notes")
+        notes_list = os.listdir(NOTES_PATH)
         no_notes = len(notes_list) == 0
         if no_notes:
             notes_label.configure(text="No notes added yet. Why not start by adding one?", text_color="red")
@@ -774,7 +778,7 @@ class App(ctk.CTk):
             illegal_chars: str = string.punctuation
             note_name = note_name.lower().rstrip()
             is_name_legal = not(any((char in illegal_chars for char in note_name)) or note_name == "")
-            notes = os.listdir(r".\notes")
+            notes = os.listdir(NOTES_PATH)
             name_exists = f"{note_name}.txt" in notes
             
             if name_exists:
@@ -784,8 +788,8 @@ class App(ctk.CTk):
                 name_label.configure(text=f"Name contains illegal characters", text_color="red")
                 return
             
-            with open(fr".\notes\{note_name}.txt", "x") as new_note_file:
-                print(os.listdir(fr".\notes"))
+            with open(os.path.join(NOTES_PATH, f"{note_name}.txt"), "x") as new_note_file:
+                print(os.listdir(NOTES_PATH))
                 print(f"{new_note_file.name} created")
             new_note.destroy()
             self.notes()
@@ -800,7 +804,7 @@ class App(ctk.CTk):
 
         # use after due to customtkinter's implementation where some data is set after 200ms
         new_note.after(300, new_note.focus)
-        new_note.after(200, lambda: new_note.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        new_note.after(200, lambda: new_note.iconbitmap(self.icon))
 
         name_label = ctk.CTkLabel(new_note, text="Enter your note name", font=(self.font_type, self.header_size))
         name_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 20))
@@ -819,7 +823,7 @@ class App(ctk.CTk):
         self.clear_main_panel()
         def save_note():
             content = note_box.get("0.0", ctk.END)
-            with open(fr".\notes\{note_name}.txt", "w") as note_file:
+            with open(os.path.join(NOTES_PATH, f"{note_name}.txt"), "w") as note_file:
                 note_file.write(content)
             self.clear_main_panel()
             self.show_note(note_name)
@@ -830,7 +834,7 @@ class App(ctk.CTk):
         label.grid(row=0, column=0, pady=15, padx=15, sticky=ctk.W)
         note_box = ctk.CTkTextbox(self.main_panel, wrap="word", font=(self.font_type, self.font_size))
         note_box.grid(row=1, column=0, pady=15, padx=15, sticky=ctk.NSEW, columnspan=2)
-        with open(fr".\notes\{note_name}.txt", "r") as note_file:
+        with open(os.path.join(NOTES_PATH, f"{note_name}.txt"), "r") as note_file:
             note_box.insert("0.0", note_file.read())
         delete_note = ctk.CTkButton(self.main_panel, text="Delete note", fg_color="red", font=(self.font_type, self.header_size), command=lambda: self.delete_note(note_name))
         delete_note.grid(row=2, column=0, pady=15, padx=15, sticky=ctk.W)
@@ -842,7 +846,7 @@ class App(ctk.CTk):
             print(choice)
             if choice:
                 del_note_label.configure(text=choice, text_color="green")
-                os.remove(fr".\notes\{note_name}.txt")
+                os.remove(os.path.join(NOTES_PATH, f"{note_name}.txt"))
                 del_note.destroy()
                 self.notes()
                 return
@@ -856,7 +860,7 @@ class App(ctk.CTk):
         del_note.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         del_note.after(300, del_note.focus)
-        del_note.after(200, lambda: del_note.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        del_note.after(200, lambda: del_note.iconbitmap(self.icon))
 
         del_note_label = ctk.CTkLabel(del_note, text="Are you sure?", font=(self.font_type, self.header_size))
         del_note_label.pack(side=ctk.TOP, pady=(10, 0))
@@ -890,7 +894,7 @@ class App(ctk.CTk):
 
             CONFIG["Appearance"]["Theme"] = theme_entry.get()
             if colour_appearance not in ("blue", "green"):
-                CONFIG["Appearance"]["ColourScheme"] = fr".\themes\{colour_appearance}.json"
+                CONFIG["Appearance"]["ColourScheme"] = os.path.join(THEMES_PATH, f"{colour_appearance}.json")
             else:
                 CONFIG["Appearance"]["ColourScheme"] = colour_appearance
 
@@ -908,7 +912,7 @@ class App(ctk.CTk):
 
         # use after due to customtkinter's implementation where some data is set after 200ms
         settings_window.after(300, settings_window.focus)
-        settings_window.after(200, lambda: settings_window.iconbitmap(r".\assets\FitArchiveLogo1.ico"))
+        settings_window.after(200, lambda: settings_window.iconbitmap(self.icon))
 
         settings_window.columnconfigure(0, weight=1)
         settings_window.rowconfigure(0, weight=1)
@@ -979,11 +983,11 @@ class App(ctk.CTk):
         # colour themes
         colour_theme_font_label = ctk.CTkLabel(settings_frame, text="Colour Theme", font=(self.font_type, self.font_size))
         colour_theme_font_label.grid(column=0, row=11, pady=25, padx=40)
-        themes = [theme.replace(".json", "") for theme in os.listdir(r".\themes")]
+        themes = [theme.replace(".json", "") for theme in os.listdir(THEMES_PATH)]
         themes.append("blue")
         themes.append("green")
         themes.insert(0, COLOUR_SCHEME)
-        themes[0] = COLOUR_SCHEME.lstrip(r".\themes\\").rstrip(".json")
+        themes[0] = os.path.basename(COLOUR_SCHEME).rstrip(".json")
         colour_theme = ctk.CTkOptionMenu(settings_frame, values=themes, font=(self.font_type, self.font_size), height=35)
         colour_theme.grid(column=1, row=11, padx=40)
 
