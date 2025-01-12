@@ -1,5 +1,7 @@
 # workoutTracker
 
+Pre-development:
+
 This is my personal workout tracker that uses pandas for data manipulation of the csv collection of my workouts and their respective PRs
 
 By the end the app should:
