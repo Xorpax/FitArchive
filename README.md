@@ -1,4 +1,4 @@
-# workoutTracker
+# FitArchive
 
 Pre-development:
 
