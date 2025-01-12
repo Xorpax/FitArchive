@@ -907,7 +907,7 @@ class App(ctk.CTk):
 
         settings_window = ctk.CTkToplevel(self)
         settings_window.title("Settings")
-        settings_window.geometry(f"900x630+{x}+{y}")
+        settings_window.geometry(f"1100x630+{x}+{y}")
         settings_window.resizable(False, False)
 
         # use after due to customtkinter's implementation where some data is set after 200ms
