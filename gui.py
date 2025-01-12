@@ -163,12 +163,12 @@ class App(ctk.CTk):
         self.screen_height = self.winfo_screenheight()
 
         # window setup
-        self.icon = os.path.join(ASSETS_PATH, "FitArchiveLogo1.ico")
+        self.app_icon = os.path.join(ASSETS_PATH, "FitArchiveLogo1.ico")
         self.minsize(width=1405, height=800)
         self.maxsize(width=self.screen_width, height=self.screen_height)
         self.geometry(f"{self.screen_width}x{self.screen_height}")
         self.title("FitArchive")
-        self.iconbitmap(self.icon)
+        self.iconbitmap(self.app_icon)
         self.after(0, lambda: self.wm_state('zoomed'))
 
         # side panel
@@ -315,7 +315,7 @@ class App(ctk.CTk):
         new_exercise.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         new_exercise.after(300, new_exercise.focus)
-        new_exercise.after(200, lambda: new_exercise.iconbitmap(self.icon))
+        new_exercise.after(200, lambda: new_exercise.iconbitmap(self.app_icon))
         name_label = ctk.CTkLabel(new_exercise, text="Enter your exercise name", font=(self.font_type, self.header_size))
         name_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 20))
         name_entry = ctk.CTkEntry(new_exercise, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=40)
@@ -460,7 +460,7 @@ class App(ctk.CTk):
         delete_scr.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         delete_scr.after(300, delete_scr.focus)
-        delete_scr.after(200, lambda: delete_scr.iconbitmap(self.icon))
+        delete_scr.after(200, lambda: delete_scr.iconbitmap(self.app_icon))
 
         delete_scr_label = ctk.CTkLabel(delete_scr, text="Enter the index to be removed:", font=(self.font_type, self.header_size))
         delete_scr_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 15))
@@ -504,7 +504,7 @@ class App(ctk.CTk):
         add_scr.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         add_scr.after(300, add_scr.focus)
-        add_scr.after(200, lambda: add_scr.iconbitmap(self.icon))
+        add_scr.after(200, lambda: add_scr.iconbitmap(self.app_icon))
 
         add_scr_label = ctk.CTkLabel(add_scr, text="Enter new score:", font=(self.font_type, self.header_size))
         add_scr_label.grid(column=1, row=0, sticky=ctk.N, pady=(15, 0))
@@ -562,7 +562,7 @@ class App(ctk.CTk):
         edit_scr.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         edit_scr.after(300, edit_scr.focus)
-        edit_scr.after(200, lambda: edit_scr.iconbitmap(self.icon))
+        edit_scr.after(200, lambda: edit_scr.iconbitmap(self.app_icon))
 
         add_scr_label = ctk.CTkLabel(edit_scr, text="Enter new score:", font=(self.font_type, self.header_size))
         add_scr_label.grid(column=0, row=0, pady=(15, 0), padx=(80, 0))
@@ -608,7 +608,7 @@ class App(ctk.CTk):
         del_exercise.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         del_exercise.after(300, del_exercise.focus)
-        del_exercise.after(200, lambda: del_exercise.iconbitmap(self.icon))
+        del_exercise.after(200, lambda: del_exercise.iconbitmap(self.app_icon))
 
         del_exercise_label = ctk.CTkLabel(del_exercise, text="Are you sure?", font=(self.font_type, self.header_size))
         del_exercise_label.pack(side=ctk.TOP, pady=(10, 0))
@@ -804,7 +804,7 @@ class App(ctk.CTk):
 
         # use after due to customtkinter's implementation where some data is set after 200ms
         new_note.after(300, new_note.focus)
-        new_note.after(200, lambda: new_note.iconbitmap(self.icon))
+        new_note.after(200, lambda: new_note.iconbitmap(self.app_icon))
 
         name_label = ctk.CTkLabel(new_note, text="Enter your note name", font=(self.font_type, self.header_size))
         name_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 20))
@@ -860,7 +860,7 @@ class App(ctk.CTk):
         del_note.resizable(False, False)
         # use after due to customtkinter's implementation where some data is set after 200ms
         del_note.after(300, del_note.focus)
-        del_note.after(200, lambda: del_note.iconbitmap(self.icon))
+        del_note.after(200, lambda: del_note.iconbitmap(self.app_icon))
 
         del_note_label = ctk.CTkLabel(del_note, text="Are you sure?", font=(self.font_type, self.header_size))
         del_note_label.pack(side=ctk.TOP, pady=(10, 0))
@@ -912,7 +912,7 @@ class App(ctk.CTk):
 
         # use after due to customtkinter's implementation where some data is set after 200ms
         settings_window.after(300, settings_window.focus)
-        settings_window.after(200, lambda: settings_window.iconbitmap(self.icon))
+        settings_window.after(200, lambda: settings_window.iconbitmap(self.app_icon))
 
         settings_window.columnconfigure(0, weight=1)
         settings_window.rowconfigure(0, weight=1)
