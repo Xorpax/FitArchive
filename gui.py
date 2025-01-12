@@ -32,7 +32,6 @@ class SidePanel(ctk.CTkFrame):
         self.expand_img = ctk.CTkImage(Image.open(self.expand_path), size=(25, 25))
         self.exercises_path = os.path.join(ASSETS_PATH, "exercise.png")
         self.bmi_calculator_path = os.path.join(ASSETS_PATH, "calculator.png")
-        self.measurements_path = os.path.join(ASSETS_PATH, "muscle.png")
         self.notes_path = os.path.join(ASSETS_PATH, "notes.png")
         self.settings_path = os.path.join(ASSETS_PATH, "settings.png")
         self.font = CONFIG["SidePanel"]["Font"]
@@ -153,7 +152,6 @@ class App(ctk.CTk):
             "FitArchive": self.show_landing_page,
             "Exercises": self.exercises,
             "BMI Calculator": self.bmi_calculator,
-            "Measurements": self.measurements,
             "Notes": self.notes,
             "Settings": self.settings,
         }
@@ -717,11 +715,6 @@ class App(ctk.CTk):
         calculate_btn.grid(row=2, column=1, padx=10, pady=10, sticky=ctk.W)
         result_lbl = ctk.CTkLabel(calc_frame, text="Result:", font=(self.font_type, self.font_size))
         result_lbl.grid(row=3, column=0, padx=15, pady=50, sticky=ctk.W, columnspan=2)
-
-    def measurements(self) -> None:
-        self.clear_main_panel()
-        self.under_construction()
-        raise NotImplementedError("Measurements page")
     
     def notes(self) -> None:
         self.clear_main_panel()
@@ -841,7 +834,7 @@ class App(ctk.CTk):
         save_note = ctk.CTkButton(self.main_panel, text="Save", font=(self.font_type, self.header_size), command=save_note)
         save_note.grid(row=2, column=1, pady=15, padx=15, sticky=ctk.E)
 
-    def delete_note(self, note_name: str):
+    def delete_note(self, note_name: str) -> None:
         def submit(choice: int):
             print(choice)
             if choice:
