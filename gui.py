@@ -875,10 +875,6 @@ class App(ctk.CTk):
 
         submit_btn = ctk.CTkButton(del_note, text="Submit", font=(self.font_type, self.header_size), command=lambda: submit(radio_var.get()))
         submit_btn.pack(side=ctk.TOP, pady=(45, 10))
-        
-    # def placeholder(self) -> None:
-        self.clear_main_panel()
-        self.clear_main_panel()
 
     def settings(self) -> None:
         def save_settings():
