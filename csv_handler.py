@@ -108,14 +108,11 @@ class Handler:
         dataset = self.get_dataset()[exercise_name][3:].str.split("|", expand=True)
         return date in dataset.values
 
-    def save_note(self, exercise_name: str, note: str) -> str:
+    def save_note(self, exercise_name: str, note: str) -> None:
         exercise_name = exercise_name.capitalize()
         dataset = self.get_dataset()
-        if exercise_name not in self.exercises:
-            return f"No entry for {exercise_name}"
         dataset.loc[2, exercise_name] = f"Note:{note}"
         dataset.to_csv(self.csv_path, index=False)
-        return f"Succesfully saved the note for {exercise_name}"
 
     def edit_record(self, exercise_name: str, row_index: int, new_score: float) -> bool:
         exercise_name = exercise_name.capitalize()
