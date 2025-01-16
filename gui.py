@@ -10,10 +10,11 @@ from tkinter import font
 CURRENT_DIR = os.getcwd()
 ASSETS_PATH = os.path.join(CURRENT_DIR, "assets")
 CONFIG_PATH = os.path.join(CURRENT_DIR, "config.ini")
-CONFIG = configparser.ConfigParser()
-CONFIG.read(CONFIG_PATH)
 THEMES_PATH = os.path.join(CURRENT_DIR, "themes")
 NOTES_PATH = os.path.join(CURRENT_DIR, "notes")
+
+CONFIG = configparser.ConfigParser()
+CONFIG.read(CONFIG_PATH)
 THEME = CONFIG["Appearance"]["Theme"]
 COLOUR_SCHEME = CONFIG["Appearance"]["ColourScheme"]
 
