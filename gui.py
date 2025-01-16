@@ -509,8 +509,8 @@ class App(ctk.CTk):
             except ValueError:
                 add_scr_label.configure(text="Invalid score or date", text_color="red")
                 return
-            if score < 0:
-                add_scr_label.configure(text="Your score cannot be negative", text_color="red")
+            if score < 0 or len(str(year)) < 4 or year < 1950 or year > 2200:
+                add_scr_label.configure(text="Invalid score or date", text_color="red")
                 return
 
             date = date.strftime("%d.%m.%Y")
