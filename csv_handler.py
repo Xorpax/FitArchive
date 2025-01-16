@@ -44,7 +44,7 @@ class Handler:
         dataset.to_csv(self.csv_path, index=False)
         self.update_exercises()
     
-    def remove_exercise(self, exercise_name: str) -> str:
+    def remove_exercise(self, exercise_name: str) -> None:
         exercise_name = exercise_name.capitalize()
         dataset = self.get_dataset()
         dataset.drop(columns=exercise_name, inplace=True)
