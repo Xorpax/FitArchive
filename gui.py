@@ -25,6 +25,7 @@ class SidePanel(ctk.CTkFrame):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         
+        # images
         self.fitarchive_path = os.path.join(ASSETS_PATH, "FitArchiveLogo.png")
         self.collapse_path = os.path.join(ASSETS_PATH, "push_left_icon.png")
         self.collapse_img = ctk.CTkImage(Image.open(self.collapse_path), size=(25, 25))
@@ -34,11 +35,15 @@ class SidePanel(ctk.CTkFrame):
         self.bmi_calculator_path = os.path.join(ASSETS_PATH, "calculator.png")
         self.notes_path = os.path.join(ASSETS_PATH, "notes.png")
         self.settings_path = os.path.join(ASSETS_PATH, "settings.png")
+
+        # config
         self.font = CONFIG["SidePanel"]["Font"]
         self.font_size = int(CONFIG["SidePanel"]["FontSize"])
         self.text_color = CONFIG["SidePanel"]["TextColor"]
-        self.buttons = []
         self.btn_height = int(CONFIG["SidePanel"]["BtnHeight"])
+
+        # buttons
+        self.buttons = []
         
         self.initialise_buttons()
     
