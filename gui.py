@@ -267,12 +267,9 @@ class App(ctk.CTk):
         settings_btn.grid(row=0, column=3, sticky=ctk.NSEW, padx=15, pady=15)
     
     def clear_main_panel(self) -> None:
-        print("Clearing main panel...")
         self.main_panel.destroy()
         self.main_panel = ctk.CTkFrame(self, corner_radius=0, border_color="red", border_width=0)
         self.main_panel.pack(expand=True, fill=ctk.BOTH, side=ctk.RIGHT)
-        # for widget in self.main_panel.winfo_children():
-        #     widget.destroy()
 
     def reset_config(self) -> None:
         self.main_panel.columnconfigure(list(range(100)), weight=0)
