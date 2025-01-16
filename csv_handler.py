@@ -55,18 +55,14 @@ class Handler:
         exercise_name = exercise_name.capitalize()
         dataset = self.get_dataset()
         if row_index > len(dataset[exercise_name]) - 1:
-            print(f"Invalid index")
             return False
         if exercise_name not in self.exercises:
-            print(f"No entry for {exercise_name}. Aborting.")
             return False
         if dataset.loc[row_index, exercise_name] == np.nan:
-            print(f"Cannot remove {exercise_name} at {row_index}. Aborting.")
             return False
         dataset.loc[row_index, exercise_name] = np.nan
         dataset.dropna(subset=exercise_name, inplace=True)
         dataset.to_csv(self.csv_path, index=False)
-        print(f"Successfully removed {exercise_name} at {row_index}")
         return True
 
     def sort_records(self, exercise_name: str, sort_type: str) -> tuple[pd.DataFrame, list[str]]:
