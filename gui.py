@@ -185,6 +185,12 @@ class App(ctk.CTk):
         # main panel
         self.main_panel = ctk.CTkFrame(self, corner_radius=0, border_color="red", border_width=0)
         self.main_panel.pack(expand=True, fill=ctk.BOTH, side=ctk.RIGHT)
+        
+        # landing page
+        self.exercises_img = ctk.CTkImage(Image.open(os.path.join(ASSETS_PATH, "exercises_img_label.jpg")), size=(400, 700))
+        self.bmi_calculator_img = ctk.CTkImage(Image.open(os.path.join(ASSETS_PATH, "bmi_calculator_img_label.jpg")), size=(400, 700))
+        self.notes_img = ctk.CTkImage(Image.open(os.path.join(ASSETS_PATH, "notes_img_label.jpg")), size=(400, 700))
+        self.settings_img = ctk.CTkImage(Image.open(os.path.join(ASSETS_PATH, "settings_img_label.jpg")), size=(400, 700))
         self.show_landing_page()
 
         # file operations
@@ -211,35 +217,52 @@ class App(ctk.CTk):
         buttons_frame.pack(expand=True, fill=ctk.BOTH, anchor=ctk.NW, padx=10, pady=10)
         buttons_frame.rowconfigure(0, weight=1)
         buttons_frame.columnconfigure(list(range(4)), weight=1)
+
         exercises_btn = ctk.CTkButton(buttons_frame,
-                                        text="Exercises",
-                                        font=(self.font_type, self.font_size),
-                                        anchor=ctk.N,
-                                        border_spacing=20,
-                                        command=self.exercises)
+                                    text="",
+                                    font=(self.font_type, self.font_size),
+                                    anchor=ctk.N,
+                                    border_spacing=0,
+                                    corner_radius=0,
+                                    command=self.exercises,
+                                    image=self.exercises_img,
+                                    fg_color="transparent",
+                                    bg_color="transparent")
         exercises_btn.grid(row=0, column=0, sticky=ctk.NSEW, padx=15, pady=15)
 
         bmi_calculator_btn = ctk.CTkButton(buttons_frame,
-                                           text="BMI calculator",
-                                           font=(self.font_type, self.font_size),
-                                           anchor=ctk.N,
-                                           border_spacing=20,
-                                           command=self.bmi_calculator)
+                                        text="",
+                                        font=(self.font_type, self.font_size),
+                                        anchor=ctk.N,
+                                        border_spacing=0,
+                                        corner_radius=0,
+                                        image=self.bmi_calculator_img,
+                                        fg_color="transparent",
+                                        bg_color="transparent",
+                                        command=self.bmi_calculator)
         bmi_calculator_btn.grid(row=0, column=1, sticky=ctk.NSEW, padx=15, pady=15)
 
         notes_btn = ctk.CTkButton(buttons_frame,
-                                    text="Notes",
-                                    font=(self.font_type, self.font_size),
-                                    anchor=ctk.N,
-                                    border_spacing=20,
-                                    command=self.notes)
+                                text="",
+                                font=(self.font_type, self.font_size),
+                                anchor=ctk.N,
+                                border_spacing=0,
+                                corner_radius=0,
+                                image=self.notes_img,
+                                fg_color="transparent",
+                                bg_color="transparent",
+                                command=self.notes)
         notes_btn.grid(row=0, column=2, sticky=ctk.NSEW, padx=15, pady=15)
 
         settings_btn = ctk.CTkButton(buttons_frame,
-                                    text="Settings",
+                                    text="",
                                     font=(self.font_type, self.font_size),
                                     anchor=ctk.N,
-                                    border_spacing=20,
+                                    border_spacing=0,
+                                    corner_radius=0,
+                                    image=self.settings_img,
+                                    fg_color="transparent",
+                                    bg_color="transparent",
                                     command=self.settings)
         settings_btn.grid(row=0, column=3, sticky=ctk.NSEW, padx=15, pady=15)
     
