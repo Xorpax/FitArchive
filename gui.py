@@ -327,10 +327,11 @@ class App(ctk.CTk):
             if name in exercises_list:
                 name_label.configure(text=f"An entry for {name} already exists.", text_color="red")
             else:
-                print(self.handler.add_exercise(name, category, units))
+                self.handler.add_exercise(name, category, units)
                 new_exercise.destroy()
                 self.exercises()
         
+        # configure TopLevel
         x = (self.screen_width - 640) // 2
         y = (self.screen_height -360) // 2
         new_exercise = ctk.CTkToplevel(self)
@@ -340,6 +341,8 @@ class App(ctk.CTk):
         # use after due to customtkinter's implementation where some data is set after 200ms
         new_exercise.after(300, new_exercise.focus)
         new_exercise.after(200, lambda: new_exercise.iconbitmap(self.app_icon))
+
+        # widgets
         name_label = ctk.CTkLabel(new_exercise, text="Enter your exercise name", font=(self.font_type, self.header_size))
         name_label.pack(side=ctk.TOP, anchor=ctk.CENTER, pady=(20, 20))
         name_entry = ctk.CTkEntry(new_exercise, placeholder_text="Type here...", font=(self.font_type, self.font_size), width=350, height=40)
