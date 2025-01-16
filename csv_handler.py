@@ -118,8 +118,7 @@ class Handler:
         exercise_name = exercise_name.capitalize()
         dataset = self.get_dataset()
         num_rows = len(dataset[exercise_name])
-        if row_index > num_rows:
-            print("too many")
+        if row_index - 2 > num_rows:
             return False
         pb_row = dataset[exercise_name][0]
         pb = float(pb_row.split("|")[0].split(":")[1])
