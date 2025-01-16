@@ -157,8 +157,10 @@ class Handler:
         sns.set_theme(context="paper", font_scale=1.75, rc=rc, style="darkgrid")
         plt.figure(figsize=(10, 7.8))
         sns.lineplot(data=df, x="date (DD-MM-YYYY)", y=f"score ({unit})", markers=True, marker="o", color="#f0a310", linewidth=2.25)
-        plt.ylim(bottom=df[f"score ({unit})"].min(), top=df[f"score ({unit})"].max())
-        plt.xlim(df["date (DD-MM-YYYY)"][0], df["date (DD-MM-YYYY)"].values[-1])
+
+        # you can uncomment these to remove gaps on the graph
+        # plt.ylim(bottom=df[f"score ({unit})"].min(), top=df[f"score ({unit})"].max())
+        # plt.xlim(df["date (DD-MM-YYYY)"][0], df["date (DD-MM-YYYY)"].values[-1])
         plt.title(f"{exercise_name} ({category})")
 
         plt.xticks(rotation=-35)
