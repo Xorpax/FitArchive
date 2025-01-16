@@ -69,8 +69,6 @@ class Handler:
         """Return a list of special rows (PR, Category, Note) and a dataframe of sorted scores"""
         sort_type = sort_type.capitalize()
         sort_types = ["Index ascending", "Index descending", "Score ascending", "Score descending", "Date ascending", "Date descending"]
-        if sort_type not in sort_types:
-            return f"No type {sort_type}"
         
         dataset = self.get_dataset()[exercise_name].dropna()
         special_fields = dataset[:3].str.split(":")
