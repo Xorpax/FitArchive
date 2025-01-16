@@ -793,8 +793,6 @@ class App(ctk.CTk):
 
     def add_note(self) -> None:
         def submit_note(note_name: str) -> None:
-            print("current directory: adding a new note")
-            print(os.getcwd())
             illegal_chars: str = string.punctuation
             note_name = note_name.lower().rstrip()
             is_name_legal = not(any((char in illegal_chars for char in note_name)) or note_name == "")
@@ -809,11 +807,10 @@ class App(ctk.CTk):
                 return
             
             with open(os.path.join(NOTES_PATH, f"{note_name}.txt"), "x") as new_note_file:
-                print(os.listdir(NOTES_PATH))
-                print(f"{new_note_file.name} created")
+                new_note_file.close()
             new_note.destroy()
             self.notes()
-        print(os.getcwd())
+        
         x = (self.screen_width - 640) // 2
         y = (self.screen_height -360) // 2
 
