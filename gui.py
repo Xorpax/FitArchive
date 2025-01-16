@@ -312,6 +312,7 @@ class App(ctk.CTk):
             if col % 5 == 0:
                 row += 1
         
+        # this prevents tkinter from raising exception (cannot configure empty list)
         if col == 0:
             col = 1
         if row == 0:
