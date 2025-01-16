@@ -616,7 +616,6 @@ class App(ctk.CTk):
 
     def delete_exercise(self, exercise_name: str) -> None:
         def submit(choice: int):
-            print(choice)
             if choice:
                 del_exercise_label.configure(text=choice, text_color="green")
                 self.handler.remove_exercise(exercise_name)
