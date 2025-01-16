@@ -26,6 +26,16 @@ FitArchive was made by myself (Xorpax) as a workout tracker.
 - Each scheme has its dark and light theme. Those are stored as .json files, making them entirely configurable!
 - The BMI calculator feature uses metric units and presents users with an index of weight classes based on the BMI score.
 
+# Windows
+
+To run FitArchive on your Windows machine, all you need is to download a release of FitArchive and extract the files. No external programs are required to run FitArchive on windows.
+
+# Linux
+
+In order to get FitArchive to function on Linux distros, you may want to use wine on any FitArchive Windows release. It will function as expected, but window icons will not display the correct images.
+
+Another option is to create a Python virtual environment for FitArchive and install the requirements.
+
 # Landing Page
 ![image](./preview/landing_page.png "Landing Page")
 # Exercises Panel
