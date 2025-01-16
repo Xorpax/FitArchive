@@ -103,7 +103,7 @@ class Handler:
             return df.empty
         return True
 
-    def is_date_duplicate(self, exercise_name: str, date: str):
+    def is_date_duplicate(self, exercise_name: str, date: str) -> bool:
         exercise_name = exercise_name.capitalize()
         dataset = self.get_dataset()[exercise_name][3:].str.split("|", expand=True)
         return date in dataset.values
