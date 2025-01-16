@@ -518,7 +518,7 @@ class App(ctk.CTk):
                 add_scr_label.configure(text=f"No duplicate dates!", text_color="red")
                 return
             unit = self.handler.get_dataset()[exercise_name].tolist()[0].split("|")[1]
-            print(self.handler.add_exercise_data(exercise_name, score, date, unit))
+            self.handler.add_exercise_data(exercise_name, score, date, unit)
             add_scr.destroy()
             self.show_exercise(exercise_name)
 
