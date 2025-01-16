@@ -368,7 +368,6 @@ class App(ctk.CTk):
         self.clear_main_panel()
         self.reset_config()
         def list_scores(sort_type: str="Index ascending"):
-            print(f"{sort_type=}")
             data = self.handler.sort_records(exercise_name, sort_type=sort_type)
             special_rows = data[1]
             df = data[0]
@@ -394,7 +393,7 @@ class App(ctk.CTk):
 
         exercise_name = exercise_name.capitalize()
         # left side
-        label = ctk.CTkLabel(self.main_panel, text=exercise_name, font=(self.font_type, self.header_size))
+        label = ctk.CTkLabel(self.main_panel, font=(self.font_type, self.header_size))
         label.grid(column=0, row=0, padx=15, pady=15, sticky=ctk.NW)
         notes_label = ctk.CTkLabel(self.main_panel, text="Notes", font=(self.font_type, self.header_size))
         notes_label.grid(column=0, row=1, padx=15, pady=15, sticky=ctk.NW)
@@ -426,10 +425,10 @@ class App(ctk.CTk):
                                variable=sort_var,
                                command=lambda s: list_scores(sort_type=sort_var.get()))
         sort.grid(column=1, row=1, padx=30, sticky=ctk.NW, columnspan=3)
-        pb_label = ctk.CTkLabel(self.main_panel, text="PB: ", font=(self.font_type, self.header_size))
+        pb_label = ctk.CTkLabel(self.main_panel, font=(self.font_type, self.header_size))
         pb_label.grid(column=4, row=0, padx=30, pady=15, sticky=ctk.NW)
 
-        scorebox = ctk.CTkScrollableFrame(self.main_panel, border_color="orange", border_width=0, orientation="horizontal")
+        scorebox = ctk.CTkScrollableFrame(self.main_panel, border_color="orange", border_width=0, orientation="vertical")
         scorebox.grid(column=1, row=2, padx=30, columnspan=5, sticky=ctk.NSEW, rowspan=3)
         self.main_panel.grid_columnconfigure(1, weight=1)
         self.main_panel.rowconfigure(4, weight=1)
