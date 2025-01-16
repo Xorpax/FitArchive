@@ -31,17 +31,9 @@ class Handler:
         dataset.to_csv(self.csv_path, index=False)
         self.update_exercises()
     
-    def add_exercise_data(self, exercise_name: str, score: float, date: str, units:str) -> str:
+    def add_exercise_data(self, exercise_name: str, score: float, date: str, units:str) -> None:
         exercise_name = exercise_name.capitalize()
         dataset = self.get_dataset()
-        correct_datatypes = (isinstance(score, float) or isinstance(score, int)) and isinstance(date, str) and isinstance(units, str)
-        if exercise_name not in self.exercises:
-            return f"No entry for {exercise_name}. Aborting"
-        try:
-            assert correct_datatypes
-        except AssertionError:
-            return f"Invalid data types"
-        
         pb = float(dataset[exercise_name].tolist()[0].split("|")[0].split(":")[1])
         if score > pb:
             dataset.loc[0, exercise_name] = f"PR:{score}|{units}"
@@ -51,7 +43,6 @@ class Handler:
         dataset.loc[entry_index, exercise_name] = entry
         dataset.to_csv(self.csv_path, index=False)
         self.update_exercises()
-        return f"Entry: {entry} successfully added for {exercise_name}"
     
     def remove_exercise(self, exercise_name: str) -> str:
         exercise_name = exercise_name.capitalize()
