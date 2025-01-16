@@ -860,7 +860,6 @@ class App(ctk.CTk):
 
     def delete_note(self, note_name: str) -> None:
         def submit(choice: int):
-            print(choice)
             if choice:
                 del_note_label.configure(text=choice, text_color="green")
                 os.remove(os.path.join(NOTES_PATH, f"{note_name}.txt"))
@@ -869,6 +868,7 @@ class App(ctk.CTk):
                 return
             del_note_label.configure(text=choice, text_color="red")
             del_note.destroy()
+        
         del_note = ctk.CTkToplevel(self)
         x = (self.screen_width - 640) // 2
         y = (self.screen_height -360) // 2
