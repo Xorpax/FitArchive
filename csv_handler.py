@@ -61,7 +61,6 @@ class Handler:
         if dataset.loc[row_index, exercise_name] == np.nan:
             return False
         dataset.loc[row_index, exercise_name] = np.nan
-        dataset.dropna(subset=exercise_name, inplace=True)
         dataset.to_csv(self.csv_path, index=False)
         return True
 
